@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class MedicalReport extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'report_name', 
+        'report_date', 
+        'report_type', 
+        'patient_id', 
+        'doctor_id',
+    ];
+    public function patient(): BelongsTo
+    {
+        return $this->belongsTo(Patient::class);
+    }
+    public function doctor(): BelongsTo
+    {
+        return $this->belongsTo(Doctor::class);
+    }
+}
