@@ -9,10 +9,35 @@
         <link href="{{asset('assets/global/plugins/jqvmap/jqvmap/jqvmap.css')}}" rel="stylesheet" type="text/css" />
         <!-- END PAGE LEVEL PLUGINS -->
 @endsection
+@section('imge')
+<li class="dropdown dropdown-user">
+    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+        <img alt="Profile Image" class="img-circle" 
+             src="{{ $admin->profile_image ? asset('storage/' . $admin->profile_image) : asset('assets/layouts/layout2/img/avatar3_small.jpg') }}" />
+        <span class="username username-hide-on-mobile">{{ $admin->name }}</span>
+        <i class="fa fa-angle-down"></i>
+    </a>
+    
+    <ul class="dropdown-menu dropdown-menu-default">
+        <li>
+            <a href="{{route('admin.profile')}}">
+                <i class="icon-user"></i>  ملفي  </a>
+        </li>
+        <li>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+            <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <i class="icon-logout"></i> تسجيل خروج  
+            </a>
+        </li>
+    </ul>
+</li>
+@endsection
 
 @section('content')
-<!-- BEGIN CONTENT -->
-<div class="page-content-wrapper">
+ <!-- BEGIN CONTENT -->
+ <div class="page-content-wrapper">
                 <!-- BEGIN CONTENT BODY -->
                 <div class="page-content">
                     <!-- BEGIN PAGE HEADER-->
@@ -29,7 +54,7 @@
                             </li>
                             <li>
                              
-                                <a href="{{ route('admin.dashboard') }}">الصفحة الرئيسية </a>
+                                <a href="{{route('admin.dashboard')}}">الصفحة الرئيسية </a>
                                 <i class="icon-home"></i>
                                
                             </li>
@@ -44,12 +69,12 @@
                     <div class="row widget-row">
                     <div class="col-md-3">
                             <!-- BEGIN WIDGET THUMB -->
-                            <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 text-center">
-                                <h4 class="widget-thumb-heading">إجمالي عدد المراجعين النشيطين </h4>
+                            <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20">
+                                <h4 class="widget-thumb-heading">عدد المراجعين النشطين</h4>
                                 <div class="widget-thumb-wrap">
-                                    <i class=" widget-thumb-icon bg-purple fa fa-calendar-check-o"></i>
+                                     <i class=" widget-thumb-icon bg-blue icon-user"></i>
                                     <div class="widget-thumb-body">
-                                        <span class="widget-thumb-subtitle"> عدد المراجعين النشطين</span>
+                                        <span class="widget-thumb-subtitle">عدد المراجعين</span>
                                         <span class="widget-thumb-body-stat" data-counter="counterup" >{{$activeReviewersCount}}</span>
                                     </div>
                                 </div>
@@ -57,28 +82,31 @@
                             <!-- END WIDGET THUMB -->
                         </div>
                         
+                        
+                        
+                        
                         <div class="col-md-3">
                             <!-- BEGIN WIDGET THUMB -->
-                            <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 text-center">
-                                <h4 class="widget-thumb-heading">إجمالي عدد الخدمات</h4>
+                            <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20">
+                                <h4 class="widget-thumb-heading">إجمالي عدد الخدمات   </h4>
                                 <div class="widget-thumb-wrap">
-                                    <i class="widget-thumb-icon bg-red fa fa-check-circle-o"></i></i>
+                                    <i class=" widget-thumb-icon bg-purple fa fa-calendar-check-o"></i>
                                     <div class="widget-thumb-body">
-                                        <span class="widget-thumb-subtitle">  إجمالي عدد الخدمات</span>
-                                        <span class="widget-thumb-body-stat" data-counter="counterup">{{$serviceCount}}</span>
+                                        <span class="widget-thumb-subtitle">عدد الخدمات</span>
+                                        <span class="widget-thumb-body-stat" data-counter="counterup" >{{$serviceCount}}</span>
                                     </div>
                                 </div>
                             </div>
                             <!-- END WIDGET THUMB -->
                         </div>
                         
-                        
+
                         <div class="col-md-3">
                             <!-- BEGIN WIDGET THUMB -->
                             <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20">
-                                <h4 class="widget-thumb-heading"> إجمالي عدد الأطباء</h4>
+                                <h4 class="widget-thumb-heading">  إجمالي عدد الاطباء</h4>
                                 <div class="widget-thumb-wrap">
-                                     <i class=" widget-thumb-icon bg-blue icon-user"></i>
+                                    <i class="widget-thumb-icon bg-red fa fa-check-circle-o"></i></i>
                                     <div class="widget-thumb-body">
                                         <span class="widget-thumb-subtitle">عدد الأطباء</span>
                                         <span class="widget-thumb-body-stat" data-counter="counterup" >{{$doctorsCount}}</span>
@@ -90,7 +118,7 @@
                         <div class="col-md-3">
                             <!-- BEGIN WIDGET THUMB -->
                             <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20">
-                                <h4 class="widget-thumb-heading">إجمالي عدد المرضى </h4>
+                                <h4 class="widget-thumb-heading"> إجمالي عدد المرضى </h4>
                                 <div class="widget-thumb-wrap">   
                                     <i class=" widget-thumb-icon bg-green fa fa-wheelchair"></i>
                                     <div class="widget-thumb-body">
@@ -107,23 +135,34 @@
                                
                             </div>
                             <div class="portlet-body">
+                               
+                                
+
                             <a href="{{route('admin.doctors')}}" class="icon-btn">
                                     <i class="fa fa-user-md"></i>
                                     <div> قسم الاطباء </div>
                                 </a>
+                               
                                 <a href="{{route('admin.patients')}}" class="icon-btn">
                                     <i class="fa fa-wheelchair"></i>
                                     <div> قسم المرضى </div>
                                 </a>
+                                <a href="{{route('website.home')}}" class="icon-btn">
+                                    <i class="fa fa"></i>
+                                    <div>  الموقع الرئيسي </div>
+                                </a>
+                               
                                 <a href="{{route('admin.profile')}}" class="icon-btn">
                                     <i class="icon-user"></i>
                                     <div> ملفي الشخصي  </div>
                                 </a>
-                                
+
                                 <a href="{{route('admin.notifications')}}" class="icon-btn">
                                     <i class="icon-bell"></i>
-                                    <div> الاشعارات و التنبيهات  </div>
+                                    <div> الإشعارات و التنبيهات  </div>
                                 </a>
+                               
+                                
                                 <a href="{{route('admin.services')}}" class="icon-btn">
                                     <i class="icon-folder"></i>
                                     <div> ادارة الخدمات  </div>

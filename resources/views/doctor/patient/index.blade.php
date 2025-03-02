@@ -29,12 +29,12 @@
                     <div class="page-bar">
                         <ul class="page-breadcrumb">
                             <li>
-                                <a href="#">المرضى</a>
+                                <a href="{{route('doctor.patients')}}">المرضى</a>
                             </li>
                             <li>
                                 <i class="fa fa-angle-left"></i>
                              
-                                <a href="Doctor dashboard.html">الصفحة الرئيسية </a>
+                                <a href="{{route('doctor.dashboard')}}">الصفحة الرئيسية </a>
                                 <i class="icon-home"></i>
                                
                             </li>
@@ -43,6 +43,23 @@
                         </ul>
                        
                             </div>
+                            @if(session('success'))
+                    <div class="alert alert-success">
+                       
+                        <span>{{ session('success') }}</span>
+                        <button onclick="this.parentElement.style.display='none';">x</button>
+                       
+                    </div>
+                @endif
+                @if($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
                     <!-- END PAGE HEADER-->
                     <div class="row">
                         <div class="col-md-12">
@@ -78,11 +95,7 @@
                                                             <div class="row">
                                                                 <div class="col-md-6">
                                                                     <div class="btn-group">
-                                                                        <button id="" class="btn green " data-toggle="modal" data-target="#new_doctor"> 
-                                                                            <i class="fa fa-plus"></i>
-                                                                            اضافة جديد 
-                                                                         
-                                                                        </button>
+                                                                        
                                                                     </div>
                                                                 </div>
                                                             
@@ -92,84 +105,25 @@
                                                     
                                                                 <thead>
                                                                     <tr>
+                                                                        <th># </th>
                                                                         <th>اسم المريض</th>
                                                                         <th>نوع الخدمة</th>
                                                                         <th>التاريخ</th>
                                                                         <th>ملاحظات</th>
-                                                                        <th>تعديل</th>
+                                                                        
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <tr>
-                                                                        <td>أحمد محمد</td>
-                                                                        <td>استشارة طبية</td>
-                                                                        <td>10 ديسمبر 2024</td>
-                                                                        <td>يعاني من ارتفاع ضغط الدم ويحتاج إلى فحص دوري.</td>
-                                                                        <td><a class="edit" href="javascript:;">تعديل</a></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>فاطمة علي</td>
-                                                                        <td>علاج طبيعي</td>
-                                                                        <td>15 ديسمبر 2024</td>
-                                                                        <td>تتابع جلسات علاج طبيعي بعد عملية في العمود الفقري.</td>
-                                                                        <td><a class="edit" href="javascript:;">تعديل</a></td>
-                                                                    </tr>
-                                                                    <tr>
+                                                               
+                                                                     <tr>
+                                                                        <td>  </td>
                                                                         <td>سامي الخطيب</td>
                                                                         <td>استشارة نفسية</td>
                                                                         <td>20 ديسمبر 2024</td>
                                                                         <td>يعاني من اضطرابات القلق، يحتاج متابعة نفسية.</td>
-                                                                        <td><a class="edit" href="javascript:;">تعديل</a></td>
+                                                                        
                                                                     </tr>
-                                                                    <tr>
-                                                                        <td>نورا عادل</td>
-                                                                        <td>فحص طبي شامل</td>
-                                                                        <td>25 ديسمبر 2024</td>
-                                                                        <td>فحص شامل للمريض، مع مراجعة تاريخ الأمراض المزمنة.</td>
-                                                                        <td><a class="edit" href="javascript:;">تعديل</a></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>محمد جابر</td>
-                                                                        <td>فحص طبي</td>
-                                                                        <td>30 ديسمبر 2024</td>
-                                                                        <td>شكوى من آلام في الصدر، تم إجراء فحص للقلب.</td>
-                                                                        <td><a class="edit" href="javascript:;">تعديل</a></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>سارة خالد</td>
-                                                                        <td>استشارة طبية</td>
-                                                                        <td>30 يناير 2025</td>
-                                                                        <td>تقييم جديد لحالة السكري ونتائج الفحوصات السابقة.</td>
-                                                                        <td><a class="edit" href="javascript:;">تعديل</a></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>ريم جاسم</td>
-                                                                        <td>علاج طبيعي</td>
-                                                                        <td>2 فبراير 2025</td>
-                                                                        <td>تعاني من آلام في الركبة وتتابع جلسات العلاج الطبيعي.</td>
-                                                                        <td><a class="edit" href="javascript:;">تعديل</a></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>أحمد سعيد</td>
-                                                                        <td>استشارة نفسية</td>
-                                                                        <td>7 فبراير 2025</td>
-                                                                        <td>يتم متابعة تحسن الحالة النفسية بعد جلسات العلاج السابقة.</td>
-                                                                        <td><a class="edit" href="javascript:;">تعديل</a></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>مريم حسن</td>
-                                                                        <td>فحص طبي شامل</td>
-                                                                        <td>12 فبراير 2025</td>
-                                                                        <td>فحص عام للحالة الصحية مع متابعة نسبة الحديد في الدم.</td>
-                                                                        <td><a class="edit" href="javascript:;">تعديل</a></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>سعاد علي</td>
-                                                                        <td>فحص طبي</td>
-                                                                        <td>18 فبراير 2025</td>
-                                                                        <td>تم فحص الضغط والسكر بسبب شكوى من الدوخة المستمرة.</td>
-                                                                        <td><a class="edit" href="javascript:;">تعديل</a></td>
-                                                                    </tr>
+                                                                    
                                                                 </tbody>
                                                             </table>
                                                         

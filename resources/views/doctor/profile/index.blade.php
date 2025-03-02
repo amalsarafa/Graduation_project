@@ -30,21 +30,36 @@
 <div class="page-bar">
     <ul class="page-breadcrumb">
         <li>
-            <a href="#">الملف الشخصي</a>
+            <a href="{{route('doctor.profile')}}">الملف الشخصي</a>
         </li>
         <li>
             <i class="fa fa-angle-left"></i>
          
-            <a href="Doctor dashboard.html">الصفحة الرئيسية </a>
+            <a href="{{route('doctor.dashboard')}}">الصفحة الرئيسية </a>
             <i class="icon-home"></i>
            
         </li>
         
        
     </ul>
-
-
 </div>
+@if(session('success'))
+                    <div class="alert alert-success">
+                       
+                        <span>{{ session('success') }}</span>
+                        <button onclick="this.parentElement.style.display='none';">x</button>
+                       
+                    </div>
+                @endif
+                @if($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 <!-- END PAGE HEADER-->
 <div class="profile">
 <div class="tabbable-line tabbable-full-width">
@@ -64,18 +79,21 @@
 <ul class="list-unstyled profile-nav">
 <!-- صورة الطبيب -->
 <li>
-<img src="{{asset('assets/pages/media/profile/people19.png')}}" class="img-responsive pic-bordered" alt="Profile Picture" />
-<a href="javascript:;" class="profile-edit"> تعديل الصورة </a>
+    <img src="{{ asset('storage/' . auth()->user()->profile_image) }}" 
+         class="img-responsive pic-bordered" 
+         alt="Profile Picture" 
+         onerror="this.onerror=null;this.src='{{ asset('assets/pages/media/profile/people19.png') }}';" />
 </li>
+
 <!-- قائمة الخيارات -->
 
 <li>
-<a href="Appointments.d.html">  مواعيدي 
+<a href="{{route('doctor.appointments')}}">  مواعيدي 
 
 </a>
 </li>
 <li>
-<a href="Patients.html"> السجلات الطبية </a>
+<a href="{{route('doctor.patients')}}"> السجلات الطبية </a>
 </li>
 </ul>
 </div>
@@ -83,21 +101,21 @@
 <div class="col-md-9">
 <div class="row">
 <div class="col-md-8 profile-info">
-<h1 class="font-green sbold uppercase">د. محمد الفهد</h1>
+<h1 class="font-green sbold uppercase">{{$user->name}}</h1>
 <p> طبيب متخصص في الرعاية الصحية المنزلية، يعمل على تقديم الاستشارات الطبية للمرضى في منازلهم ومتابعة حالتهم الصحية عن كثب، وتوفير العلاج المناسب في راحة منازلهم. </p>
 
 <p>
-<a href="javascript:;"> www.mywebsite.com </a>
+<a href="{{route('website.home')}}">  www.mhwcare.com </a>
 </p>
 <ul class="list-inline">
 <li>
-<i class="fa fa-map-marker"></i> الرياض </li>
+<i class="fa fa-map-marker"></i> {{$user->country}} </li>
 <li>
-<i class="fa fa-calendar"></i> 12 مايو 1980 </li>
+<i class="fa fa-calendar"></i> {{$user->birth_date}}</li>
 <li>
-<i class="fa fa-briefcase"></i> طبيب الرعاية المنزلية </li>
+<i class="fa fa-briefcase"></i> {{ $doctor->specialization }} </li>
 <li>
-<i class="fa fa-star"></i> متخصص في الطب الباطني والرعاية المنزلية </li>
+
 <li>
 <i class="fa fa-heart"></i> توفير الرعاية الصحية المتكاملة للمرضى في منازلهم </li>
 </ul>
@@ -145,9 +163,7 @@
         <li class="active">
             <a href="#tab_1_11" data-toggle="tab"> آخر الأنشطة الطبية </a>
         </li>
-        <li>
-            <a href="#tab_1_22" data-toggle="tab"> إشعارات النظام الطبية </a>
-        </li>
+       
     </ul>
     <div class="tab-content">
         <!-- آخر الأنشطة الطبية الخاصة بالطبيب -->
@@ -162,7 +178,7 @@
                                 <i class="fa fa-cogs"></i> الخدمة </th>
                             <th>
                                 <i class="fa fa-calendar-check"></i> الحالة </th>
-                            <th> </th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -173,102 +189,15 @@
                             </td>
                             <td class="hidden-xs"> استشارة طبية عن بُعد </td>
                             <td> <span class="label label-success label-sm"> تم تقديم الاستشارة بنجاح </span> </td>
-                            <td>
-                                <a class="btn btn-sm grey-salsa btn-outline" href="javascript:;"> عرض التفاصيل </a>
-                            </td>
+
                         </tr>
-                        <!-- النشاط الثاني: فحص طبي منزلي -->
-                        <tr>
-                            <td>
-                                <a href="javascript:;"> سارة الزهراني </a>
-                            </td>
-                            <td class="hidden-xs"> فحص طبي منزلي </td>
-                            <td> <span class="label label-warning label-sm"> قيد المعالجة </span> </td>
-                            <td>
-                                <a class="btn btn-sm grey-salsa btn-outline" href="javascript:;"> عرض التفاصيل </a>
-                            </td>
-                        </tr>
-                        <!-- النشاط الثالث: متابعة صحية عن بُعد -->
-                        <tr>
-                            <td>
-                                <a href="javascript:;"> نادر الفارس </a>
-                            </td>
-                            <td class="hidden-xs"> متابعة صحية عن بُعد </td>
-                            <td> <span class="label label-info label-sm"> في انتظار التقييم </span> </td>
-                            <td>
-                                <a class="btn btn-sm grey-salsa btn-outline" href="javascript:;"> عرض التفاصيل </a>
-                            </td>
-                        </tr>
-                        <!-- النشاط الرابع: رعاية تمريضية منزلية -->
-                        <tr>
-                            <td>
-                                <a href="javascript:;"> فاطمة العنزي </a>
-                            </td>
-                            <td class="hidden-xs"> رعاية تمريضية منزلية </td>
-                            <td> <span class="label label-success label-sm"> تم تقديم الخدمة </span> </td>
-                            <td>
-                                <a class="btn btn-sm grey-salsa btn-outline" href="javascript:;"> عرض التفاصيل </a>
-                            </td>
-                        </tr>
+                       
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <!-- إشعارات النظام الطبية الخاصة بالطبيب -->
-        <div class="tab-pane" id="tab_1_22">
-            <div class="portlet-body">
-                <table class="table table-striped table-bordered table-advance table-hover">
-                    <thead>
-                        <tr>
-                            <th>
-                                <i class="fa fa-bell"></i> الإشعار </th>
-                            <th>
-                                <i class="fa fa-clock"></i> التاريخ </th>
-                            <th> </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- إشعار 1: تحديثات الأمان -->
-                        <tr>
-                            <td>
-                                تم تحديث النظام لتوفير أمان إضافي في تسجيل الدخول للطبيب مع المصادقة الثنائية </td>
-                            <td> 1 ديسمبر 2024 </td>
-                            <td>
-                                <a class="btn btn-sm grey-salsa btn-outline" href="javascript:;"> عرض التفاصيل </a>
-                            </td>
-                        </tr>
-                        <!-- إشعار 2: إضافة خدمة جديدة -->
-                        <tr>
-                            <td>
-                                تم إضافة خدمة الاستشارات الطبية عن بُعد للمرضى لتوسيع نطاق خدماتنا </td>
-                            <td> 28 نوفمبر 2024 </td>
-                            <td>
-                                <a class="btn btn-sm grey-salsa btn-outline" href="javascript:;"> عرض التفاصيل </a>
-                            </td>
-                        </tr>
-                        <!-- إشعار 3: تحديث أدوات التشخيص -->
-                        <tr>
-                            <td>
-                                تم تحديث أدوات التشخيص الإلكترونية لتسهيل عملية فحص المرضى عن بُعد </td>
-                            <td> 20 نوفمبر 2024 </td>
-                            <td>
-                                <a class="btn btn-sm grey-salsa btn-outline" href="javascript:;"> عرض التفاصيل </a>
-                            </td>
-                        </tr>
-                        <!-- إشعار 4: تدريب على تقنيات جديدة -->
-                        <tr>
-                            <td>
-                                تم تنظيم دورة تدريبية على التقنيات الطبية الحديثة للتواصل مع المرضى عن بُعد </td>
-                            <td> 15 نوفمبر 2024 </td>
-                            <td>
-                                <a class="btn btn-sm grey-salsa btn-outline" href="javascript:;"> عرض التفاصيل </a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+       
  
 
 <!--tab-pane-->
@@ -297,141 +226,154 @@
 <a data-toggle="tab" href="#tab_3-3">
 <i class="fa fa-lock"></i> تغير كلمة المرور  </a>
 </li>
-<li>
-<a data-toggle="tab" href="#tab_4-4">
-<i class="fa fa-eye"></i> اعدادات الخصوصية  </a>
-</li>
+
 </ul>
 </div>
 <div class="col-md-9">
 <div class="tab-content">
 <div id="tab_1-1" class="tab-pane active">
-<form role="form" action="#">
-<div class="form-group">
-    <label class="control-label">الاسم الكامل </label>
-    <input type="text" placeholder="John" class="form-control" /> </div>
-<div class="form-group">
-    <label class="control-label">التخصص الطبي </label>
-    <input type="text" placeholder="تمريض " class="form-control" /> </div>
-<div class="form-group">
-    <label class="control-label">رقم الترخيص الطبي </label>
-    <input type="text" placeholder="+1 646 580 DEMO (6284)" class="form-control" /> </div>
-<div class="form-group">
-    <label class="control-label">المؤهلات الاكاديمية </label>
-    <input type="text" placeholder="Design, Web etc." class="form-control" /> </div>
-<div class="form-group">
-    <label class="control-label">سنوات الخبرة </label>
-    <input type="number" placeholder="Web Developer" class="form-control" /> </div>
-<div class="form-group">
-    <label class="control-label">الدورات التدريبية المعتمدة </label>
-    <textarea class="form-control" rows="3" placeholder="We are KeenThemes!!!"></textarea>
-</div>
-<div class="form-group">
-    <label class="control-label">الشهادات المهنية </label>
-    <span class="btn-dufult">
-        <span></span>
-        <input type="file" name="files[]" multiple=""> </span>
+    <form role="form" action="{{ route('doctor.profile.update', $doctor->id) }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
+    
+        <!-- اسم المستخدم -->
+        <div class="form-group">
+            <label class="control-label">الاسم الكامل</label>
+            <input type="text" name="name" class="form-control" value="{{ old('name', $user->name) }}" />
+        </div>
+        <!-- رقم الجوال -->
+    <div class="form-group">
+        <label class="control-label">رقم الجوال</label>
+        <input type="text" name="phone_number"  class="form-control" value="{{ old('phone_number', $user->phone_number) }}" />
     </div>
-<div class="margiv-top-10">
-    <a href="javascript:;" class="btn green"> حفظ التغيرات  </a>
-    <a href="javascript:;" class="btn default"> الغاء  </a>
+
+    <!-- البريد الإلكتروني -->
+    <div class="form-group">
+        <label class="control-label">البريد الإلكتروني</label>
+        <input type="email" name="email"  class="form-control" value="{{ old('email', $user->email) }}" />
+    </div>
+
+    <!-- الدولة -->
+    <div class="form-group">
+        <label class="control-label">الدولة</label>
+        <input type="text" name="country" placeholder="مصر" class="form-control" value="{{ old('country', $user->country) }}" />
+    </div>
+
+    <!-- العنوان -->
+    <div class="form-group">
+        <label class="control-label">العنوان</label>
+        <textarea class="form-control" rows="3" name="address" >{{ old('address', $user->address) }}</textarea>
+    </div>
+
+    
+        <!-- التخصص الطبي -->
+        <div class="form-group">
+            <label class="control-label">التخصص الطبي</label>
+            <input type="text" name="specialization" class="form-control" value="{{ old('specialization', $doctor->specialization) }}" />
+        </div>
+    
+        <!-- رقم الترخيص الطبي -->
+        <div class="form-group">
+            <label class="control-label">رقم الترخيص الطبي</label>
+            <input type="text" name="license_number"  class="form-control" value="{{ old('license_number', $doctor->license_number) }}" />
+        </div>
+    
+        <!-- المؤهلات الأكاديمية -->
+        <div class="form-group">
+            <label class="control-label">المؤهلات الأكاديمية</label>
+            <input type="text" name="academic_qualifications" class="form-control" value="{{ old('academic_qualifications', $doctor->academic_qualifications) }}" />
+        </div>
+    
+        <!-- سنوات الخبرة -->
+        <div class="form-group">
+            <label class="control-label">سنوات الخبرة</label>
+            <input type="number" name="years_experience"  class="form-control" value="{{ old('years_experience', $doctor->years_experience) }}" />
+        </div>
+    
+        <!-- الدورات التدريبية المعتمدة -->
+        <div class="form-group">
+            <label class="control-label">الدورات التدريبية المعتمدة</label>
+            <textarea class="form-control" rows="3" name="training_courses" placeholder="الدورات التدريبية">{{ old('training_courses', $doctor->training_courses) }}</textarea>
+        </div>
+    
+        <!-- الشهادات المهنية -->
+        <div class="form-group">
+            <label class="control-label">الشهادات المهنية</label>
+            <input type="file" name="professional_certificate" class="form-control" />
+        </div>
+    
+        <div class="margiv-top-10">
+            <button type="submit" class="btn green">حفظ التغيرات</button>
+            <a href="javascript:;" class="btn default">إلغاء</a>
+        </div>
+    </form>
+    
 </div>
-</form>
-</div>
+
+
+
 <div id="tab_2-2" class="tab-pane">
 <p> 
 (JPEG أو PNG) يمكنك تحديث صورتك الشخصية هنا. يُرجى تحميل صورة ذات جودة عالية وبتنسيق مناسب 
 </p>
-<form action="#" role="form">
-<div class="form-group">
-    <div class="fileinput fileinput-new" data-provides="fileinput">
-        <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
-            <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" /> </div>
-        <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
-        <div>
-            <span class="btn default btn-file">
-                <span class="fileinput-new"> تحديد صورة  </span>
-                <span class="fileinput-exists"> تغير الصورة  </span>
-                <input type="file" name="..."> </span>
-            <a href="javascript:;" class="btn default fileinput-exists" data-dismiss="fileinput"> ازالة الصورة  </a>
+<form action="{{ route('doctor.profile.updateImage') }}" method="POST" enctype="multipart/form-data">
+    @csrf
+    <div class="form-group">
+        <div class="fileinput fileinput-new" data-provides="fileinput">
+            <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+
+                <img src="{{ asset(auth()->user()->profile_image ? 'images/profiles/' . auth()->user()->profile_image : 'http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image') }}" alt="Profile Image" /> 
+            </div>
+            <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> 
+            </div>
+            <div>
+                <span class="btn default btn-file">
+                    <span class="fileinput-new"> تحديد صورة </span>
+                    <span class="fileinput-exists"> تغيير الصورة </span>
+                    <input type="file" name="profile_image" accept="image/*"> 
+                </span>
+                <a href="javascript:;" class="btn default fileinput-exists" data-dismiss="fileinput"> إزالة الصورة </a>
+            </div>
+        </div>
+        <div class="clearfix margin-top-10">
+            <span class="label label-danger"> NOTE! </span>
+            <span>إذا واجهت أي مشكلة أثناء تحميل الصورة، يُرجى التأكد من أن حجم الملف وصيغته يتوافقان مع التعليمات أعلاه.</span>
         </div>
     </div>
-    <div class="clearfix margin-top-10">
-        <span class="label label-danger"> NOTE! </span>
-        <span>إذا واجهت أي مشكلة أثناء تحميل الصورة، يُرجى التأكد من أن حجم الملف وصيغته يتوافقان مع التعليمات أعلاه  </span>
+    <div class="margin-top-10">
+        <button type="submit" class="btn green"> حفظ </button>
+        <a href="javascript:;" class="btn default"> إلغاء </a>
     </div>
-</div>
-<div class="margin-top-10">
-    <a href="javascript:;" class="btn green"> حفظ  </a>
-    <a href="javascript:;" class="btn default"> الغاء  </a>
-</div>
 </form>
+
 </div>
+
+
 <div id="tab_3-3" class="tab-pane">
-<form action="#">
-<div class="form-group">
-    <label class="control-label">كلمة المرور الحالية </label>
-    <input type="password" class="form-control" /> </div>
-<div class="form-group">
-    <label class="control-label">كلمة المرور الجديدة </label>
-    <input type="password" class="form-control" /> </div>
-<div class="form-group">
-    <label class="control-label">تاكيد كلمة المرور الجديدة </label>
-    <input type="password" class="form-control" /> </div>
-<div class="margin-top-10">
-    <a href="javascript:;" class="btn green"> تغير كلمة المرور  </a>
-    <a href="javascript:;" class="btn default"> الغاء  </a>
+    <form action="{{ route('doctor.password.update') }}" method="POST">
+        @csrf
+        @method('PUT') 
+        
+        <div class="form-group">
+            <label>كلمة المرور الحالية</label>
+            <input type="password" name="current_password" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label>كلمة المرور الجديدة</label>
+            <input type="password" name="new_password" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label>تأكيد كلمة المرور الجديدة</label>
+            <input type="password" name="new_password_confirmation" class="form-control" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">تغيير كلمة المرور</button>
+    </form>
 </div>
-</form>
-</div>
-<div id="tab_4-4" class="tab-pane">
-<form action="#">
-<table class="table table-bordered table-striped">
-    <tr>
-        <td> هل ترغب في تمكين وصول المرضى إلى ملفك الشخصي؟ </td>
-        <td>
-            <label class="uniform-inline">
-                <input type="radio" name="patientAccess" value="yes" /> نعم </label>
-            <label class="uniform-inline">
-                <input type="radio" name="patientAccess" value="no" checked/> لا </label>
-        </td>
-    </tr>
-    <tr>
-        <td> هل ترغب في تلقي إشعارات عند إضافة مواعيد جديدة؟ </td>
-        <td>
-            <label class="uniform-inline">
-                <input type="checkbox" name="appointmentNotifications" /> نعم </label>
-        </td>
-    </tr>
-    <tr>
-        <td> هل ترغب في مشاركة مقالات أو نصائح صحية مع مرضاك؟ </td>
-        <td>
-            <label class="uniform-inline">
-                <input type="checkbox" name="shareHealthTips" /> نعم </label>
-        </td>
-    </tr>
-    <tr>
-        <td> هل ترغب في تمكين ميزة المراسلة المباشرة مع المرضى؟ </td>
-        <td>
-            <label class="uniform-inline">
-                <input type="checkbox" name="enableMessaging" /> نعم </label>
-        </td>
-    </tr>
-    <tr>
-        <td> هل ترغب في إخفاء ساعات العمل الخاصة بك من صفحة الملف الشخصي؟ </td>
-        <td>
-            <label class="uniform-inline">
-                <input type="checkbox" name="hideWorkingHours" /> نعم </label>
-        </td>
-    </tr>
-</table>
+
 <!--end profile-settings-->
-<div class="margin-top-10">
-    <a href="javascript:;" class="btn green"> حفظ التغييرات </a>
-    <a href="javascript:;" class="btn default"> إلغاء </a>
-</div>
-</form>
-</div>
 
 <!--end col-md-9-->
 </div>

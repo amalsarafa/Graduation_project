@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Patient;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\Models\PatientReservation;
 class PatientRervervationController extends Controller
 {
     /**
@@ -12,7 +12,10 @@ class PatientRervervationController extends Controller
      */
     public function index()
     {
-        return view('patient.Reservations.index');
+        $reservations=PatientReservation::paginate(10);
+        return view('patient.Reservations.index',compact(
+            'reservations'
+         ));
     }
 
     /**

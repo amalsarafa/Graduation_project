@@ -29,7 +29,7 @@
                             </li>
                             <li>
                              
-                                <a href="pationt dashboard.html">الصفحة الرئيسية </a>
+                                <a href="{{route('patient.dashboard')}}">الصفحة الرئيسية </a>
                                 <i class="icon-home"></i>
                                
                             </li>
@@ -42,60 +42,47 @@
                     </div>
                     <!-- END PAGE HEADER-->
                     <div class="row widget-row">
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <!-- BEGIN WIDGET THUMB -->
                             <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20">
-                                <h4 class="widget-thumb-heading">عدد المرضى الجدد</h4>
+                                <h4 class="widget-thumb-heading">عدد التقارير المرفقة</h4>
                                 <div class="widget-thumb-wrap">   
-                                    <i class=" widget-thumb-icon bg-green fa fa-wheelchair"></i>
+                                    <i class=" widget-thumb-icon bg-purple fa fa-calendar-check-o"></i>
                                     <div class="widget-thumb-body">
-                                        <span class="widget-thumb-subtitle">عدد المرضى</span>
-                                        <span class="widget-thumb-body-stat" data-counter="counterup" data-value="7,644">0</span>
+                                        <span class="widget-thumb-subtitle">عدد التقارير</span>
+                                        <span class="widget-thumb-body-stat" data-counter="counterup" data-value="0">0</span>
                                     </div>
                                 </div>
                             </div>
                             <!-- END WIDGET THUMB -->
                         </div>
                         
-                        <div class="col-md-3">
-                            <!-- BEGIN WIDGET THUMB -->
-                            <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20">
-                                <h4 class="widget-thumb-heading">عدد الطلبات المكتملة</h4>
-                                <div class="widget-thumb-wrap">
-                                    <i class="widget-thumb-icon bg-red fa fa-check-circle-o"></i></i>
-                                    <div class="widget-thumb-body">
-                                        <span class="widget-thumb-subtitle">عدد الطلبات</span>
-                                        <span class="widget-thumb-body-stat" data-counter="counterup" data-value="1,293">0</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- END WIDGET THUMB -->
-                        </div>
                         
-                        <div class="col-md-3">
+                        
+                        <div class="col-md-4">
                             <!-- BEGIN WIDGET THUMB -->
                             <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20">
-                                <h4 class="widget-thumb-heading">عدد الزيارات الطبية اليومية</h4>
+                                <h4 class="widget-thumb-heading">عدد الزيارات الطبية السابقة</h4>
                                 <div class="widget-thumb-wrap">
                                     <i class=" widget-thumb-icon bg-purple fa fa-calendar-check-o"></i>
                                     <div class="widget-thumb-body">
                                         <span class="widget-thumb-subtitle">عدد الزيارات</span>
-                                        <span class="widget-thumb-body-stat" data-counter="counterup" data-value="815">0</span>
+                                        <span class="widget-thumb-body-stat" data-counter="counterup" data-value="0">0</span>
                                     </div>
                                 </div>
                             </div>
                             <!-- END WIDGET THUMB -->
                         </div>
                         
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <!-- BEGIN WIDGET THUMB -->
                             <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20">
-                                <h4 class="widget-thumb-heading">عدد المراجعين النشطين</h4>
+                                <h4 class="widget-thumb-heading">عدد المواعيد القادمة </h4>
                                 <div class="widget-thumb-wrap">
-                                     <i class=" widget-thumb-icon bg-blue icon-user"></i>
+                                    <i class=" widget-thumb-icon bg-purple fa fa-calendar-check-o"></i>
                                     <div class="widget-thumb-body">
-                                        <span class="widget-thumb-subtitle">عدد المراجعين</span>
-                                        <span class="widget-thumb-body-stat" data-counter="counterup" data-value="5,071">0</span>
+                                        <span class="widget-thumb-subtitle">عدد المواعيد</span>
+                                        <span class="widget-thumb-body-stat" data-counter="counterup" data-value="0">0</span>
                                     </div>
                                 </div>
                             </div>
@@ -106,15 +93,19 @@
                                
                             </div>
                             <div class="portlet-body">
-                            <a href="Reservations.p.html" class="icon-btn btn-dr">
+                            <a href="{{route('patient.reservations')}}" class="icon-btn btn-dr">
                                     <i class="icon-calendar"></i>
                                     <div>  حجوزاتي  </div>
                                 </a>
-                                <a href="pageuser_a.html" class="icon-btn btn-dr">
+                               
+                                <a href="{{route('patient.profile')}}" class="icon-btn btn-dr">
                                     <i class="icon-user"></i>
                                     <div> ملفي الشخصي  </div>
                                 </a>
-                                     
+                                <a href="{{route('website.home')}}" class="icon-btn">
+                                    <i class="fa fa"></i>
+                                    <div>  الموقع الرئيسي </div>
+                                </a>
                             </div>
                         </div>
                             <!-- END WIDGET THUMB -->

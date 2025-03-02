@@ -36,7 +36,7 @@
        
         <link href="{{asset('assets/pages/css/custom.css')}}" rel="stylesheet" type="text/css" />
         <!-- END THEME LAYOUT STYLES -->
-        <link rel="shortcut icon" href="favicon.ico" /> </head>
+        <link href="{{asset('assets/pages/img/favicon_new.ico')}}" rel="icon"> </head>
     <!-- END HEAD -->
 
     <body class="page-header-fixed page-sidebar-closed-hide-logo page-container-bg-solid page-sidebar-reversed page-md">
@@ -46,7 +46,7 @@
             <div class="page-header-inner ">
                 <!-- BEGIN LOGO -->
                 <div class="page-logo">
-                    <a href="Doctor dashboard.html">
+                    <a href="{{route('doctor.dashboard')}}">
                         <img src="{{asset('assets/pages/img/login/logo_project2.png')}}" alt="logo" class="logo-default" /> </a>
                     <div class="menu-toggler sidebar-toggler">
                         <!-- DOC: Remove the above "hide" to enable the sidebar toggler button on header -->
@@ -61,19 +61,7 @@
                 <!-- END PAGE ACTIONS -->
                 <!-- BEGIN PAGE TOP -->
                 <div class="page-top">
-                    <!-- BEGIN HEADER SEARCH BOX -->
-                    <!-- DOC: Apply "search-form-expanded" right after the "search-form" class to have half expanded search box -->
-                    <form class="search-form search-form-expanded" action="page_general_search_3.html" method="GET">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="ابحث " name="query">
-                            <span class="input-group-btn">
-                                <a href="javascript:;" class="btn submit">
-                                    <i class="icon-magnifier"></i>
-                                </a>
-                            </span>
-                        </div>
-                    </form>
-                    <!-- END HEADER SEARCH BOX -->
+                    
                     <!-- BEGIN TOP NAVIGATION MENU -->
                     <div class="top-menu">
                         <ul class="nav navbar-nav pull-right">
@@ -388,10 +376,12 @@
                             <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
                             <li class="dropdown dropdown-user">
                                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                    <img alt="" class="img-circle" src="{{asset('assets/layouts/layout2/img/avatar3_small.jpg')}}" />
-                                    <span class="username username-hide-on-mobile"> احمد  </span>
+                                    <img alt="صورة المستخدم" class="img-circle" 
+                                         src="{{ auth()->user()->profile_image ? asset('storage/' . auth()->user()->profile_image) : asset('assets/layouts/layout2/img/photo1.jpg') }}" />
+                                    <span class="username username-hide-on-mobile"> {{ auth()->user()->name }} </span>
                                     <i class="fa fa-angle-down"></i>
                                 </a>
+                                
                                 <ul class="dropdown-menu dropdown-menu-default">
                                     <li>
                                         <a href="{{ route('doctor.profile') }}">
@@ -403,18 +393,19 @@
                                     </li>
                                  
                                     <li>
-                                        <a href="page_user_login_1.html">
-                                            <i class="icon-key"></i> تسجيل خروج  </a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            @csrf
+                                        </form>
+                                        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            <i class="icon-logout"></i> تسجيل خروج  
+                                        </a>
                                     </li>
                                 </ul>
                             </li>
                             <!-- END USER LOGIN DROPDOWN -->
                             <!-- BEGIN QUICK SIDEBAR TOGGLER -->
                             <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-                            <li class="dropdown dropdown-extended quick-sidebar-toggler">
-                                <span class="sr-only">Toggle Quick Sidebar</span>
-                                <i class="icon-logout"></i>
-                            </li>
+                            
                             <!-- END QUICK SIDEBAR TOGGLER -->
                         </ul>
                     </div>

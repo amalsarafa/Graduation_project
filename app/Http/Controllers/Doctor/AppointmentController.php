@@ -4,24 +4,25 @@ namespace App\Http\Controllers\Doctor;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Appointment;
 
 class AppointmentController extends Controller
 {
     
     public function index()
     {
-        return view('doctor.Appointment.index');
+
+        $appointments=Appointment::all();
+        return view('doctor.Appointment.index',compact(
+           'appointments'
+        ));
     }
 
     
-    public function create()
-    {
-        //
-    }
+    
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
+
     public function store(Request $request)
     {
         //

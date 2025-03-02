@@ -4,14 +4,16 @@ namespace App\Http\Controllers\Patient;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\Models\Appointment;
+use App\Models\Patient;
 class DashboradController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
-    {
+    {  
+        
         return view('patient.dashboard');
     }
 

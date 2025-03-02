@@ -26,19 +26,36 @@
                     <div class="page-bar">
                         <ul class="page-breadcrumb">
                             <li>
-                                <a href="#">المواعيد  </a>
+                                <a href="{{route('doctor.appointments')}}">المواعيد  </a>
                                 
                             </li>
                             <li>
                                 <i class="fa fa-angle-left"></i>
                                 
-                                <a href="index.html">الصفحة الئيسية </a>
+                                <a href="{{route('doctor.dashboard')}}">الصفحة الرئسية </a>
                                 <i class="icon-home"></i>
                             </li>
                             
                         </ul>
 
                     </div>
+                    @if(session('success'))
+                    <div class="alert alert-success">
+                       
+                        <span>{{ session('success') }}</span>
+                        <button onclick="this.parentElement.style.display='none';">x</button>
+                       
+                    </div>
+                @endif
+                @if($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
                     <!-- END PAGE HEADER-->
                     <div class="row">
                         <div class="col-md-12">
@@ -52,106 +69,34 @@
                           
                                     <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
                                         <thead>
-                                            <tr>
+                                            <tr> 
+                                                <th> # </th>
+                                                <th> الخدمة </th>
+                                                <th> اسم المريض </th>
                                                 <th> التاريخ </th>
                                                 <th> الوقت  </th>
-                                                <th> الخدمة </th>
                                                 <th> الحالة  </th>
                                                
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        @foreach($appointments as $appointment)
                                             <tr>
-                                                <td> 10 ديسمبر 2024 </td>
-                                                <td> 2:00 م </td>
-                                                <td> استشارة طبية </td>
-                                               
-                                                <td>
-                                                    <span class="label label-sm label-success"> مؤكد </span>
+                                                <td> {{$loop->iteration}} </td>
+                                                <td>{{$appointment->service->name}} </td>
+                                                <td>{{$appointment->patient->user->name}} </td>
+                                                <td> {{$appointment->appointment_date}}</td>
+                                                <td>{{$appointment->appointment_time}} </td>
+                                                <td>  @if($appointment->status == 'confirmed')
+                                                <span class="label label-sm label-success">مؤكد</span>
+                                                @elseif($appointment->status == 'pending')
+                                               <span class="label label-sm label-warning">قيد الانتظار</span>
+                                                @elseif($appointment->status == 'cancelled')
+                                                <span class="label label-sm label-danger">ملغي</span>
+                                                @endif
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td> 15 ديسمبر 2024 </td>
-                                                <td> 4:30 م </td>
-                                                <td> علاج طبيعي </td>
-                                                
-                                                <td>
-                                                    <span class="label label-sm label-warning"> قيد الانتظار </span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td> 20 ديسمبر 2024 </td>
-                                                <td> 10:00 ص </td>
-                                                <td> استشارة نفسية </td>
-                                               
-                                                <td>
-                                                    <span class="label label-sm label-danger"> ملغي </span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td> 25 ديسمبر 2024 </td>
-                                                <td> 5:00 م </td>
-                                                <td> فحص طبي شامل </td>
-                                               
-                                                <td>
-                                                    <span class="label label-sm label-success"> مؤكد </span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td> 30 ديسمبر 2024 </td>
-                                                <td> 11:00 ص </td>
-                                                <td> فحص طبي </td>
-                                                
-                                                <td>
-                                                    <span class="label label-sm label-warning"> قيد الانتظار </span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td> 30 يناير 2025 </td>
-                                                <td> 4:00 م </td>
-                                                <td> استشارة طبية </td>
-                                               
-                                                <td>
-                                                    <span class="label label-sm label-success"> مؤكد </span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td> 2 فبراير 2025 </td>
-                                                <td> 11:00 ص </td>
-                                                <td> علاج طبيعي </td>
-                                                
-                                                <td>
-                                                    <span class="label label-sm label-danger"> ملغي </span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td> 7 فبراير 2025 </td>
-                                                <td> 2:30 م </td>
-                                                <td> استشارة نفسية </td>
-                                                
-                                                <td>
-                                                    <span class="label label-sm label-warning"> قيد الانتظار </span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td> 12 فبراير 2025 </td>
-                                                <td> 5:00 م </td>
-                                                <td> فحص طبي شامل </td>
-                                               
-                                                <td>
-                                                    <span class="label label-sm label-success"> مؤكد </span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td> 18 فبراير 2025 </td>
-                                                <td> 9:00 ص </td>
-                                                <td> فحص طبي </td>
-                                                
-                                                <td>
-                                                    <span class="label label-sm label-success"> مؤكد </span>
-                                                </td>
-                                            </tr>
-                                            
+                                            @endforeach    
                                         </tbody>
                                     </table>
                                 </div>

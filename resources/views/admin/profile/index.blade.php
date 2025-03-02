@@ -6,6 +6,31 @@
 <link href="{{asset('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
         <!-- END PAGE LEVEL PLUGINS -->
 @endsection
+@section('imge')
+<li class="dropdown dropdown-user">
+    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+        <img alt="Profile Image" class="img-circle" 
+             src="{{ $admin->profile_image ? asset('storage/' . $admin->profile_image) : asset('assets/layouts/layout2/img/avatar3_small.jpg') }}" />
+        <span class="username username-hide-on-mobile">{{ $admin->name }}</span>
+        <i class="fa fa-angle-down"></i>
+    </a>
+    
+    <ul class="dropdown-menu dropdown-menu-default">
+        <li>
+            <a href="{{route('admin.profile')}}">
+                <i class="icon-user"></i>  ملفي  </a>
+        </li>
+        <li>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+            <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <i class="icon-logout"></i> تسجيل خروج  
+            </a>
+        </li>
+    </ul>
+</li>
+@endsection
 
 @section('PAGE LEVEL STYLES ')
 <!-- BEGIN PAGE LEVEL STYLES -->
@@ -49,7 +74,24 @@
                         
                     </div>
                         
+                   
+                    @if(session('success'))
+                    <div class="alert alert-success">
+                        <button onclick="this.parentElement.style.display='none';">x</button>
+                        <span>{{ session('success') }}</span>
+                       
                     </div>
+                @endif
+                @if($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+                
                      <!-- END PAGE HEADER-->
                      <div class="profile">
                         <div class="tabbable-line tabbable-full-width">
@@ -68,8 +110,11 @@
                                         <div class="col-md-3">
                                             <ul class="list-unstyled profile-nav">
                                                 <li>
-                                                    <img src="{{asset('assets/pages/media/profile/profile-img.png')}}" class="img-responsive pic-bordered" alt="" />
-                                                    <a href="javascript:;" class="profile-edit"> تعديل </a>
+                                                    <img src="{{ asset('storage/' . $admin->profile_image) }}" 
+                                                       class="img-responsive pic-bordered" 
+                                                        alt="Profile Image" 
+                                                        style="width: 100%; border-radius: 10px;" />
+                                                   
                                                 </li>
                                                 <li>
                                                     <a href="{{route('admin.profile')}}"> ملفي الشخصي </a>
@@ -92,7 +137,7 @@
                                                     <h1 class="font-green sbold uppercase">(مدير النظام){{$admin->name}}</h1>
                                                     <p> .المسؤول عن إدارة وصيانة النظام الإلكتروني في موقع خدمات التمريض، ضمان عمل الأنظمة التقنية بسلاسة، والحفاظ على أمن بيانات المرضى وتحسين أداء الخدمات الإلكترونية</p>
                                                     <p>
-                                                        <a href="javascript:;"> www.mhwcare.com </a>
+                                                        <a href="{{route('website.home')}}"> www.mhwcare.com </a>
                                                     </p>
                                                     <ul class="list-inline">
                                                         
@@ -117,19 +162,19 @@
                                 
                                                             </div>
                                                         </div>
-                                                        <div class="portlet-body">
+                                                        <div class="portlet-body ">
                                                             <ul class="list-unstyled">
                                                                 <li>
-                                                                    <span class="sale-info"> المهام اليوم </span>
-                                                                    <span class="sale-num " > 5 </span>
+                                                                    <span class="sale-info"> المهام اليومية</span>
+                                                                    <span class="sale-num " > {{ $todayTasks }} </span>
                                                                 </li>
                                                                 <li>
                                                                     <span class="sale-info"> المهام الأسبوعية </span>
-                                                                    <span class="sale-num"> 15 </span>
+                                                                    <span class="sale-num  "> {{ $weeklyTasks }} </span>
                                                                 </li>
                                                                 <li>
                                                                     <span class="sale-info"> المهام الإجمالية </span>
-                                                                    <span class="sale-num"> 180 </span>
+                                                                    <span class="sale-num "> {{ $totalTasks }} </span>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -142,7 +187,7 @@
                                                         <a href="#tab_1_11" data-toggle="tab"> آخر الأنشطة </a>
                                                     </li>
                                                     <li>
-                                                        <a href="#tab_1_22" data-toggle="tab"> إشعارات النظام </a>
+                                                        <a href="#tab_1_22" data-toggle="tab">جدول المهام</a>
                                                     </li>
                                                 </ul>
                                                 <div class="tab-content">
@@ -151,96 +196,79 @@
                                                             <table class="table table-striped table-bordered table-advance table-hover">
                                                                 <thead>
                                                                     <tr>
+                                                                    <th> #</th>
                                                                         <th>
                                                                             <i class="fa fa-briefcase"></i> المريض </th>
                                                                         <th class="hidden-xs">
                                                                             <i class="fa fa-question"></i> الخدمة </th>
                                                                         <th>
                                                                             <i class="fa fa-bookmark"></i> الحالة </th>
-                                                                        <th> </th>
+                                                                        
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
                                                                 @foreach($patients as $patient)
                                                                     <tr>
-                                                                        <td>
-                                                                            {{$patient->name}}
-                                                                        </td>
-                                                                        <td class="hidden-xs"> رعاية تمريضية منزلية </td>
-                                                                        <td> <span class="label label-success label-sm"> تم توفير الخدمة </span> </td>
-                                                                        <td>
-                                                                            <a class="btn btn-sm grey-salsa btn-outline" href="javascript:;"> عرض </a>
-                                                                        </td>
+                                                                    <td>{{$loop->iteration}}</td>
+                                                                        <td> {{$patient->user->name}}</td>
+                                                                        <td class="hidden-xs">
+                                                                        @if($patient->services->isNotEmpty())
+                                                                           {{ $patient->services->first()->name }}
+                                                                             @else
+                                                                       غير محدد
+                                                                       @endif
+                                                                       </td>
+                                                                        <td>  
+                                                                        @if($patient->services->isNotEmpty())
+                                                        
+                                                                           @if($patient->services->first()->status == 'approved')
+                                                                            <span class="label label-sm label-success">مقبول</span>
+                                                                          @elseif($patient->services->first()->status == 'pending')
+                                                                            <span class="label label-sm label-warning">قيد الانتظار</span>
+                                                                                @elseif($patient->services->first()->status == 'rejected')
+                                                                                 <span class="label label-sm label-danger">مرفوض</span>
+                                                                                 @endif
+                                                                             @else
+                                                                       غير محدد
+                                                                       @endif
+                                                                    </td>   
                                                                     </tr>
-                                                                    <tr>
-                                                                        @endforeach
-                                                                        <td>
-                                                                             سارة الزهراني 
-                                                                        </td>
-                                                                        <td class="hidden-xs"> استشارات طبية عن بُعد </td>
-                                                                        <td> <span class="label label-warning label-sm"> قيد الانتظار </span> </td>
-                                                                        <td>
-                                                                            <a class="btn btn-sm grey-salsa btn-outline" href="javascript:;"> عرض </a>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="javascript:;"> نادر الفارس </a>
-                                                                        </td>
-                                                                        <td class="hidden-xs"> فحص طبي منزلي </td>
-                                                                        <td> <span class="label label-danger label-sm"> متأخر </span> </td>
-                                                                        <td>
-                                                                            <a class="btn btn-sm grey-salsa btn-outline" href="javascript:;"> عرض </a>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="javascript:;"> فاطمة العنزي </a>
-                                                                        </td>
-                                                                        <td class="hidden-xs"> رعاية كبار السن </td>
-                                                                        <td> <span class="label label-success label-sm"> تم تقديم الخدمة </span> </td>
-                                                                        <td>
-                                                                            <a class="btn btn-sm grey-salsa btn-outline" href="javascript:;"> عرض </a>
-                                                                        </td>
-                                                                    </tr>
+                                                                    @endforeach
+                                                                  
                                                                 </tbody>
                                                             </table>
                                                         </div>
                                                     </div>
                                                     <div class="tab-pane" id="tab_1_22">
                                                         <div class="portlet-body">
-                                                            <table class="table table-striped table-bordered table-advance table-hover">
+                                                            <table class="table table-bordered">
                                                                 <thead>
                                                                     <tr>
-                                                                        <th>
-                                                                            <i class="fa fa-bell"></i> الإشعار </th>
-                                                                        <th>
-                                                                            <i class="fa fa-clock"></i> التاريخ </th>
-                                                                        <th> </th>
+                                                                        <th>رقم المهمة</th>
+                                                                        <th>العنوان</th>
+                                                                        <th>الوصف</th>
+                                                                        <th>تاريخ الانتهاء</th>
+                                                                        <th>التاريخ / الوقت</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <tr>
-                                                                        <td>
-                                                                            تم تحديث النظام لتوفير أمان إضافي في تسجيل الدخول </td>
-                                                                        <td> 1 ديسمبر 2024 </td>
-                                                                        <td>
-                                                                            <a class="btn btn-sm grey-salsa btn-outline" href="javascript:;"> عرض </a>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            تم إضافة خدمة الاستشارات الطبية عن بُعد </td>
-                                                                        <td> 28 نوفمبر 2024 </td>
-                                                                        <td>
-                                                                            <a class="btn btn-sm grey-salsa btn-outline" href="javascript:;"> عرض </a>
-                                                                        </td>
-                                                                    </tr>
+                                                    
+                                                                    @foreach($tasks as $task)
+                                                                        <tr>
+                                                                            <td>{{ $task->id }}</td>
+                                                                            <td>{{ $task->title }}</td>
+                                                                            <td>{{ $task->description }}</td>
+                                                                            <td>{{ $task->due_date }}</td>
+                                                                            <td>{{ $task->created_at }}</td>
+                                                                        </tr>
+                                                                        @endforeach
+                                                                        
                                                                 </tbody>
                                                             </table>
+                                                            
                                                         </div>
                                                     </div>
-                                               
+                                                   
                             
                                                     <!--tab-pane-->
                                                  
@@ -270,120 +298,135 @@
                                                 </li>
                                                 <li>
                                                     <a data-toggle="tab" href="#tab_4-4">
-                                                        <i class="fa fa-eye"></i> إعدادات الخصوصية </a>
+                                                        <i class="fa fa-eye"></i>   إضافة مهمة جديدة   </a>
                                                 </li>
+                                                
                                             </ul>
                                         </div>
                                         <div class="col-md-9">
                                             <div class="tab-content">
                                                 <div id="tab_1-1" class="tab-pane active">
-                                                    <form role="form" action="#">
+                                                    <form role="form" action="{{ route('admin.profile.update', $admin->id) }}" method="POST">
+                                                        @csrf
+                                                        @method('PUT') 
                                                         <div class="form-group">
-                                                            <label class="control-label">الاسم الكامل </label>
-                                                            <input type="text" placeholder="John" class="form-control" /> </div>
+                                                            <label class="control-label">الاسم الكامل</label>
+                                                            <input type="text" name="name" value="{{ $admin->name }}" class="form-control" />
+                                                        </div>
                                                         <div class="form-group">
-                                                            <label class="control-label">التخصص  </label>
-                                                            <input type="text" placeholder="Doe" class="form-control" /> </div>
+                                                            <label class="control-label">البريد الإلكتروني</label>
+                                                            <input type="email" name="email" value="{{ $admin->email }}" class="form-control" />
+                                                        </div>
                                                         <div class="form-group">
-                                                            <label class="control-label">رقم الجوال  </label>
-                                                            <input type="text" placeholder="+1 646 580 DEMO (6284)" class="form-control" /> </div>
+                                                            <label class="control-label">التخصص</label>
+                                                            <input type="text" name="specialization" value="{{ $admin->specialization }}" class="form-control" />
+                                                        </div>
                                                         <div class="form-group">
-                                                            <label class="control-label">العنوان  </label>
-                                                            <input type="text" placeholder="Design, Web etc." class="form-control" /> </div>
+                                                            <label class="control-label">رقم الجوال</label>
+                                                            <input type="text" name="phone_number" value="{{ $admin->phone_number }}" class="form-control" />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label">الدولة</label>
+                                                            <input type="text" name="country" value="{{ $admin->country }}" class="form-control" />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label">العنوان</label>
+                                                            <input type="text" name="address" value="{{ $admin->address }}" class="form-control" />
+                                                        </div>
                                                       
-                                                        <div class="margiv-top-10">
-                                                            <a href="javascript:;" class="btn green"> حفظ التغيرات  </a>
-                                                            <a href="javascript:;" class="btn default"> الغاء  </a>
+                                                        <div class="margin-top-10">
+                                                           
+                                                            <button type="submit" class="btn green">حفظ التغيرات</button>
+                                                            <a  class="btn default">إلغاء</a>
                                                         </div>
                                                     </form>
+                                                    
+                                                    
                                                 </div>
                                                 <div id="tab_2-2" class="tab-pane">
                                                     <p> 
                                                         (JPEG أو PNG) يمكنك تحديث صورتك الشخصية هنا. يُرجى تحميل صورة ذات جودة عالية وبتنسيق مناسب 
                                                         </p>
-                                                    <form action="#" role="form">
-                                                        <div class="form-group">
-                                                            <div class="fileinput fileinput-new" data-provides="fileinput">
-                                                                <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
-                                                                    <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" /> </div>
-                                                                <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
-                                                                <div>
-                                                                    <span class="btn default btn-file">
-                                                                        <span class="fileinput-new"> تحديد صورة  </span>
-                                                                        <span class="fileinput-exists"> تغير الصورة  </span>
-                                                                        <input type="file" name="..."> </span>
-                                                                    <a href="javascript:;" class="btn default fileinput-exists" data-dismiss="fileinput"> ازالة الصورة  </a>
-                                                                </div>
+                                                <form action="{{ route('admin.profile.updateImage', $admin->id) }}" method="POST" enctype="multipart/form-data">
+                                                    @csrf
+                                                    <div class="form-group">
+                                                        <div class="fileinput fileinput-new" data-provides="fileinput">
+                                                            <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                                                                <img src="{{ $admin->profile_image ? asset('storage/' . $admin->profile_image) : 'http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image' }}" alt="" />
                                                             </div>
-                                                            <div class="clearfix margin-top-10">
-                                                                <span class="label label-danger"> NOTE! </span>
-                                                                <span>إذا واجهت أي مشكلة أثناء تحميل الصورة، يُرجى التأكد من أن حجم الملف وصيغته يتوافقان مع التعليمات أعلاه  </span>
+                                                            <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
+                                                            <div>
+                                                                <span class="btn default btn-file">
+                                                                    <span class="fileinput-new"> تحديد صورة </span>
+                                                                    <span class="fileinput-exists"> تغير الصورة </span>
+                                                                    <input type="file" name="profile_image"> </span>
+                                                                <a href="javascript:;" class="btn default fileinput-exists" data-dismiss="fileinput"> ازالة الصورة </a>
                                                             </div>
                                                         </div>
-                                                        <div class="margin-top-10">
-                                                            <a href="javascript:;" class="btn green"> حفظ  </a>
-                                                            <a href="javascript:;" class="btn default"> الغاء  </a>
+                                                        <div class="clearfix margin-top-10">
+                                                            <span class="label label-danger"> NOTE! </span>
+                                                            <span>إذا واجهت أي مشكلة أثناء تحميل الصورة، يُرجى التأكد من أن حجم الملف وصيغته يتوافقان مع التعليمات أعلاه </span>
                                                         </div>
+                                                    </div>
+                                                    <div class="margin-top-10">
+                                                        <button type="submit" class="btn green">حفظ</button>
+                                                        <a href="javascript:;" class="btn default">إلغاء</a>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                                
+                                            <div id="tab_3-3" class="tab-pane">
+                                                
+                                                    <form action="{{ route('admin.password.update') }}" method="POST">
+                                                        @csrf
+                                                        @method('PUT') 
+                                                        
+                                                        <div class="form-group">
+                                                            <label>كلمة المرور الحالية</label>
+                                                            <input type="password" name="current_password" class="form-control" required>
+                                                        </div>
+                                                
+                                                        <div class="form-group">
+                                                            <label>كلمة المرور الجديدة</label>
+                                                            <input type="password" name="new_password" class="form-control" required>
+                                                        </div>
+                                                
+                                                        <div class="form-group">
+                                                            <label>تأكيد كلمة المرور الجديدة</label>
+                                                            <input type="password" name="new_password_confirmation" class="form-control" required>
+                                                        </div>
+                                                
+                                                        <button type="submit" class="btn btn-primary">تغيير كلمة المرور</button>
                                                     </form>
                                                 </div>
-                                                <div id="tab_3-3" class="tab-pane">
-                                                    <form action="#">
-                                                        <div class="form-group">
-                                                            <label class="control-label">كلمة المرور الحالية </label>
-                                                            <input type="password" class="form-control" /> </div>
-                                                        <div class="form-group">
-                                                            <label class="control-label">كلمة المرور الجديدة </label>
-                                                            <input type="password" class="form-control" /> </div>
-                                                        <div class="form-group">
-                                                            <label class="control-label">تاكيد كلمة المرور الجديدة </label>
-                                                            <input type="password" class="form-control" /> </div>
-                                                        <div class="margin-top-10">
-                                                            <a href="javascript:;" class="btn green"> تغير كلمة المرور  </a>
-                                                            <a href="javascript:;" class="btn default"> الغاء  </a>
-                                                        </div>
-                                                    </form>
-                                                </div>
+                                                
+                                            
+                                            
+                                                    
                                                 <div id="tab_4-4" class="tab-pane">
-                                                    <form action="#">
-                                                        <table class="table table-bordered table-striped">
-                                                            <tr>
-                                                                <td>اظهار الأنشطة الأخيرة الخاصة بك على ملفك الشخصي؟</td>
-                                                                <td>
-                                                                    <label class="uniform-inline">
-                                                                        <input type="radio" name="optionsRadios1" value="option1" /> نعم </label>
-                                                                    <label class="uniform-inline">
-                                                                        <input type="radio" name="optionsRadios1" value="option2" checked/> لا </label>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>هل ترغب في مشاركة موقعك الجغرافي مع الآخرين؟</td>
-                                                                <td>
-                                                                    <label class="uniform-inline">
-                                                                        <input type="checkbox" value="" /> نعم </label>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td> تفعيل إشعارات تسجيل الدخول من أجهزة جديدة؟ </td>
-                                                                <td>
-                                                                    <label class="uniform-inline">
-                                                                        <input type="checkbox" value="" /> نعم </label>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td> هل ترغب في ظهور حسابك في نتائج البحث؟ </td>
-                                                                <td>
-                                                                    <label class="uniform-inline">
-                                                                        <input type="checkbox" value="" /> نعم </label>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                        <!--end profile-settings-->
-                                                        <div class="margin-top-10">
-                                                            <a href="javascript:;" class="btn green"> حفظ التغيرات </a>
-                                                            <a href="javascript:;" class="btn default"> الغاء </a>
+                                                    <form action="{{ route('admin.tasks.store') }}" method="POST">
+                                                        @csrf
+                                                        <div class="form-group">
+                                                            <label>عنوان المهمة</label>
+                                                            <input type="text" name="title" class="form-control" required>
                                                         </div>
+                                                    
+                                                        <div class="form-group">
+                                                            <label>وصف المهمة</label>
+                                                            <textarea name="description" class="form-control"></textarea>
+                                                        </div>
+                                                    
+                                                        <div class="form-group">
+                                                            <label>تاريخ الانتهاء</label>
+                                                            <input type="date" name="due_date" class="form-control">
+                                                        </div>
+                                                    
+                                                        <button type="submit" class="btn btn-primary">إضافة المهمة</button>
                                                     </form>
+                                                    
+                                                    
                                                 </div>
+                                                    
                                             </div>
                                         </div>
                                         <!--end col-md-9-->

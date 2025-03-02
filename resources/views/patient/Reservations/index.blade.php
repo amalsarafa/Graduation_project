@@ -39,20 +39,34 @@
                     <div class="page-bar">
                         <ul class="page-breadcrumb">
                             <li>
-                                <a href="#">حجوزاتي </a>
+                                <a href="{{route('patient.reservations')}}">حجوزاتي </a>
                             </li>
                             <li>
                                 <i class="fa fa-angle-left"></i>
                              
-                                <a href="pationt dashboard.html">الصفحة الرئيسية </a>
+                                <a href="{{route('patient.dashboard')}}">الصفحة الرئيسية </a>
                                 <i class="icon-home"></i>
                                
-                            </li>
-                            
-                           
+                            </li>  
                         </ul>
-                       
                             </div>
+                            @if(session('success'))
+                    <div class="alert alert-success">
+                       
+                        <span>{{ session('success') }}</span>
+                        <button onclick="this.parentElement.style.display='none';">x</button>
+                       
+                    </div>
+                @endif
+                @if($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
                     <!-- END PAGE HEADER-->
                     <div class="row">
                         <div class="col-md-12">
@@ -113,159 +127,32 @@
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
+                                                                        @foreach($reservations as $reservation)
                                                                             <tr>
-                                                                                <td> 10 ديسمبر 2024 </td>
-                                                                                <td> 2:00 م </td>
-                                                                                <td> استشارة طبية </td>
-                                                                                <td> د. أحمد العلي </td>
+                                                                                <td> {{$reservation->date}} </td>
+                                                                                <td> {{$reservation->time}}</td>
+                                                                                <td> {{$reservation->service}} </td>
+                                                                                <td>  {{$reservation->doctor->user->name}} </td>
                                                                             
-                                                                                <td>
-                                                                                    <span class="label label-sm label-success"> مؤكد </span>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <a class="edit" href="javascript:;"> تعديل </a>
-                                                                                    /
-                                                                                    <a class="delete" href="javascript:;"> حذف </a>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td> 15 ديسمبر 2024 </td>
-                                                                                <td> 4:30 م </td>
-                                                                                <td> علاج طبيعي </td>
-                                                                                <td> د. فاطمة السالم </td>
-                                                                             
-                                                                                <td>
-                                                                                    <span class="label label-sm label-warning"> قيد الانتظار </span>
-                                                                                </td>
+                                                                                <td>  @if($reservation->status == 'confirmed')
+                                                                                  <span class="label label-sm label-success">مؤكد</span>
+                                                                                   @elseif($reservation->status == 'pending')
+                                                                                   <span class="label label-sm label-warning">قيد الانتظار</span>
+                                                                                    @elseif($reservation->status == 'cancelled')
+                                                                                    <span class="label label-sm label-danger">ملغي</span>
+                                                                                     @endif
+                                                                                  </td>
                                                                                 <td>
                                                                                     <a class="edit" href="javascript:;"> تعديل </a>
                                                                                     /
                                                                                     <a class="delete" href="javascript:;"> حذف </a>
                                                                                 </td>
                                                                             </tr>
-                                                                            <tr>
-                                                                                <td> 20 ديسمبر 2024 </td>
-                                                                                <td> 10:00 ص </td>
-                                                                                <td> استشارة نفسية </td>
-                                                                                <td> د. سامي الخطيب </td>
-                                                                              
-                                                                                <td>
-                                                                                    <span class="label label-sm label-danger"> ملغي </span>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <a class="edit" href="javascript:;"> تعديل </a>
-                                                                                    /
-                                                                                    <a class="delete" href="javascript:;"> حذف </a>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td> 25 ديسمبر 2024 </td>
-                                                                                <td> 5:00 م </td>
-                                                                                <td> فحص طبي شامل </td>
-                                                                                <td> د. نورا عادل </td>
-                                                                              
-                                                                                <td>
-                                                                                    <span class="label label-sm label-success"> مؤكد </span>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <a class="edit" href="javascript:;"> تعديل </a>
-                                                                                    /
-                                                                                    <a class="delete" href="javascript:;"> حذف </a>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td> 30 ديسمبر 2024 </td>
-                                                                                <td> 11:00 ص </td>
-                                                                                <td> فحص طبي </td>
-                                                                                <td> د. محمد جابر </td>
-                                                                               
-                                                                                <td>
-                                                                                    <span class="label label-sm label-warning"> قيد الانتظار </span>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <a class="edit" href="javascript:;"> تعديل </a>
-                                                                                    /
-                                                                                    <a class="delete" href="javascript:;"> حذف </a>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td> 30 يناير 2025 </td>
-                                                                                <td> 4:00 م </td>
-                                                                                <td> استشارة طبية </td>
-                                                                                <td> د. سارة خالد </td>
-                                                                              
-                                                                                <td>
-                                                                                    <span class="label label-sm label-success"> مؤكد </span>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <a class="edit" href="javascript:;"> تعديل </a>
-                                                                                    /
-                                                                                    <a class="delete" href="javascript:;"> حذف </a>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td> 2 فبراير 2025 </td>
-                                                                                <td> 11:00 ص </td>
-                                                                                <td> علاج طبيعي </td>
-                                                                                <td> د. ريم جاسم </td>
-                                                                                
-                                                                                <td>
-                                                                                    <span class="label label-sm label-danger"> ملغي </span>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <a class="edit" href="javascript:;"> تعديل </a>
-                                                                                    /
-                                                                                    <a class="delete" href="javascript:;"> حذف </a>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td> 7 فبراير 2025 </td>
-                                                                                <td> 2:30 م </td>
-                                                                                <td> استشارة نفسية </td>
-                                                                                <td> د. أحمد سعيد </td>
-                                                                                
-                                                                                <td>
-                                                                                    <span class="label label-sm label-warning"> قيد الانتظار </span>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <a class="edit" href="javascript:;"> تعديل </a>
-                                                                                    /
-                                                                                    <a class="delete" href="javascript:;"> حذف </a>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td> 12 فبراير 2025 </td>
-                                                                                <td> 5:00 م </td>
-                                                                                <td> فحص طبي شامل </td>
-                                                                                <td> د. مريم حسن </td>
-                                                                              
-                                                                                <td>
-                                                                                    <span class="label label-sm label-success"> مؤكد </span>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <a class="edit" href="javascript:;"> تعديل </a>
-                                                                                    /
-                                                                                    <a class="delete" href="javascript:;"> حذف </a>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td> 18 فبراير 2025 </td>
-                                                                                <td> 9:00 ص </td>
-                                                                                <td> فحص طبي </td>
-                                                                                <td> د. سعاد علي </td>
-                                                                              
-                                                                                <td>
-                                                                                    <span class="label label-sm label-success"> مؤكد </span>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <a class="edit" href="javascript:;"> تعديل </a>
-                                                                                    /
-                                                                                    <a class="delete" href="javascript:;"> حذف </a>
-                                                                                </td>
-                                                                            </tr>
+                                                                           @endforeach
                                                                             
                                                                         </tbody>
                                                                     </table>
+                                                                    {{$reservations->links()}}
                                                                 </div>
                                                             </div>
                                                             <!-- END EXAMPLE TABLE PORTLET-->
@@ -323,12 +210,7 @@
                                                         </div>
                                                        
                                                     </div>
-                                                    <div class="form-group">
-                                                        <label class="control-label">ملاحظات  </label>
-                                                        <div >
-                                                            <textarea class="form-control" rows="3" placeholder="تفاصيل و ملاحظات خاصة "></textarea>
-                                                        </div>
-                                                    </div>
+                                                    
                                                     <div class="form-actions">
                                                         <div class="row">
                                                             <div >
