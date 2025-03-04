@@ -242,8 +242,8 @@
                     <!-- END PAGE HEADER-->
                     @if(session('success'))
                     <div class="alert alert-success">
-                        <button onclick="this.parentElement.style.display='none';">x</button>
                         <span>{{ session('success') }}</span>
+                        <button onclick="this.parentElement.style.display='none';">x</button>
                     </div>
                 @endif
                 @if($errors->any())

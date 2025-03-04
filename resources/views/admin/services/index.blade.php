@@ -161,8 +161,8 @@
                     <!-- END PAGE HEADER-->
                     @if(session('success'))
                     <div class="alert alert-success">
-                        <button onclick="this.parentElement.style.display='none';">x</button>
                         <span>{{ session('success') }}</span>
+                        <button onclick="this.parentElement.style.display='none';">x</button>
                     </div>
                 @endif
                 @if($errors->any())
@@ -221,7 +221,7 @@
                                         </thead>
                                         <tbody>
                                         @foreach($services as $service)
-                                            <tr class="odd gradeX">   
+                                            <tr >   
                                                <td>{{$loop->iteration}}</td>
                                                 <td> {{$service->name}} </td>
                                                 <td> {{$service->medical_specialization}} </td>

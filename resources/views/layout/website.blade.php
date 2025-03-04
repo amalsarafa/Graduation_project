@@ -2,6 +2,9 @@
 <html lang="ar" dir="rtl">
 
 <head>
+    <!-- SweetAlert2 -->
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <meta charset="utf-8">
     <title>@yield('title')</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="ar" dir="rtl">
     <!--<![endif]-->
     <!-- BEGIN HEAD -->
     <head>

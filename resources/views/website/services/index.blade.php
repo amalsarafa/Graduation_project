@@ -101,7 +101,7 @@
                             <i class="fas fa-ambulance text-white"></i>
                         </div>
                         <div class="ps-4">
-                            <h4 class="mb-3">الخدمة الطبية المنزلية</h4>
+                            <h4 class="mb-3">الرعاية الطبية المنزلية</h4>
                             <p>ترتيب زيارات منزلية لأطباء عامين أو متخصصين لتقديم الاستشارات الطبية، الفحوصات، ووضع خطط علاجية.</p>
                             <a class="text-uppercase" href="{{route('website.services.service2')}}">اقرأ المزيد<i class="bi bi-arrow-right ms-2"></i></a>
                         </div>

@@ -157,9 +157,9 @@
                                     <div> ملفي الشخصي  </div>
                                 </a>
 
-                                <a href="{{route('admin.notifications')}}" class="icon-btn">
+                                <a href="{{route('admin.contact-messages')}}" class="icon-btn">
                                     <i class="icon-bell"></i>
-                                    <div> الإشعارات و التنبيهات  </div>
+                                    <div>  اتصل بنا  </div>
                                 </a>
                                
                                 

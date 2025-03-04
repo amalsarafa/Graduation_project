@@ -91,7 +91,7 @@
                                                 </li>
                                                 <li>
                                                     <a href="#tab_doctor_reviews" data-toggle="tab">
-                                                      تقييم الطبيب  
+                                                      تقييم الخدمة  
                                                     </a>
                                                 </li>
                                                 <li>
@@ -237,28 +237,14 @@
                                                                 <div >
                                                                     <input type="password" class="form-control" placeholder="ادخل اسمك " readonly=""> </div>
                                                             </div>
-                                                            <div class="form-group">
-                                                                
-                                                                <label class=" control-label">التقييم : </label>
-                                                                <div >
-                                                                    <select class="form-control">
-                                                         
-                                                                        <option>سيء جدًا</option>
-                                                                        <option>سيء</option>
-                                                                        <option>مقبول</option>
-                                                                        <option>جيد</option>
-                                                                        <option>ممتاز</option>
-                                                                    </select>
-                                                                </div>
-                                                               
-                                                            </div>
+
                                                             <div class="form-group">
                                                                 <label class="control-label">تعليقك : </label>
                                                                 <div >
                                                                     <textarea class="form-control" rows="3" placeholder="أدخل تعليقك"></textarea>
                                                                 </div>
                                                             </div>
-                                                            <div class="form-actions">
+                                                            
                                                                 <div class="row">
                                                                     <div >
                                                                         <button type="submit" class="btn green">
@@ -266,7 +252,7 @@
                                                                         <button type="button" class="btn btn-outline grey-salsa">الغاء </button>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            
                                                         </form>
                                                     </div>
                                                     

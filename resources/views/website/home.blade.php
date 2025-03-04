@@ -59,7 +59,7 @@
                             <h5 class="text-white text-uppercase mb-3 animated slideInDown">نهتم بصحتك وعافيتك – خدمات طبية وتمريضية متكاملة تصل إليك أينما كنت
                             </h5>
                             <h1 class="display-1 text-white mb-md-4 animated zoomIn">احتياجاتك أولويتنا</h1>
-                            <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">احجز خدمتك </a>
+                            <a href="{{route('website.home')}}" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">احجز خدمتك </a>
                             <a href="{{route('website.contact')}}" class="btn btn-outline-light py-md-3 px-md-5 animated slideInRight">اتصل بنا </a>
                         </div>
                     </div>
@@ -319,57 +319,126 @@
     </div>
     
     <!-- Service End -->
-    <!-- Quote Start -->
-    <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;">
+    
+     <!-- Vendor Start -->
+     <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
         <div class="container py-5">
-            <div class="section-title-1 text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
-                <h5 class="fw-bold text-primary text-uppercase">احجز خدمتك</h5>
-                <h1 class="mb-0">املأ النموذج أدناه للحصول على الخدمة المناسبة لك</h1>
+            <div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
+                <h5 class="fw-bold text-primary text-uppercase">احجز خدمتك الآن</h5>
+                <h1 class="mb-0">سهولة في الحجز  </h1>
             </div>
-            <div class="row g-5">
-                <div class="col-lg-7">
-                    <form>
-                        <div class="row g-3">
-                            <div class="col-xl-12">
-                                <input type="text" class="form-control bg-light border-0" placeholder="اسمك" style="height: 55px;">
-                            </div>
-                            <div class="col-12">
-                                <input type="email" class="form-control bg-light border-0" placeholder="بريدك الالكتروني" style="height: 55px;">
-                            </div>
-                            <div class="col-12">
-                                <select class="form-select bg-light border-0" style="height: 55px;">
-                                    <option selected="">اختر الخدمة</option>
-                                    <option value="1">التمريض المنزلي</option>
-                                    <option value="2">الإستشارات الطبية عن بُعد</option>
-                                    <option value="3">العلاج الطبيعي</option>
-                                    <option value="4">إدارة الأدوية</option>
-                                </select>
-                            </div>
-                            <div class="col-12">
-                                <textarea class="form-control bg-light border-0" rows="3" placeholder="رسالتك"></textarea>
-                            </div>
-                            <div class="col-12">
-                                <button class="btn btn-primary w-100 py-3" type="submit">أرسل الطلب</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="col-lg-5">
-                    <div class="bg-primary rounded h-100 d-flex align-items-center p-5">
-                        <div>
-                            <h3 class="text-white mb-4">نحن هنا لمساعدتك</h3>
-                            <p class="text-white mb-4">إذا كان لديك أي استفسار أو تحتاج إلى معلومات إضافية، لا تتردد في الاتصال بنا.</p>
-                            <h4 class="text-white mb-0">+966 123 456 789</h4>
-                        </div>
+            <form id="reservationForm" method="POST" class="bg-light p-5 rounded shadow">
+                @csrf
+                <div class="row g-3">
+                    <!-- اختيار الطبيب -->
+                    <div class="col-md-6">
+                        <label for="doctor_id" class="form-label">اختيار الطبيب</label>
+                        <select class="form-select" id="doctor_id" name="doctor_id" required>
+                            <option selected disabled>اختر الطبيب</option>
+                            @foreach ($doctors as $doctor)
+                                <option value="{{ $doctor->id }}">{{ $doctor->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+            
+                    <!-- اختيار الخدمة -->
+                    <div class="col-md-6">
+                        <label for="service" class="form-label">الخدمة</label>
+                        <select class="form-select" id="service" name="service" required>
+                            <option selected disabled>اختر الخدمة</option>
+                            <option value="general">الطب العام</option>
+                            <option value="pediatrics">طب الأطفال</option>
+                            <option value="psychiatry">الطب النفسي</option>
+                            <option value="nutrition">التغذية</option>
+                            <option value="physiotherapy">العلاج الطبيعي</option>
+                        </select>
+                    </div>
+            
+                    <!-- اختيار التاريخ -->
+                    <div class="col-md-6">
+                        <label for="date" class="form-label">تاريخ الخدمة</label>
+                        <input type="date" class="form-control" id="date" name="date" required>
+                    </div>
+            
+                    <!-- اختيار الوقت -->
+                    <div class="col-md-6">
+                        <label for="time" class="form-label">وقت الخدمة</label>
+                        <input type="time" class="form-control" id="time" name="time" required>
+                    </div>
+            
+                    <!-- زر الحجز -->
+                    <div class="col-12 text-center">
+                        <button type="submit" class="btn btn-primary py-2 px-4">احجز الآن</button>
                     </div>
                 </div>
-            </div>
+            </form>
+            <meta name="csrf-token" content="{{ csrf_token() }}">
+            <script>
+                // التحقق مما إذا كان المستخدم مسجل دخول أم لا
+                let isAuthenticated = {{ auth()->check() ? 'true' : 'false' }};
+            
+                document.getElementById('reservationForm').addEventListener('submit', function(event) {
+                    event.preventDefault();
+            
+                    if (!isAuthenticated) {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'يجب تسجيل الدخول',
+                            text: 'يرجى تسجيل الدخول لإجراء الحجز.',
+                            confirmButtonText: 'تسجيل الدخول'
+                        }).then(() => {
+                            window.location.href = "{{ route('login') }}"; // توجيه المستخدم لتسجيل الدخول
+                        });
+                        return;
+                    }
+            
+                    // إنشاء البيانات لإرسالها
+                    let formData = new FormData(this);
+            
+                    fetch('{{ route('patient.reservations.store') }}', {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'خطأ!',
+                                text: data.error,
+                                confirmButtonText: 'إغلاق'
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'تم الحجز!',
+                                text: 'تم الحجز بنجاح، سيتم تأكيده قريبًا.',
+                                confirmButtonText: 'حسناً',
+                                timer: 3000
+                            });
+                            document.getElementById('reservationForm').reset(); // إعادة تعيين النموذج بعد الإرسال
+                        }
+                    })
+                    .catch(error => {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'خطأ!',
+                            text: 'حدث خطأ أثناء إرسال الحجز، حاول مرة أخرى.',
+                            confirmButtonText: 'إغلاق'
+                        });
+                        console.error('Error:', error);
+                    });
+                });
+            </script>
+            
         </div>
     </div>
     
-    <!-- Quote End -->
-
-
+    <!-- Vendor End -->
+    
     <!-- Team Start -->
     <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s"
         style="visibility: hidden; animation-delay: 0.1s; animation-name: none;">

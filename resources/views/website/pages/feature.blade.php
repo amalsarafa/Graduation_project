@@ -125,54 +125,10 @@
     <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
         <div class="container py-5">
             <div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
-                <h5 class="fw-bold text-primary text-uppercase">احجز استشارتك الآن</h5>
-                <h1 class="mb-0">سهولة في الحجز واستشارة آمنة</h1>
+                <h5 class="fw-bold text-primary text-uppercase">احجز خدمتك الآن</h5>
+                <h1 class="mb-0">سهولة في الحجز  </h1>
             </div>
-            <form action="/book-appointment" method="POST" class="bg-light p-5 rounded shadow">
-                <div class="row g-3">
-                    <!-- اختيار التخصص -->
-                    <div class="col-md-6">
-                        <label for="specialization" class="form-label">التخصص الطبي</label>
-                        <select class="form-select" id="specialization" name="specialization" required>
-                            <option selected disabled>اختر التخصص</option>
-                            <option value="general">الطب العام</option>
-                            <option value="pediatrics">طب الأطفال</option>
-                            <option value="psychiatry">الطب النفسي</option>
-                            <option value="nutrition">التغذية</option>
-                            <option value="physiotherapy">العلاج الطبيعي</option>
-                        </select>
-                    </div>
-                    <!-- اختيار الطبيب -->
-                    <div class="col-md-6">
-                        <label for="doctor" class="form-label">اختيار الطبيب</label>
-                        <select class="form-select" id="doctor" name="doctor" required>
-                            <option selected disabled>اختر الطبيب</option>
-                            <option value="doctor1">د. أحمد محمد</option>
-                            <option value="doctor2">د. سارة علي</option>
-                            <option value="doctor3">د. خالد يوسف</option>
-                        </select>
-                    </div>
-                    <!-- اختيار التاريخ -->
-                    <div class="col-md-6">
-                        <label for="appointment-date" class="form-label">تاريخ الاستشارة</label>
-                        <input type="date" class="form-control" id="appointment-date" name="appointment_date" required>
-                    </div>
-                    <!-- اختيار الوقت -->
-                    <div class="col-md-6">
-                        <label for="appointment-time" class="form-label">وقت الاستشارة</label>
-                        <input type="time" class="form-control" id="appointment-time" name="appointment_time" required>
-                    </div>
-                    <!-- بيانات إضافية -->
-                    <div class="col-12">
-                        <label for="notes" class="form-label">ملاحظات (اختياري)</label>
-                        <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="أضف أي ملاحظات إضافية..."></textarea>
-                    </div>
-                    <!-- زر الحجز -->
-                    <div class="col-12 text-center">
-                        <button type="submit" class="btn btn-primary py-2 px-4">احجز الآن</button>
-                    </div>
-                </div>
-            </form>
+           
         </div>
     </div>
     

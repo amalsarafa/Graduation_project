@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\RoleMiddleware;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\WebsiteController;
+use App\Http\Controllers\DoctorRatingController;
+use App\Http\Controllers\ContactController;
+
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Admin\PatientController as AdminPatientController;
@@ -13,6 +16,8 @@ use App\Http\Controllers\Admin\DoctorController as AdminDoctorController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\TaskController;
+
+
 use App\Http\Controllers\Doctor\DashboardController as DoctorDashboardController;
 use App\Http\Controllers\Doctor\DoctorProfileController;
 use App\Http\Controllers\Doctor\PatientController as DoctorPatientController;
@@ -22,15 +27,17 @@ use App\Http\Controllers\Patient\DashboradController as PatientDashboardControll
 use App\Http\Controllers\Patient\PatientProfileController;
 use App\Http\Controllers\Patient\PatientRervervationController;
 
+
 //website
 Route::controller(WebsiteController::class)->group(function () {
     // Main Pages
     Route::get('/', 'home')->name('website.home');
     Route::get('/about', 'about')->name('website.about');
     Route::get('/blog', 'blog')->name('website.blog');
-    Route::get('/contact', 'contact')->name('website.contact');
-   Route::get('/search', [SearchController::class, 'index'])->name('search');
-
+    Route::get('/contact', 'contact')->name('website.contact')->middleware('auth');
+    Route::get('/search', [SearchController::class, 'index'])->name('search');
+    Route::post('/contact', [ContactController::class, 'store'])->middleware('auth');
+  
 
     //Pages
     Route::get('/team', 'team')->name('website.page.team');
@@ -90,7 +97,7 @@ Route::controller(WebsiteController::class)->group(function () {
 // Admin Routes
 Route::prefix('admin')->name('admin.')->middleware(['auth', RoleMiddleware::class . ':admin'])->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
-
+   
     Route::get('/profile', [AdminProfileController::class, 'index'])->name('profile');
     Route::put('/profile/{id}', [AdminProfileController::class, 'update'])->name('profile.update');
     Route::post('/profile/{id}', [AdminProfileController::class, 'updateImage'])->name('profile.updateImage');
@@ -115,7 +122,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', RoleMiddleware::clas
     
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications');
     Route::delete('/notifications/{id}', [NotificationController::class, 'destroy'])->name('notifications.destroy');
+
+    Route::get('/contact-messages', [ContactController::class, 'index'])->name('contact-messages');
+    Route::delete('/contact-messages/{id}', [ContactController::class, 'destroy'])->name('contact-messages.destroy');
 });
+
 
 
 // Doctor Routes
@@ -143,7 +154,14 @@ Route::prefix('patient')->name('patient.')->middleware(['auth', RoleMiddleware::
     Route::put('/password/update', [PatientProfileController::class, 'updatePassword'])->name('password.update');
 
     Route::get('/reservations', [PatientRervervationController::class, 'index'])->name('reservations');
+    Route::post('/reservations/store', [PatientReservationController::class, 'store'])->name('reservations.store');
+    
 });
+
+
+
+
+
 
 
 

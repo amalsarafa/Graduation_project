@@ -3,12 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+
 
 class WebsiteController extends Controller
 {
-    public function home() {
-     return view('website.home'); 
-    }
+   public function home()
+   {
+       $doctors = User::where('role', 'doctor')->get();
+       
+       return view('website.home', compact('doctors'));
+   }
+
     public function about() {
      return view('website.about');
      }

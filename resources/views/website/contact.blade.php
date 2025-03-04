@@ -113,25 +113,79 @@
             </div>
             <div class="row g-5">
                 <div class="col-lg-6 wow slideInUp" data-wow-delay="0.3s">
-                    <form>
+                    <form id="contactForm">
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <input type="text" class="form-control border-0 bg-light px-4" placeholder="الاسم" style="height: 55px;">
+                                <input type="text" name="name" class="form-control border-0 bg-light px-4" placeholder="الاسم" required style="height: 55px;">
                             </div>
                             <div class="col-md-6">
-                                <input type="email" class="form-control border-0 bg-light px-4" placeholder="البريد الإلكتروني" style="height: 55px;">
+                                <input type="email" name="email" class="form-control border-0 bg-light px-4" placeholder="البريد الإلكتروني" required style="height: 55px;">
                             </div>
                             <div class="col-12">
-                                <input type="text" class="form-control border-0 bg-light px-4" placeholder="الموضوع" style="height: 55px;">
+                                <input type="text" name="subject" class="form-control border-0 bg-light px-4" placeholder="الموضوع" required style="height: 55px;">
                             </div>
                             <div class="col-12">
-                                <textarea class="form-control border-0 bg-light px-4 py-3" rows="4" placeholder="رسالتك"></textarea>
+                                <textarea name="message" class="form-control border-0 bg-light px-4 py-3" rows="4" placeholder="رسالتك" required></textarea>
                             </div>
                             <div class="col-12">
                                 <button class="btn btn-primary w-100 py-3" type="submit">إرسال الرسالة</button>
                             </div>
                         </div>
                     </form>
+                    
+                    <!-- إضافة سكريبت لجلب CSRF Token -->
+                    <meta name="csrf-token" content="{{ csrf_token() }}">
+                    <script>
+                        let isAuthenticated = {{ auth()->check() ? 'true' : 'false' }};
+                    
+                        document.getElementById('contactForm').addEventListener('submit', function(event) {
+                            event.preventDefault();
+                    
+                            if (!isAuthenticated) {
+                                Swal.fire({
+                                    icon: 'warning',
+                                    title: 'يجب تسجيل الدخول',
+                                    text: 'يرجى تسجيل الدخول لإرسال رسالة.',
+                                    confirmButtonText: 'تسجيل الدخول'
+                                }).then(() => {
+                                    window.location.href = "{{ route('login') }}"; // توجيه المستخدم إلى تسجيل الدخول
+                                });
+                                return;
+                            }
+                    
+                            let formData = new FormData(this);
+                    
+                            fetch('/contact', {
+                                method: 'POST',
+                                body: formData,
+                                headers: {
+                                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                                }
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'تم الإرسال!',
+                                    text: 'تم إرسال رسالتك بنجاح، سنقوم بالرد عليك قريبًا.',
+                                    confirmButtonText: 'حسناً',
+                                    timer: 3000
+                                });
+                                document.getElementById('contactForm').reset();
+                            })
+                            .catch(error => {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'خطأ!',
+                                    text: 'حدث خطأ أثناء إرسال الرسالة، حاول مرة أخرى.',
+                                    confirmButtonText: 'إغلاق'
+                                });
+                                console.error('Error:', error);
+                            });
+                        });
+                    </script>
+                    
+                    
                 </div>
                 <div class="col-lg-6 wow slideInUp" data-wow-delay="0.6s">
                     <iframe class="position-relative rounded w-100 h-100"

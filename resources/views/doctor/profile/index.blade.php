@@ -43,9 +43,8 @@
        
     </ul>
 </div>
-@if(session('success'))
-                    <div class="alert alert-success">
-                       
+                    @if(session('success'))
+                    <div class="alert alert-success">  
                         <span>{{ session('success') }}</span>
                         <button onclick="this.parentElement.style.display='none';">x</button>
                        

@@ -40,8 +40,8 @@
                     </div>
                     @if(session('success'))
                     <div class="alert alert-success">
-                        <button onclick="this.parentElement.style.display='none';">x</button>
                         <span>{{ session('success') }}</span>
+                        <button onclick="this.parentElement.style.display='none';">x</button>
                     </div>
                 @endif
                 @if($errors->any())
@@ -100,12 +100,12 @@
                                                     <ul class="list-inline">
                                                         <li>
                                                             <i class="fa fa-map-marker"></i> {{$user->country}}</li>
-                                                        <li>
-                                                            <i class="fa fa-calendar"></i> {{$user->brith_date}}</li>
-                                                        <li>
+                                                            <li>
+                                                                <i class="fa fa-calendar"></i> {{$user->birth_date}}
+                                                            </li>
                                                             <i class="fa fa-heartbeat"></i> رعاية طبية منزلية </li>
                                                         <li>
-                                                            <i class="fa fa-briefcase"></i> {{$patient->chronic_diseases_history}}</li>
+                                                            <i class="fa fa-briefcase"></i> {{$patient->chronic_diseases_history	}}</li>
                                                         <li>
                                                             <i class="fa fa-calendar-check-o"></i> متابعة دورية </li>
                                                     </ul>

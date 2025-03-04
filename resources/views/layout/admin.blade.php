@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en">
-
+<html lang="ar" dir="rtl">
     <head>
         <meta charset="utf-8" />
         <title>@yield('title')   </title>
@@ -450,9 +449,9 @@
                                    </a>
                                </li>
                                <li class="nav-item  ">
-                                   <a href="{{route('admin.notifications')}}"  class="nav-link ">
+                                   <a href="{{route('admin.contact-messages')}}"  class="nav-link ">
                                        <i class="icon-bell"></i>
-                                       <span class="title"> الإشعارات و التنبيهات     </span>
+                                       <span class="title"> رسائل اتصل بنا   </span>
                                    </a>
                                </li>
                        </li>
