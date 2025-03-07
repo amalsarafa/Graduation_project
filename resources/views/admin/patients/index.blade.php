@@ -177,17 +177,16 @@
                  
                     <div class="page-bar">
                         <ul class="page-breadcrumb">
+                           
+                            <li> 
+                                <i class="icon-home"></i>
+                                <a href="{{ route('admin.dashboard') }}">الصفحة الرئيسية </a>
+                                <i class="fa fa-angle-left"></i>
+                               
+                            </li>
                             <li>
                                 <a href="{{ route('admin.patients') }}">قسم المرضى</a>
                             </li>
-                            <li>
-                                <i class="fa fa-angle-left"></i>
-                             
-                                <a href="{{ route('admin.dashboard') }}">الصفحة الرئيسية </a>
-                                <i class="icon-home"></i>
-                               
-                            </li>
-                            
                            
                         </ul>
                         
@@ -245,13 +244,10 @@
                                                 <th class="all">اسم المريض</th>
                                                 <th class="min-phone-l">رقم الهاتف </th>
                                                 <th class="min-tablet">البريد الالكتروني </th>
+                                                <th class="none"> رقم الهوية</th>
                                                 <th class="none">السجل الطبي </th>
-                                                <th class="none">الخدمة المقدمة</th>
                                                 <th class="desktop"> رقم الجوال</th>
                                                 <th class="all">الإجراءات</th>
-                                                
-                                                
-                                                <th class="none">موعد الخدمة المستقبلية </th>   
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -262,12 +258,9 @@
                                       <td>{{ $patient->user->email }}</td>
                                       <td>{{ $patient->chronic_diseases_history ?? 'لا يوجد' }}</td>
                                       <td>
-                                        @if($patient->services->isNotEmpty())
-                                         {{ $patient->services->first()->name }}
-                                           @else
-                                                غير محدد
-                                           @endif
-                                            </td>
+                                       
+                                         {{ $patient->id_number }}
+                    
                                             <td>{{ $patient->user->phone_number }}</td>
                                       <td>
                                                   
@@ -308,13 +301,7 @@
                                       
                                       
                                       
-                                      <td>
-                                    @if($patient->appointments->isNotEmpty())
-                              {{ \Carbon\Carbon::parse($patient->appointments->first()->appointment_date)->format('Y/m/d') }}
-                                   @else
-                               غير محدد
-                                @endif
-                              </td>
+                                     
                              </tr>
                                 @endforeach          
                                         </tbody>

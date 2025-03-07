@@ -31,7 +31,6 @@
                     </div>
                     <a href="{{route('website.contact')}}" class="nav-item nav-link">اتصل بنا </a>
                 </div>
-                <butaton type="button" class="btn text-primary ms-3" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa fa-search"></i></butaton>
                 @if(Auth::check())
                 <a href="{{ route('logout') }}" 
                   class="btn btn-danger py-2 px-4 ms-3"
@@ -85,7 +84,7 @@
                     <h4 class="text-primary mb-3">جلسة تمريض منزلي</h4>
                     <p>خدمة رعاية صحية شاملة في المنزل تشمل العناية الطبية الأولية ومتابعة الحالات المزمنة.</p>
                     <h5 class="text-primary">100 شيكل / الجلسة</h5>
-                    <a href="{{route('website.page.feature')}}" class="btn btn-primary py-2 px-4 mt-3">احجز الآن</a>
+                    <a href="{{route('website.home')}}" class="btn btn-primary py-2 px-4 mt-3">احجز الآن</a>
                 </div>
             </div>
             <!-- خدمة العلاج الطبيعي -->
@@ -94,7 +93,7 @@
                     <h4 class="text-primary mb-3">جلسة علاج طبيعي</h4>
                     <p>جلسات علاج طبيعي مخصصة لتحسين الحركة والتخفيف من الألم.</p>
                     <h5 class="text-primary">150 شيكل / الجلسة</h5>
-                    <a href="{{route('website.page.feature')}}" class="btn btn-primary py-2 px-4 mt-3">احجز الآن</a>
+                    <a href="{{route('website.home')}}" class="btn btn-primary py-2 px-4 mt-3">احجز الآن</a>
                 </div>
             </div>
             <!-- خدمة استشارة طبية عن بعد -->
@@ -103,7 +102,7 @@
                     <h4 class="text-primary mb-3">استشارة طبية عن بعد</h4>
                     <p>تواصل مع أطباء مختصين بسهولة من خلال الاستشارات الطبية عن بعد.</p>
                     <h5 class="text-primary">50 شيكل / الاستشارة</h5>
-                    <a href="{{route('website.page.feature')}}" class="btn btn-primary py-2 px-4 mt-3">احجز الآن</a>
+                    <a href="{{route('website.home')}}" class="btn btn-primary py-2 px-4 mt-3">احجز الآن</a>
                 </div>
             </div>
             <!-- خدمة إدارة الأدوية -->
@@ -112,7 +111,7 @@
                     <h4 class="text-primary mb-3">إدارة الأدوية</h4>
                     <p>تنظيم وتقديم الأدوية اليومية لضمان الالتزام بالخطة العلاجية.</p>
                     <h5 class="text-primary">80 شيكل / الجلسة</h5>
-                    <a href="{{route('website.page.feature')}}" class="btn btn-primary py-2 px-4 mt-3">احجز الآن</a>
+                    <a href="{{route('website.home')}}" class="btn btn-primary py-2 px-4 mt-3">احجز الآن</a>
                 </div>
             </div>
             <!-- خدمة فحص طبي منزلي -->
@@ -121,7 +120,7 @@
                     <h4 class="text-primary mb-3">فحص طبي منزلي</h4>
                     <p>فحص شامل ومتابعة صحية من قبل فريق طبي مختص في منزلك.</p>
                     <h5 class="text-primary">200 شيكل / الفحص</h5>
-                    <a href="{{route('website.page.feature')}}" class="btn btn-primary py-2 px-4 mt-3">احجز الآن</a>
+                    <a href="{{route('website.home')}}" class="btn btn-primary py-2 px-4 mt-3">احجز الآن</a>
                 </div>
             </div>
         </div>

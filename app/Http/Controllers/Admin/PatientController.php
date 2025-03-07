@@ -11,6 +11,7 @@ use App\Models\Appointment;
 use Illuminate\Support\Str;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Models\PatientReservation;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -20,10 +21,12 @@ class PatientController extends Controller
       $admin = Auth::user();
       $patients=Patient::with(['user', 'appointments', 'services'])->paginate(10);
       $services=Service::all();
+      $reservations = PatientReservation::get();
       return view('admin.patients.index',[
        'patients'=> $patients,
        'services'=> $services,
        'admin'=> $admin,
+       'reservations'=> $reservations,
       ]);
     }
     

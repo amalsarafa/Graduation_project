@@ -11,10 +11,15 @@ class AppointmentController extends Controller
     
     public function index()
     {
+        $doctor = auth()->user()->doctor;
 
-        $appointments=Appointment::all();
+        $appointments = $doctor->reservations()
+            ->with('patient') // جلب بيانات المريض المرتبطة
+            ->orderBy('date', 'asc')
+            ->orderBy('time', 'asc')
+            ->get();
         return view('doctor.Appointment.index',compact(
-           'appointments'
+            'appointments'
         ));
     }
 

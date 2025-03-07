@@ -32,9 +32,8 @@
                                 <a href="#"> </a>
                             </li>
                             <li>
-                             
-                                <a href="{{ route('doctor.dashboard') }}">الصفحة الرئيسية </a>
                                 <i class="icon-home"></i>
+                                <a href="{{ route('doctor.dashboard') }}">الصفحة الرئيسية </a>
                                
                             </li>
                             
@@ -49,12 +48,12 @@
                     
                         <div class="col-md-4">
                             <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20">
-                                <h4 class="widget-thumb-heading">عدد المرضى الجدد</h4>
+                                <h4 class="widget-thumb-heading">عدد  الأطباء</h4>
                                 <div class="widget-thumb-wrap">   
                                     <i class="widget-thumb-icon bg-green fa fa-wheelchair"></i>
                                     <div class="widget-thumb-body">
-                                        <span class="widget-thumb-subtitle">عدد المرضى</span>
-                                        <span class="widget-thumb-body-stat" data-counter="counterup" data-value="{{ $newPatients }}">0</span>
+                                        <span class="widget-thumb-subtitle">إجمالي عدد الأطباء   </span>
+                                        <span class="widget-thumb-body-stat" data-counter="counterup" >{{$totalDoctors}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -65,12 +64,12 @@
                         
                         <div class="col-md-4">
                             <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20">
-                                <h4 class="widget-thumb-heading">عدد الزيارات الطبية اليومية</h4>
+                                <h4 class="widget-thumb-heading">عدد المواعيد الطبية </h4>
                                 <div class="widget-thumb-wrap">
                                     <i class="widget-thumb-icon bg-purple fa fa-calendar-check-o"></i>
                                     <div class="widget-thumb-body">
-                                        <span class="widget-thumb-subtitle">عدد الزيارات</span>
-                                        <span class="widget-thumb-body-stat" data-counter="counterup" data-value="{{ $dailyVisits }}">0</span>
+                                        <span class="widget-thumb-subtitle">إجمالي عدد المواعيد   </span>
+                                        <span class="widget-thumb-body-stat" data-counter="counterup" >{{ $appointmentsCount  }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -80,12 +79,12 @@
                         
                         <div class="col-md-4">
                             <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20">
-                                <h4 class="widget-thumb-heading">عدد المراجعين النشطين</h4>
+                                <h4 class="widget-thumb-heading">عدد المرضى  </h4>
                                 <div class="widget-thumb-wrap">
                                     <i class="widget-thumb-icon bg-blue icon-user"></i>
                                     <div class="widget-thumb-body">
-                                        <span class="widget-thumb-subtitle">عدد المراجعين</span>
-                                        <span class="widget-thumb-body-stat" data-counter="counterup" data-value="{{ $activePatients }}">0</span>
+                                        <span class="widget-thumb-subtitle">إجمالي عدد المرضى لدى الطبيب </span>
+                                        <span class="widget-thumb-body-stat" data-counter="counterup" >  {{ $patientsCount}} </span>
                                     </div>
                                 </div>
                             </div>
@@ -98,15 +97,6 @@
                             </div>
                             <div class="portlet-body">
                                 
-                               
-                                <a href="{{ route('doctor.appointments') }}" class="icon-btn">
-                                    <i class="icon-calendar"></i>
-                                    <div> المواعيد </div>
-                                </a>
-                                <a href="{{ route('doctor.patients') }}" class="icon-btn">
-                                    <i class="fa fa-wheelchair"></i>
-                                    <div> المريض </div>
-                                </a> 
                                 <a href="{{route('website.home')}}" class="icon-btn">
                                     <i class="fa fa"></i>
                                     <div>  الموقع الرئيسي </div>
@@ -115,6 +105,16 @@
                                     <i class="icon-user"></i>
                                     <div> ملفي الشخصي  </div>
                                 </a>
+                                <a href="{{ route('doctor.appointments') }}" class="icon-btn">
+                                    <i class="icon-calendar"></i>
+                                    <div> المواعيد </div>
+                                </a>
+                                <a href="{{ route('doctor.patients') }}" class="icon-btn">
+                                    <i class="fa fa-wheelchair"></i>
+                                    <div> المريض </div>
+                                </a> 
+                               
+                                
                                 
                             </div>
                         </div> 

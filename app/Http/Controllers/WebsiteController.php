@@ -2,21 +2,36 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-
+use App\Models\Doctor;
+use App\Models\Patient;
+use App\Models\PatientReservation;
+use App\Models\Service;
+use App\Models\PatientService;
 
 class WebsiteController extends Controller
 {
    public function home()
-   {
-       $doctors = User::where('role', 'doctor')->get();
-       
-       return view('website.home', compact('doctors'));
-   }
 
+   {   
+     $user = Auth::user();
+       $doctors = User::where('role', 'doctor')->get();
+       $services = Service::all();
+       return view('website.home', compact('doctors','services','user'));
+   }
+   
     public function about() {
-     return view('website.about');
+      $user = Auth::user();
+      $doctors = Doctor::with('user')->get(); 
+        $services = Service::all();
+        return view('website.about', compact('doctors','services','user'));
+   
      }
     public function blog() {
          return view('website.blog');
@@ -42,7 +57,11 @@ class WebsiteController extends Controller
         return view('website.pages.testimonial');
      }
      public function feature() { 
-      return view('website.pages.feature');
+      $user = Auth::user();
+      $doctors = User::where('role', 'doctor')->get();
+      $services = Service::all();
+      return view('website.pages.feature', compact('doctors','services','user'));
+     
    }
    
    public function CaregiverResources() { 

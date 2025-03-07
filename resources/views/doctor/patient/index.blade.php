@@ -28,17 +28,16 @@
                     </h3>
                     <div class="page-bar">
                         <ul class="page-breadcrumb">
+                            
+                            <li>
+                                <i class="icon-home"></i>
+                                <a href="{{route('doctor.dashboard')}}">الصفحة الرئيسية </a>
+                                <i class="fa fa-angle-left"></i>
+                               
+                            </li>
                             <li>
                                 <a href="{{route('doctor.patients')}}">المرضى</a>
                             </li>
-                            <li>
-                                <i class="fa fa-angle-left"></i>
-                             
-                                <a href="{{route('doctor.dashboard')}}">الصفحة الرئيسية </a>
-                                <i class="icon-home"></i>
-                               
-                            </li>
-                            
                            
                         </ul>
                        
@@ -81,10 +80,10 @@
                                                 <li>
                                                     <a href="#tab_patient_management" data-toggle="tab">
                                                       
-                                                        السجل الطبي  
+                                                        تقييم العملاء
                                                     </a>
                                                 </li>
-                                            
+                                                
                                             </ul>
                                             
                                             <div class="tab-content">
@@ -101,31 +100,38 @@
                                                             
                                                             </div>
                                                         </div>
-                                                        <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
-                                                    
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th># </th>
-                                                                        <th>اسم المريض</th>
-                                                                        <th>نوع الخدمة</th>
-                                                                        <th>التاريخ</th>
-                                                                        <th>ملاحظات</th>
-                                                                        
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                               
-                                                                     <tr>
-                                                                        <td>  </td>
-                                                                        <td>سامي الخطيب</td>
-                                                                        <td>استشارة نفسية</td>
-                                                                        <td>20 ديسمبر 2024</td>
-                                                                        <td>يعاني من اضطرابات القلق، يحتاج متابعة نفسية.</td>
-                                                                        
-                                                                    </tr>
-                                                                    
-                                                                </tbody>
-                                                            </table>
+                                                        <table class="table table-striped table-hover table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>#</th>
+                                                                    <th>اسم المريض</th>
+                                                                    <th>نوع الخدمة</th>
+                                                                    <th>التاريخ</th>
+                                                                    <th>السجل المرضي للمريض</th> <!-- حقل التاريخ المرضي المزمن -->
+                                                                    <th>التقرير السابق</th> <!-- حقل التقرير السابق -->
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach($appointments as $index => $appointment)
+                                                                <tr>
+                                                                    <td>{{ $index + 1 }}</td>
+                                                                    <td>{{ $appointment->patient->user->name }}</td>
+                                                                    <td>{{ $appointment->service }}</td>
+                                                                    <td>{{ $appointment->date }}</td>
+                                                                    <td>{{ $appointment->patient->chronic_diseases_history ?? 'لا يوجد' }}</td> <!-- عرض التاريخ المرضي المزمن -->
+                                                                    <td>
+                                                                        @if($appointment->patient->medicalReports->isNotEmpty())
+                                                                            <a href="{{ asset('storage/'.$appointment->patient->medicalReports->first()->file_path) }}" target="_blank">عرض التقرير</a>
+                                                                        @else
+                                                                            لا يوجد تقرير
+                                                                        @endif
+                                                                    </td>
+                                                                </tr>
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                        
+                                                        
                                                         
                                                     </div>
                                                 </div>
@@ -136,41 +142,24 @@
                                                                     <table class="table table-striped table-bordered table-hover dt-responsive"  id="sample_3" cellspacing="0" >
                                                                         <thead>
                                                                             <tr>
-                                                                                <th class="all">تفاصيل الزيارات السابقة</th>
-                                                                                <th class="min-phone-l">رقم المريض</th>
-                                                                                <th class="min-phone-l">اسم المريض</th>
-                                                                                <th class="min-tablet">التشخيص الحالي    </th>
-                                                                                <th class="none">التاريخ   </th>
-                                                                                <th class="none">التشخيص  </th>
-                                                                                <th class="none">الملاحظات  </th>
-                                                    
+                                                                                <th>#</th>
+                                                                                <th>اسم المريض</th>
+                                                                                <th>التقييم</th>
+                                                                                <th>التعليق</th>
+                                                                                <th>التاريخ</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                          
+                                                                            @foreach($ratings as $index => $rating)
                                                                             <tr>
-                                                                                <td></td>
-                                                                                <td>001	</td>
-                                                                                <td>أحمد محمد	</td>
-                                                                                <td >ارتفاع ضغط الدم</td>
-                                                                                <td>2024-12-01</td>
-                                                                                <td>فحص السكري</td>
-                                                                                <td>يحتاج متابعة دورية لضغط الدم وقياس السكر.
-                                                                                </td>
+                                                                                <td>{{ $index + 1 }}</td>
+                                                                                <td>{{ $rating->patient->user->name }}</td>
+                                                                                <td>{{ $rating->rating }}</td>
+                                                                                <td>{{ $rating->comment }}</td>
+                                                                                <td>{{ optional($rating->created_at)->format('Y-m-d') ?? 'لم يتم التعيين' }}</td>
                                                                             </tr>
-                                                                            <tr>
-                                                                                <td></td>
-                                                                                <td>002</td>
-                                                                                <td>فاطمة علي</td>
-                                                                                <td>رعاية منزلية </td>
-                                                                                <td>2024-11-15</td>
-                                                                                <td>علاج طبيعي</td>
-                                                                                <td>استمرار جلسات العلاج الطبيعي ومتابعة الحركة.
-                                                                                </td>
-                                                                            </tr>                                          
-                                                                           
+                                                                            @endforeach
                                                                         </tbody>
-                                                                    </table>
                                                                     
                                                                 </div>
                                                             </div>

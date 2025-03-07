@@ -45,4 +45,8 @@ class Doctor extends Model
     {
         return $this->reservations()->distinct('patient_id')->count();
     }
+    public function ratings()
+    {
+        return $this->hasMany(DoctorRating::class);
+    }
 }

@@ -29,17 +29,16 @@
 </h3>
 <div class="page-bar">
     <ul class="page-breadcrumb">
+        
+        <li>
+            <i class="icon-home"></i>
+            <a href="{{route('doctor.dashboard')}}">الصفحة الرئيسية </a>
+            <i class="fa fa-angle-left"></i>
+
+        </li>
         <li>
             <a href="{{route('doctor.profile')}}">الملف الشخصي</a>
         </li>
-        <li>
-            <i class="fa fa-angle-left"></i>
-         
-            <a href="{{route('doctor.dashboard')}}">الصفحة الرئيسية </a>
-            <i class="icon-home"></i>
-           
-        </li>
-        
        
     </ul>
 </div>
@@ -130,24 +129,26 @@
         </div>
         <div class="portlet-body">
             <ul class="list-unstyled">
-                <!-- عدد الاستشارات اليومية -->
+                <!-- عدد المواعيد اليومية -->
                 <li>
-                    <span class="sale-info"> الاستشارات اليوم
+                    <span class="sale-info"> المواعيد اليومية
                         <i class="fa fa-medkit"></i>
                     </span>
-                    <span class="sale-num"> 5 </span>
+                    <span class="sale-num"> {{ $dailyAppointments }} </span>
                 </li>
-                <!-- عدد الاستشارات الأسبوعية -->
+                <!-- عدد المواعيد الأسبوعية -->
                 <li>
-                    <span class="sale-info"> الاستشارات الأسبوعية
+                  
+
+                    <span class="sale-info"> المواعيد الأسبوعية
                         <i class="fa fa-stethoscope"></i>
                     </span>
-                    <span class="sale-num"> 20 </span>
+                    <span class="sale-num"> {{ $weeklyAppointments }} </span>
                 </li>
                 <!-- عدد المرضى الذين تم علاجهم -->
                 <li>
                     <span class="sale-info"> المرضى الذين تم معالجتهم </span>
-                    <span class="sale-num"> 150 </span>
+                    <span class="sale-num"> {{ $treatmentPatients }} </span>
                 </li>
             </ul>
         </div>
@@ -181,15 +182,23 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- النشاط الأول: استشارة طبية عن بُعد -->
+                        @foreach($latestReservations as $reservation)
                         <tr>
                             <td>
-                                <a href="javascript:;"> أحمد السعدي </a>
+                                 {{ $reservation->patient->user->name }} </a>
                             </td>
-                            <td class="hidden-xs"> استشارة طبية عن بُعد </td>
-                            <td> <span class="label label-success label-sm"> تم تقديم الاستشارة بنجاح </span> </td>
-
+                            <td > {{ $reservation->service }} </td>
+                            <td>
+                                @if($reservation->status == 'confirmed')
+                                    <span class="label label-success label-sm"> تم تقديم الاستشارة بنجاح </span>
+                                @elseif($reservation->status == 'pending')
+                                    <span class="label label-warning label-sm"> قيد الانتظار </span>
+                                @else
+                                    <span class="label label-danger label-sm"> تم الإلغاء </span>
+                                @endif
+                            </td>
                         </tr>
+                    @endforeach
                        
                     </tbody>
                 </table>

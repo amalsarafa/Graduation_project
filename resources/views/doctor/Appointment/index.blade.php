@@ -25,17 +25,18 @@
                     </h3>
                     <div class="page-bar">
                         <ul class="page-breadcrumb">
+                           
                             <li>
+                                <i class="icon-home"></i>
+                                <a href="{{route('doctor.dashboard')}}">الصفحة الرئسية </a>
+                                <i class="fa fa-angle-left"></i>
+
+                                
+                            </li>
+                             <li>
                                 <a href="{{route('doctor.appointments')}}">المواعيد  </a>
                                 
                             </li>
-                            <li>
-                                <i class="fa fa-angle-left"></i>
-                                
-                                <a href="{{route('doctor.dashboard')}}">الصفحة الرئسية </a>
-                                <i class="icon-home"></i>
-                            </li>
-                            
                         </ul>
 
                     </div>
@@ -68,37 +69,35 @@
                                 <div class="portlet-body">
                           
                                     <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
-                                        <thead>
-                                            <tr> 
-                                                <th> # </th>
-                                                <th> الخدمة </th>
-                                                <th> اسم المريض </th>
-                                                <th> التاريخ </th>
-                                                <th> الوقت  </th>
-                                                <th> الحالة  </th>
-                                               
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        @foreach($appointments as $appointment)
-                                            <tr>
-                                                <td> {{$loop->iteration}} </td>
-                                                <td>{{$appointment->service->name}} </td>
-                                                <td>{{$appointment->patient->user->name}} </td>
-                                                <td> {{$appointment->appointment_date}}</td>
-                                                <td>{{$appointment->appointment_time}} </td>
-                                                <td>  @if($appointment->status == 'confirmed')
-                                                <span class="label label-sm label-success">مؤكد</span>
-                                                @elseif($appointment->status == 'pending')
-                                               <span class="label label-sm label-warning">قيد الانتظار</span>
-                                                @elseif($appointment->status == 'cancelled')
-                                                <span class="label label-sm label-danger">ملغي</span>
-                                                @endif
-                                                </td>
-                                            </tr>
-                                            @endforeach    
-                                        </tbody>
-                                    </table>
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>الخدمة</th>
+                                                    <th>اسم المريض</th>
+                                                    <th>التاريخ</th>
+                                                    <th>الوقت</th>
+                                                    <th>الحالة</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($appointments as $index => $appointment)
+                                                    <tr>
+                                                        <td>{{ $index + 1 }}</td>
+                                                        <td>{{ $appointment->service }}</td>
+                                                        <td>{{ $appointment->patient->user->name ?? 'غير متوفر' }}</td>
+                                                        <td>{{ $appointment->date }}</td>
+                                                        <td>{{ $appointment->time }}</td>
+                                                        <td>
+                                                            <span class="badge 
+                                                                {{ $appointment->status == 'pending' ? 'bg-warning' : ($appointment->status == 'confirmed' ? 'bg-success' : 'bg-danger') }}">
+                                                                {{ $appointment->status == 'pending' ? 'قيد الانتظار' : ($appointment->status == 'confirmed' ? 'مؤكد' : 'ملغى') }}
+                                                            </span>
+                                                        </td>
+                                                        
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
                                 </div>
                             </div>
                             <!-- END EXAMPLE TABLE PORTLET-->

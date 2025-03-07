@@ -36,7 +36,7 @@ class DoctorController extends Controller
                'address' => 'required|string',
                'specialization' => 'required|string|max:255',
                'license_number' => 'required|string|unique:doctors,license_number',
-               'academic_qualifications' => 'required|string',
+               'academic_qualifications' => 'nullable|string',
                'years_experience' => 'required|integer|min:0',
                'training_courses' => 'nullable|string',
                'professional_certificate' => 'nullable|string',

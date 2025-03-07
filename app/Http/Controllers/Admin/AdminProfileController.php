@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Auth;
+use App\Models\PatientReservation;
+
 class AdminProfileController extends Controller
 {
     public function index() {
@@ -21,6 +23,8 @@ class AdminProfileController extends Controller
         $admin = Auth::user();
         $patients=Patient::with(['user', 'appointments', 'services'])->get();
         $services=Service::all();
+        $reservations = PatientReservation::get();
+
         $tasks=Task::all();
          // عدد المهام التي تم إنشاؤها اليوم
          $todayTasks = Task::whereDate('created_at', Carbon::today())->count();
@@ -29,7 +33,7 @@ class AdminProfileController extends Controller
         // إجمالي عدد المهام
         $totalTasks = Task::count();
         return view('admin.profile.index',compact(
-           'admin','patients','todayTasks', 'weeklyTasks', 'totalTasks','tasks'
+           'admin','patients','todayTasks', 'weeklyTasks', 'totalTasks','tasks','reservations'
         ));
     
     }

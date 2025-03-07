@@ -26,16 +26,17 @@
                      </h3>
                      <div class="page-bar">
                         <ul class="page-breadcrumb">
+                           
                             <li>
-                                <a href="{{route('patient.profile')}}">الملف الشخصي</a>
-                            </li>
-                            <li>
+                                <i class="icon-home"></i>
+
+                                <a href="{{route('patient.dashboard')}}">الصفحة الرئيسية </a>
                                 <i class="fa fa-angle-left"></i>
                              
-                                <a href="{{route('patient.dashboard')}}">الصفحة الرئيسية </a>
-                                <i class="icon-home"></i>
-                               
-                            </li>   
+                            </li> 
+                            <li>
+                                <a href="{{route('patient.profile')}}">الملف الشخصي</a>
+                            </li>  
                         </ul>
                     </div>
                     @if(session('success'))
@@ -125,17 +126,17 @@
                                                                     <span class="sale-info"> آخر زيارة
                                                                         <i class="fa fa-img-up"></i>
                                                                     </span>
-                                                                    <span class="sale-num"> 23 نوفمبر 2024 </span>
+                                                                    <span class="sale-num"> {{ $lastVisit ? \Carbon\Carbon::parse($lastVisit->visit_date)->translatedFormat('d F Y') : 'لا توجد زيارات' }}</span>
                                                                 </li>
                                                                 <li>
                                                                     <span class="sale-info"> عدد الزيارات الأسبوعية
                                                                         <i class="fa fa-img-down"></i>
                                                                     </span>
-                                                                    <span class="sale-num"> 5 </span>
+                                                                    <span class="sale-num"> {{ $weeklyVisits }} </span>
                                                                 </li>
                                                                 <li>
                                                                     <span class="sale-info"> مجموع الزيارات </span>
-                                                                    <span class="sale-num"> 50 </span>
+                                                                    <span class="sale-num"> {{ $totalVisits }} </span>
                                                                 </li>
                                                                 
                                                             </ul>
@@ -148,70 +149,38 @@
                                             <div class="tabbable-line tabbable-custom-profile">
                                                 <ul class="nav nav-tabs">
                                                     <li class="active">
-                                                        <a href="#tab_1_11" data-toggle="tab"> الزيارات الأخيرة </a>
+                                                        <a href="#tab_1_11" data-toggle="tab">  التقارير المرفقة </a>
                                                     </li>
-                                                    <li>
-                                                        <a href="#tab_1_22" data-toggle="tab"> التقارير </a>
-                                                    </li>
+                                                    
                                                 </ul>
                                                 <div class="tab-content">
+                                                    <!--tab-pane-->
                                                     <div class="tab-pane active" id="tab_1_11">
                                                         <div class="portlet-body">
                                                             <table class="table table-striped table-bordered table-advance table-hover">
                                                                 <thead>
                                                                     <tr>
-                                                                        <th>
-                                                                            <i class="fa fa-calendar"></i> التاريخ </th>
-                                                                        <th class="hidden-xs">
-                                                                            <i class="fa fa-medkit"></i> نوع الخدمة </th>
-                                                                        <th>
-                                                                            <i class="fa fa-stethoscope"></i> الحالة الصحية </th>
-                                                                        
+                                                                        <th><i class="fa fa-medkit"></i>    اسم التقرير     </th>
+                                                                        <th>   <i class="fa fa-calendar"></i>  تاريخ التقرير   </th>
+                                                                        <th> <i class="fa fa-medkit"></i>      نوع التقرير   </th>
+                                                                        <th><i class="fa fa-stethoscope"></i>  الطبيب   </th>
+                                                                        <th><i class="fa fa-file"></i>   الملف       </th>
                                                                     </tr>
                                                                 </thead>
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="javascript:;"> 23 نوفمبر 2024 </a>
-                                                                        </td>
-                                                                        <td class="hidden-xs"> فحص طبي شامل </td>
-                                                                        <td> مستقر
-                                                                            <span class="label label-success label-sm"> تم الرعاية </span>
-                                                                        </td>
-                                                                       
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                
-                                            
-                                                    <!--tab-pane-->
-                                                    <div class="tab-pane" id="tab_1_22">
-                                                        <div class="portlet-body">
-                                                            <table class="table table-striped table-bordered table-advance table-hover">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>
-                                                                            <i class="fa fa-file"></i> التقرير </th>
-                                                                        <th>
-                                                                            <i class="fa fa-calendar"></i> تاريخ التقرير </th>
-                                                                        <th>
-                                                                            <i class="fa fa-medkit"></i> نوع التقرير </th>
-                                                                        
-                                                                    </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="javascript:;"> تقرير الفحص الطبي الشامل </a>
-                                                                        </td>
-                                                                        <td> 23 نوفمبر 2024 </td>
-                                                                        <td> فحص شامل </td>
-                                                                       
-                                                                    </tr>
-                                                                    
-                                                                   
+                                                                    @foreach ($reports as $report)
+                                                                        <tr>
+                                                                            <td>{{ $report->report_name }}</td>
+                                                                            <td>{{ $report->report_date }}</td>
+                                                                            <td> {{ $report->report_type }}</td>
+                                                                            <td> {{ $report->doctor->user->name }}</td>
+
+                                                                            <td>
+                                                                                <a href="{{ asset('storage/' . $report->file_path) }}" target="_blank">عرض الملف</a>
+                                                                            </td>
+                                                                        </tr>
+                                                                    @endforeach
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -239,6 +208,11 @@
                                                 <li>
                                                     <a data-toggle="tab" href="#tab_3-3">
                                                         <i class="fa fa-lock"></i> تغير كلمة المرور  </a>
+                                                </li>
+
+                                                <li>
+                                                    <a data-toggle="tab" href="#tab_4-4">
+                                                        <i class="fa fa-file"></i>  رفع تقارير طبية  </a>
                                                 </li>
                                                 
                                             </ul>
@@ -290,13 +264,7 @@
                                                             <label class="control-label">تاريخ الامراض المزمنة</label>
                                                             <input type="text" name="chronic_diseases_history" value="{{ $patient->chronic_diseases_history }}" placeholder="مثل السكري و ارتفاع الضغط" class="form-control" />
                                                         </div>
-                                                    
-                                                        <div class="form-group">
-                                                            <label class="control-label">التقارير السابقة</label>
-                                                            <input type="file" name="previous_report_file" class="form-control" />
-                                                        </div>
-                                                    
-                                                       
+                                                
                                                     
                                                         <div class="margiv-top-10">
                                                             <button type="submit" class="btn green">حفظ التغيرات</button>
@@ -362,7 +330,57 @@
 
         <button type="submit" class="btn btn-primary">تغيير كلمة المرور</button>
     </form>
-     </div>
+     </div>  
+
+     <div id="tab_4-4" class="tab-pane">
+        <form action="{{ route('patient.profile.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <!-- اسم التقرير -->
+            <div class="form-group">
+                <label class="control-label">اسم التقرير</label>
+                <input type="text" class="form-control" name="report_name" required>
+            </div>
+        
+            <!-- تاريخ التقرير -->
+            <div class="form-group">
+                <label class="control-label">تاريخ التقرير</label>
+                <input type="date" class="form-control" name="report_date" required>
+            </div>
+        
+            <!-- نوع التقرير -->
+            <div class="form-group">
+                <label class="control-label">نوع التقرير</label>
+                <input type="text" class="form-control" name="report_type" required>
+            </div>
+        
+            <!-- اختيار الطبيب -->
+            <div class="form-group">
+                <label class="control-label">اختر الطبيب</label>
+                <select class="form-control" name="doctor_user_id" required>
+                    <option value="">-- اختر الطبيب --</option>
+                    @foreach($doctors as $doctor)
+                        <option value="{{ $doctor->id }}">{{ $doctor->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+        
+            <!-- زر رفع الملفات -->
+            <div class="form-group">
+                <label class="control-label">رفع التقرير</label>
+                <input type="file" name="file" class="form-control" required>
+            </div>
+        
+            <!-- الأزرار -->
+            <div class="form-actions">
+                <button type="submit" class="btn btn-success">
+                    <i class="fa fa-check"></i> إرسال التقرير
+                </button>
+                <button type="reset" class="btn btn-outline-secondary">إلغاء</button>
+            </div>
+        </form>
+        
+      
+       </div>
                                                 
                                                 
                                                        

@@ -145,15 +145,16 @@
            
                         <div class="page-bar">
                             <ul class="page-breadcrumb">
+                               
                                 <li>
-                                    <a href="{{ route('admin.services') }}">إدارة الخدمات </a>
+                                    
+                                    <i class="icon-home"></i>
+                                    <a href="{{ route('admin.dashboard') }}">الصفحة الرئيسية </a>
+                                    <i class="fa fa-angle-left"></i>
+                                   
                                 </li>
                                 <li>
-                                    <i class="fa fa-angle-left"></i>
-                                 
-                                    <a href="{{ route('admin.dashboard') }}">الصفحة الرئيسية </a>
-                                    <i class="icon-home"></i>
-                                   
+                                    <a href="{{ route('admin.services') }}">إدارة الخدمات </a>
                                 </li>
                             </ul>
                         </div>
@@ -220,9 +221,9 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($services as $service)
+                                        @foreach($services  as $index =>  $service)
                                             <tr >   
-                                               <td>{{$loop->iteration}}</td>
+                                               <td>{{$index + 1}}</td>
                                                 <td> {{$service->name}} </td>
                                                 <td> {{$service->medical_specialization}} </td>
                                                 <td>{{$service->description}} </td>

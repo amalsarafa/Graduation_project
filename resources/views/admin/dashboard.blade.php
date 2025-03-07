@@ -106,7 +106,7 @@
                             <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20">
                                 <h4 class="widget-thumb-heading">  إجمالي عدد الاطباء</h4>
                                 <div class="widget-thumb-wrap">
-                                    <i class="widget-thumb-icon bg-red fa fa-check-circle-o"></i></i>
+                                    <i class=" widget-thumb-icon bg-blue icon-user"></i>
                                     <div class="widget-thumb-body">
                                         <span class="widget-thumb-subtitle">عدد الأطباء</span>
                                         <span class="widget-thumb-body-stat" data-counter="counterup" >{{$doctorsCount}}</span>
@@ -136,7 +136,14 @@
                             </div>
                             <div class="portlet-body">
                                
-                                
+                                <a href="{{route('website.home')}}" class="icon-btn">
+                                    <i class="fa fa"></i>
+                                    <div>  الموقع الرئيسي </div>
+                                </a>
+                                <a href="{{route('admin.profile')}}" class="icon-btn">
+                                    <i class="icon-user"></i>
+                                    <div> ملفي الشخصي  </div>
+                                </a>
 
                             <a href="{{route('admin.doctors')}}" class="icon-btn">
                                     <i class="fa fa-user-md"></i>
@@ -147,26 +154,16 @@
                                     <i class="fa fa-wheelchair"></i>
                                     <div> قسم المرضى </div>
                                 </a>
-                                <a href="{{route('website.home')}}" class="icon-btn">
-                                    <i class="fa fa"></i>
-                                    <div>  الموقع الرئيسي </div>
-                                </a>
-                               
-                                <a href="{{route('admin.profile')}}" class="icon-btn">
-                                    <i class="icon-user"></i>
-                                    <div> ملفي الشخصي  </div>
-                                </a>
-
-                                <a href="{{route('admin.contact-messages')}}" class="icon-btn">
-                                    <i class="icon-bell"></i>
-                                    <div>  اتصل بنا  </div>
-                                </a>
-                               
                                 
                                 <a href="{{route('admin.services')}}" class="icon-btn">
                                     <i class="icon-folder"></i>
                                     <div> ادارة الخدمات  </div>
                                 </a>
+                                <a href="{{route('admin.contact-messages')}}" class="icon-btn">
+                                    <i class="icon-bell"></i>
+                                    <div>  اتصل بنا  </div>
+                                </a>
+                               
                                 
                             </div>
                         </div>

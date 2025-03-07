@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use App\Models\PatientReservation;
 use App\Models\DoctorRating;
 use App\Models\Doctor;
+use App\Models\Patient;
+use Illuminate\Support\Facades\Storage;
+use App\Models\MedicalReport;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 class PatientRervervationController extends Controller
 {
@@ -15,65 +19,72 @@ class PatientRervervationController extends Controller
      */
     public function index()
     {
+
+        //تقييم طبيب
         $doctors = User::where('role', 'doctor')->get();
         $reservations=PatientReservation::paginate(10);
         return view('patient.Reservations.index',compact(
             'reservations','doctors'
          ));
     }
+
+
     public function store(Request $request)
     {
-         
+        $request->validate([
+            'doctor_user_id' => 'required|exists:users,id',
+            'comment' => 'nullable|string',
+        ]);
+    
+        $patient = Patient::where('user_id', Auth::id())->first();
+    
+        if (!$patient) {
+            return back()->withErrors(['error' => 'لم يتم العثور على بيانات المريض']);
+        }
+        $doctor = Doctor::where('user_id', $request->doctor_user_id)->first();
+
+        if (!$doctor) {
+            return back()->withErrors(['error' => 'لم يتم العثور على بيانات الطبيب']);
+        }
+    
+        // إدخال التقييم في قاعدة البيانات
+        DoctorRating::create([
+            'patient_id' => $patient->id,
+            'doctor_id' => $doctor->id, 
+            'rating' => 5, 
+            'comment' => $request->comment,
+        ]);
+
+    
+        return back()->with('success', 'تم إرسال تقييمك بنجاح!');
+    }
+    
+
+public function storeReport(Request $request)
+{
     $request->validate([
-        'doctor_id' => 'required|exists:users,id',
-        'date' => 'required|date',
-        'time' => 'required',
-        'service' => 'required|string|max:255',
+        'report_name' => 'required|string|max:255',
+        'report_date' => 'required|date',
+        'report_type' => 'required|string|max:255',
+        'doctor_id' => 'required|exists:users,id', 
+        'file' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048', // دعم أنواع محددة
     ]);
 
-    // التحقق من عدم وجود حجز سابق في نفس التاريخ والوقت لنفس الطبيب
-    $existingReservation = PatientReservation::where('doctor_id', $request->doctor_id)
-        ->where('date', $request->date)
-        ->where('time', $request->time)
-        ->exists();
-
-    if ($existingReservation) {
-        return response()->json(['error' => 'هذا الطبيب لديه حجز بالفعل في هذا الوقت. يرجى اختيار وقت آخر.'], 422);
+    if ($request->hasFile('file')) {
+        $filePath = $request->file('file')->store('medical_reports', 'public');
+    } else {
+        return back()->withErrors(['error' => 'لم يتم رفع الملف']);
     }
 
-    // حفظ الحجز في قاعدة البيانات
-    PatientReservation::create([
-        'patient_id' => auth()->id(),
+    MedicalReport::create([
+        'report_name' => $request->report_name,
+        'report_date' => $request->report_date,
+        'report_type' => $request->report_type,
+        'patient_id' => auth()->id(), 
         'doctor_id' => $request->doctor_id,
-        'date' => $request->appointment_date,
-        'time' => $request->appointment_time,
-        'service' => $request->service,
-        'status' => 'pending',
+        'file_path' => $filePath,
     ]);
 
-    return response()->json(['message' => 'تم الحجز بنجاح!'], 201);
+    return back()->with('success', 'تم رفع التقرير بنجاح');
 }
-
-
-
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

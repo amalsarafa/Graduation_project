@@ -1,5 +1,5 @@
 @extends('layout.patient')
-@section('title', 'حجوزاتي')
+@section('title', 'تقييم طبيب ')
 @section('head_page level plugins')
 <!-- BEGIN PAGE LEVEL PLUGINS -->
         <link href="{{asset('assets/global/plugins/datatables/datatables.min.css')}}" rel="stylesheet" type="text/css" />
@@ -17,290 +17,106 @@
         <link href="{{asset('assets/global/plugins/jquery-file-upload/blueimp-gallery/blueimp-gallery.min.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{asset('assets/global/plugins/jquery-file-upload/css/jquery.fileupload.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{asset('assets/global/plugins/jquery-file-upload/css/jquery.fileupload-ui.css')}}" rel="stylesheet" type="text/css" />
+
 <!-- END PAGE LEVEL PLUGINS -->
 @endsection
 @section('PAGE LEVEL STYLES ')
 @endsection
 @section('content')
- <!-- BEGIN CONTENT -->
- <div class="page-content-wrapper">
-                <!-- BEGIN CONTENT BODY -->
-                <div class="page-content">
-                    <!-- BEGIN PAGE HEADER-->
-                    <!-- BEGIN THEME PANEL -->
-                    <div class="theme-panel">
-                      
-                      
-                    </div>
-                    <!-- END THEME PANEL -->
-                    <h3 class="page-title"> 
-                        <small></small>
-                    </h3>
-                    <div class="page-bar">
-                        <ul class="page-breadcrumb">
-                            <li>
-                                <a href="{{route('patient.reservations')}}">حجوزاتي </a>
-                            </li>
-                            <li>
-                                <i class="fa fa-angle-left"></i>
-                             
-                                <a href="{{route('patient.dashboard')}}">الصفحة الرئيسية </a>
-                                <i class="icon-home"></i>
-                               
-                            </li>  
-                        </ul>
-                            </div>
-                            @if(session('success'))
-                    <div class="alert alert-success">
-                       
-                        <span>{{ session('success') }}</span>
-                        <button onclick="this.parentElement.style.display='none';">x</button>
-                       
-                    </div>
-                @endif
-                @if($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
+<div class="page-content-wrapper">
+    <!-- BEGIN CONTENT BODY -->
+    <div class="page-content">
+        <!-- BEGIN PAGE HEADER-->
+        <!-- BEGIN THEME PANEL -->
+        <div class="theme-panel">
+          
+          
+        </div>
+        <!-- END THEME PANEL -->
+        <h3 class="page-title"> 
+            <small></small>
+        </h3>
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <i class="icon-home"></i>
+                    <a href="{{route('patient.dashboard')}}">الصفحة الرئيسية </a>
+                    <i class="fa fa-angle-left"></i>
+                 
+                   
+                </li>
+                
+                <li>
+                    <a href="{{route('patient.reservations')}}">تقييم طبيب  </a>
+                </li>
+               
+               
+            </ul>
+           
+                </div>
+                @if(session('success'))
+                <div class="alert alert-success">
+                    <span>{{ session('success') }}</span>
+                    <button onclick="this.parentElement.style.display='none';">x</button>
                 </div>
             @endif
-                    <!-- END PAGE HEADER-->
-                    <div class="row">
-                        <div class="col-md-12">
-                            <form class="form-horizontal form-row-seperated" action="#">
-                                <div class="portlet">
-                                    <div class="portlet-title">
-                                        <div class="caption">
-                                    
-                                    </div>
-                                    <div class="portlet-body">
-                                        <div class="tabbable-bordered">
-                                            <ul class="nav nav-tabs">
-                                                <li class="active">
-                                                    <a href="#tab_reports" data-toggle="tab">
-                                                        الحجوزات  
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#tab_patient_management" data-toggle="tab">
-                                                      احجز خدمتك 
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#tab_doctor_reviews" data-toggle="tab">
-                                                      تقييم الخدمة  
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#tab_medical_reports" data-toggle="tab">
-                                                      التقارير الطبية  
-                                                    </a>
-                                                </li>
-                                            
-                                            </ul>
-                                            
-                                            <div class="tab-content">
-                                                <div class="tab-pane active" id="tab_reports">
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <!-- BEGIN EXAMPLE TABLE PORTLET-->
-                                                            <div class="portlet light portlet-fit ">
-                                                                <div class="portlet-title">
-                                                                    
-                                                                    
-                                                                </div>
-                                                                <div class="portlet-body">
-                                                                 
-                                                                    <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th> التاريخ </th>
-                                                                                <th> الوقت  </th>
-                                                                                <th> الخدمة </th>
-                                                                                <th> الطبيب  </th>
-                                                                                <th> الحالة  </th>
-                                                                                <th> تعديل / حذف  </th>
-                                                                               
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                        @foreach($reservations as $reservation)
-                                                                            <tr>
-                                                                                <td> {{$reservation->date}} </td>
-                                                                                <td> {{$reservation->time}}</td>
-                                                                                <td> {{$reservation->service}} </td>
-                                                                                <td>  {{$reservation->doctor->user->name}} </td>
-                                                                            
-                                                                                <td>  @if($reservation->status == 'confirmed')
-                                                                                  <span class="label label-sm label-success">مؤكد</span>
-                                                                                   @elseif($reservation->status == 'pending')
-                                                                                   <span class="label label-sm label-warning">قيد الانتظار</span>
-                                                                                    @elseif($reservation->status == 'cancelled')
-                                                                                    <span class="label label-sm label-danger">ملغي</span>
-                                                                                     @endif
-                                                                                  </td>
-                                                                                <td>
-                                                                                    <a class="edit" href="javascript:;"> تعديل </a>
-                                                                                    /
-                                                                                    <a class="delete" href="javascript:;"> حذف </a>
-                                                                                </td>
-                                                                            </tr>
-                                                                           @endforeach
-                                                                            
-                                                                        </tbody>
-                                                                    </table>
-                                                                    {{$reservations->links()}}
-                                                                </div>
-                                                            </div>
-                                                            <!-- END EXAMPLE TABLE PORTLET-->
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="tab-pane" id="tab_patient_management">
-                                                    <div class="caption">
-                                                        <span class="caption-subject font-dark sbold uppercase">احجز خدمتك </span>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label class="control-label">التاريخ </label>
-                                                        <div>
-                                                            <div class="input-group date date-picker" data-date-format="dd-mm-yyyy">
-                                                                <input type="text" class="form-control" readonly="" name="datepicker">
-                                                                <span class="input-group-btn">
-                                                                    <button class="btn default" type="button">
-                                                                        <i class="fa fa-calendar"></i>
-                                                                    </button>
-                                                                </span>
-                                                            </div>
-                                                            <!-- /input-group -->
-                                                            <span class="help-block"> اختر التاريخ </span>
-                                                        </div>
-                                                     
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label class="control-label">الوقت</label>
-                                                        <div>
-                                                            <div class="input-group time time-picker" data-time-format="hh:mm A">
-                                                                <input type="text" class="form-control" name="timepicker" placeholder="اختر الوقت">
-                                                                <span class="input-group-btn">
-                                                                    <button class="btn default" type="button">
-                                                                        <i class="fa fa-clock-o"></i>
-                                                                    </button>
-                                                                </span>
-                                                            </div>
-                                                            <!-- /input-group -->
-                                                            <span class="help-block"> اختر الوقت </span>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <div class="form-group">
-                                                                
-                                                        <label class=" control-label">الخدمات  </label>
-                                                        <div >
-                                                            <select class="form-control">
-                                                 
-                                                                <option>تمريص منزلي </option>
-                                                                <option>زيارات طبيب</option>
-                                                                <option>العلاج الطبيعي </option>
-                                                                <option>الفحوصات المخبرية </option>
-                                                                <option>الاستشارة الصحية عن بعد </option>
-                                                            </select>
-                                                        </div>
-                                                       
-                                                    </div>
-                                                    
-                                                    <div class="form-actions">
-                                                        <div class="row">
-                                                            <div >
-                                                                <button type="submit" class="btn green">
-                                                                    <i class="fa fa-check"></i> احجز الان  </button>
-                                                                <button type="button" class="btn btn-outline grey-salsa">الغاء </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                            <!-- END EXAMPLE TABLE PORTLET-->
-                                                        </div>
-                                                        
-                                                     <div class="tab-pane" id="tab_doctor_reviews"> 
-
-                                                        <div class="caption">
-                                                            <span class="caption-subject font-dark sbold uppercase">أضف تقييمك</span>
-                                                        </div>
-                                                        <form class="tab_doctor_reviews-form">
-                                                    
-                                                            <div class="form-group">
-                                                              
-                                                                <label class="control-label">اسمك :</label>
-                                                                <div >
-                                                                    <input type="password" class="form-control" placeholder="ادخل اسمك " readonly=""> </div>
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <label class="control-label">تعليقك : </label>
-                                                                <div >
-                                                                    <textarea class="form-control" rows="3" placeholder="أدخل تعليقك"></textarea>
-                                                                </div>
-                                                            </div>
-                                                            
-                                                                <div class="row">
-                                                                    <div >
-                                                                        <button type="submit" class="btn green">
-                                                                            <i class="fa fa-check"></i> ارسال التقييم </button>
-                                                                        <button type="button" class="btn btn-outline grey-salsa">الغاء </button>
-                                                                    </div>
-                                                                </div>
-                                                            
-                                                        </form>
-                                                    </div>
-                                                    
-                                                     <div class="tab-pane" id="tab_medical_reports"> 
-                                                        <div class="form-group">
-                                                              
-                                                            <label class="control-label">اسم الطبيب او الممرض المسؤول </label>
-                                                            <div >
-                                                                <input type="password" class="form-control" placeholder="اسم الطبيب  " readonly=""> </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                        <span class="btn green fileinput-button">
-                                                            <i class="fa fa-plus"></i>
-                                                            <span> ارفع تقاريرك  </span>
-                                                            <input type="file" name="files[]" multiple=""> </span>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="control-label">ملاحظات  </label>
-                                                            <div >
-                                                                <textarea class="form-control" rows="3" placeholder="تفاصيل و ملاحظات خاصة "></textarea>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-actions">
-                                                            <div class="row">
-                                                                <div >
-                                                                    <button type="submit" class="btn green">
-                                                                        <i class="fa fa-check"></i> ارسال </button>
-                                                                    <button type="button" class="btn btn-outline grey-salsa">الغاء </button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                     </div>
-                                                    </div>
-                                                </div>
-                                              
-                                               
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- END CONTENT BODY -->
+            @if($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
             </div>
-            <!-- END CONTENT -->    
+        @endif
+        <!-- END PAGE HEADER-->
+        <div class="container">
+            <h2 class="text-center">أضف تقييمك</h2>
+            <hr>
+            
+            <div class="panel panel-default">
+                <div class="panel-heading">إرسال تقييم جديد</div>
+                <div class="panel-body">
+                    <form action="{{ route('patient.reservations.store') }}" method="POST">
+                        @csrf
+                    
+                        <!-- اختيار الطبيب -->
+                        <div class="form-group">
+                            <label class="control-label">اختر الطبيب</label>
+                            <select class="form-control" name="doctor_user_id" required>
+                                <option value="">-- اختر الطبيب --</option>
+                                @foreach($doctors as $doctor)
+                                    <option value="{{ $doctor->id }}">{{ $doctor->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    
+                        <!-- إدخال التقييم -->
+                        <div class="form-group">
+                            <label class="control-label">تعليقك </label>
+                            <textarea class="form-control" name="comment" rows="3" placeholder="أدخل تعليقك"></textarea>
+                        </div>
+                    
+                        <!-- زر الإرسال -->
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fa fa-check"></i> إرسال التقييم
+                            </button>
+                            <button type="reset" class="btn btn-outline-secondary">إلغاء</button>
+                        </div>
+                    
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <a href="javascript:;" class="page-quick-sidebar-toggler">
+            <i class="icon-login"></i>
+        </a>
+        
+        <!-- END QUICK SIDEBAR -->
+    </div>
+<!-- END CONTENT --> 
 @endsection
 @section('PAGE LEVEL PLUGINS')
  <!-- BEGIN PAGE LEVEL PLUGINS -->

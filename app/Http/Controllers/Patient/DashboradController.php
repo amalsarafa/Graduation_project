@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Appointment;
 use App\Models\Patient;
+use App\Models\MedicalReport;
+use App\Models\PatientReservation;
+
 class DashboradController extends Controller
 {
     /**
@@ -13,8 +16,11 @@ class DashboradController extends Controller
      */
     public function index()
     {  
-        
-        return view('patient.dashboard');
+        $patientId = auth()->id(); 
+        $reportCount = MedicalReport::where('patient_id', auth()->user()->patient->id )->count();
+        $bookingsCount = PatientReservation::where('patient_id',  auth()->user()->patient->id)->count();
+        $totalVisits = PatientReservation::where('patient_id', auth()->user()->patient->id)->count();
+        return view('patient.dashboard', compact('reportCount','bookingsCount','totalVisits'));
     }
 
     /**

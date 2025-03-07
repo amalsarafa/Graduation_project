@@ -13,18 +13,41 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Auth;
+use App\Models\PatientReservation;
 
 class DoctorProfileController extends Controller
 {
     
     public function index()
-    {$user = Auth::user();
+    {
+        $user = Auth::user();
         $doctor = $user->doctor;
-        if ($user->role !== 'doctor' || !$user->doctor) {
-            return redirect()->route('website.home'); 
-        }
-        
-        return view('doctor.profile.index', compact('doctor', 'user'));
+
+        $dailyAppointments = PatientReservation::where('doctor_id', auth()->user()->doctor->id)
+        ->whereDate('date', today())
+        ->count();
+
+        $weeklyAppointments = PatientReservation::where('doctor_id', auth()->user()->doctor->id)
+        ->whereBetween('date', [
+            now()->startOfWeek()->format('Y-m-d'),
+            now()->endOfWeek()->format('Y-m-d')
+        ])
+        ->count();
+
+    $treatmentPatients = PatientReservation::where('doctor_id', auth()->user()->doctor->id)
+        ->distinct('patient_id')
+        ->count('patient_id');
+       
+
+    // الحصول على آخر 5 حجوزات للطبيب
+    $latestReservations = PatientReservation::with('patient')
+        ->where('doctor_id', auth()->user()->doctor->id)
+        ->orderBy('created_at', 'desc') // ترتيب حسب تاريخ الإنشاء
+        ->limit(5) 
+        ->get();
+
+            return view('doctor.profile.index', compact(
+            'doctor', 'user','dailyAppointments', 'weeklyAppointments', 'treatmentPatients','latestReservations'));
         
 
     }

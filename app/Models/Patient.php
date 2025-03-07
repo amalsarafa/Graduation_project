@@ -40,4 +40,13 @@ class Patient extends Model
     {
         return $this->hasMany(Appointment::class);
     }
+    public function reservations()
+    {
+        return $this->hasMany(PatientReservation::class);
+    }
+public function medicalReports()
+{
+    return $this->hasMany(MedicalReport::class);
+}
+
 }

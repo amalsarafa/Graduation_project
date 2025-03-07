@@ -3,6 +3,8 @@
     <!--<![endif]-->
     <!-- BEGIN HEAD -->
     <head>
+        <!-- SweetAlert2 -->
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <meta charset="utf-8" />
         <title>@yield('title')</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,7 +18,6 @@
         <link href="{{asset('assets/global/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{asset('assets/global/plugins/uniform/css/uniform.default.css')}}" rel="stylesheet" type="text/css" />
         <link href="{{asset('assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css')}}" rel="stylesheet" type="text/css" />
-
         <!-- END GLOBAL MANDATORY STYLES -->
         <!-- BEGIN PAGE LEVEL PLUGINS -->
         @yield('head_page level plugins')
@@ -66,109 +67,16 @@
                             <!-- BEGIN NOTIFICATION DROPDOWN -->
                             <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
                             <li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar">                                 
-                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">                                     
-                                    <i class="icon-bell"></i>                                     
-                                    <span class="badge badge-default"> 7 </span>                                 
+                                <a data-close-others="true">                                     
+                                                                  
                                 </a>                                 
                                 <ul class="dropdown-menu">                                     
                                     <li class="external">                                         
-                                        <h3>                                             
-                                            <span class="bold">12 إشعارًا معلقًا</span> إشعارات جديدة
-                                        </h3>                                         
-                                        <a href="page_user_login_1.html">عرض الكل</a>                                     
+                                                                         
                                     </li>                                     
                                     <li>                                         
                                         <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283">                                             
-                                            <li>                                                 
-                                                <a href="javascript:;">                                                    
-                                                    <span class="time">الآن</span>                                                    
-                                                    <span class="details">                                                         
-                                                        <span class="label label-sm label-icon label-success">                                                             
-                                                            <i class="fa fa-plus"></i>                                                         
-                                                        </span> تم إضافة مواعيد جديدة للرعاية المنزلية.                                                 
-                                                    </span>                                                
-                                                </a>                                            
-                                            </li>                                            
-                                            <li>                                                 
-                                                <a href="javascript:;">                                                    
-                                                    <span class="time">3 دقائق</span>                                                    
-                                                    <span class="details">                                                         
-                                                        <span class="label label-sm label-icon label-danger">                                                             
-                                                            <i class="fa fa-bolt"></i>                                                         
-                                                        </span> مريض بحاجة إلى تدخل فوري.                                                 
-                                                    </span>                                                
-                                                </a>                                            
-                                            </li>                                            
-                                            <li>                                                 
-                                                <a href="javascript:;">                                                    
-                                                    <span class="time">10 دقائق</span>                                                    
-                                                    <span class="details">                                                         
-                                                        <span class="label label-sm label-icon label-warning">                                                             
-                                                            <i class="fa fa-bell-o"></i>                                                         
-                                                        </span> موعد مريض تأجل.                                                 
-                                                    </span>                                                
-                                                </a>                                            
-                                            </li>                                            
-                                            <li>                                                 
-                                                <a href="javascript:;">                                                    
-                                                    <span class="time">14 ساعة</span>                                                    
-                                                    <span class="details">                                                         
-                                                        <span class="label label-sm label-icon label-info">                                                             
-                                                            <i class="fa fa-bullhorn"></i>                                                         
-                                                        </span> تذكير بمراجعة الطبيب.                                                 
-                                                    </span>                                                
-                                                </a>                                            
-                                            </li>                                            
-                                            <li>                                                 
-                                                <a href="javascript:;">                                                    
-                                                    <span class="time">يومين</span>                                                    
-                                                    <span class="details">                                                         
-                                                        <span class="label label-sm label-icon label-danger">                                                             
-                                                            <i class="fa fa-bolt"></i>                                                         
-                                                        </span> تأكيد موعد الجلسة العلاجية.                                                 
-                                                    </span>                                                
-                                                </a>                                            
-                                            </li>                                            
-                                            <li>                                                 
-                                                <a href="javascript:;">                                                    
-                                                    <span class="time">3 أيام</span>                                                    
-                                                    <span class="details">                                                         
-                                                        <span class="label label-sm label-icon label-danger">                                                             
-                                                            <i class="fa fa-bolt"></i>                                                         
-                                                        </span> تنبيه بخصوص مستوى الأدوية.                                                 
-                                                    </span>                                                
-                                                </a>                                            
-                                            </li>                                            
-                                            <li>                                                 
-                                                <a href="javascript:;">                                                    
-                                                    <span class="time">4 أيام</span>                                                    
-                                                    <span class="details">                                                         
-                                                        <span class="label label-sm label-icon label-warning">                                                             
-                                                            <i class="fa fa-bell-o"></i>                                                         
-                                                        </span> تحذير بخصوص موعد الفحص القادم.                                                 
-                                                    </span>                                                
-                                                </a>                                            
-                                            </li>                                            
-                                            <li>                                                 
-                                                <a href="javascript:;">                                                    
-                                                    <span class="time">5 أيام</span>                                                    
-                                                    <span class="details">                                                         
-                                                        <span class="label label-sm label-icon label-info">                                                             
-                                                            <i class="fa fa-bullhorn"></i>                                                         
-                                                        </span> إشارة لفحص دوري جديد.                                                 
-                                                    </span>                                                
-                                                </a>                                            
-                                            </li>                                            
-                                            <li>                                                 
-                                                <a href="javascript:;">                                                    
-                                                    <span class="time">9 أيام</span>                                                    
-                                                    <span class="details">                                                         
-                                                        <span class="label label-sm label-icon label-danger">                                                             
-                                                            <i class="fa fa-bolt"></i>                                                         
-                                                        </span> فشل في رفع تقارير طبية.                                                 
-                                                    </span>                                                
-                                                </a>                                            
-                                            </li>                                         
+                                                                           
                                         </ul>                                     
                                     </li>                                 
                                 </ul>                             
@@ -177,203 +85,24 @@
                             <!-- BEGIN INBOX DROPDOWN -->
                             <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
                             <li class="dropdown dropdown-extended dropdown-inbox" id="header_inbox_bar">
-                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                    <i class="icon-envelope-open"></i>
-                                    <span class="badge badge-default"> 4 </span>
+                                <a  data-close-others="true">
+                                    
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li class="external">
-                                        <h3>لديك
-                                            <span class="bold">7 رسائل جديدة</span>
-                                        </h3>
-                                        <a href="app_inbox.html">عرض الكل</a>
-                                    </li>
-                                    <li>
-                                        <ul class="dropdown-menu-list scroller" style="height: 275px;" data-handle-color="#637283">
-                                            <li>
-                                                <a href="#">
-                                                    <span class="photo">
-                                                        <img src="{{asset('assets/layouts/layout3/img/avatar2.jpg')}}" class="img-circle" alt="">
-                                                    </span>
-                                                    <span class="subject">
-                                                        <span class="from">د. ليزا وونغ</span>
-                                                        <span class="time">الآن</span>
-                                                    </span>
-                                                    <span class="message">
-                                                        تم تحديث نتائج تحاليلك. يرجى مراجعة الطبيب لتفسير النتائج.
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <span class="photo">
-                                                        <img src="{{asset('assets/layouts/layout3/img/avatar3.jpg')}}" class="img-circle" alt="">
-                                                    </span>
-                                                    <span class="subject">
-                                                        <span class="from">د. ريتشارد دو</span>
-                                                        <span class="time">منذ 16 دقيقة</span>
-                                                    </span>
-                                                    <span class="message">
-                                                        تذكير بمراجعة علاجك الشهري. لا تنسى تناول الأدوية كما هو موصوف.
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <span class="photo">
-                                                        <img src="{{asset('assets/layouts/layout3/img/avatar1.jpg')}}" class="img-circle" alt="">
-                                                    </span>
-                                                    <span class="subject">
-                                                        <span class="from">د. بوب نيلسون</span>
-                                                        <span class="time">منذ ساعتين</span>
-                                                    </span>
-                                                    <span class="message">
-                                                        إشعار بخصوص موعدك القادم مع طبيب القلب. الرجاء تأكيد الموعد.
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <span class="photo">
-                                                        <img src="{{asset('assets/layouts/layout3/img/avatar2.jpg')}}" class="img-circle" alt="">
-                                                    </span>
-                                                    <span class="subject">
-                                                        <span class="from">د. ليزا وونغ</span>
-                                                        <span class="time">منذ 40 دقيقة</span>
-                                                    </span>
-                                                    <span class="message">
-                                                        تذكير بإجراء الفحوصات الدورية الخاصة بالسكري. يرجى الالتزام بالفحص السنوي.
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <span class="photo">
-                                                        <img src="{{asset('assets/layouts/layout3/img/avatar3.jpg')}}" class="img-circle" alt="">
-                                                    </span>
-                                                    <span class="subject">
-                                                        <span class="from">د. ريتشارد دو</span>
-                                                        <span class="time">منذ 46 دقيقة</span>
-                                                    </span>
-                                                    <span class="message">
-                                                        تنبيه: نتائج فحص الضغط تحتاج إلى متابعة. نوصي بحجز موعد في أقرب وقت.
-                                                    </span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
+                                        
                                 </ul>
                             </li>
                             <!-- END INBOX DROPDOWN -->
                             <!-- BEGIN TODO DROPDOWN -->
                             <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
                             <li class="dropdown dropdown-extended dropdown-tasks" id="header_task_bar">
-                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                    <i class="icon-calendar"></i>
-                                    <span class="badge badge-default"> 3 </span>
+                                <a data-close-others="true">
+                        
                                 </a>
                                 <ul class="dropdown-menu extended tasks">
                                     <li class="external">
-                                        <h3>لديك
-                                            <span class="bold">12 مهمة معلقة</span>
-                                        </h3>
-                                        <a href="app_todo.html">عرض الكل</a>
-                                    </li>
-                                    <li>
-                                        <ul class="dropdown-menu-list scroller" style="height: 275px;" data-handle-color="#637283">
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="task">
-                                                        <span class="desc">تناول الأدوية الموصوفة</span>
-                                                        <span class="percent">100%</span>
-                                                    </span>
-                                                    <span class="progress">
-                                                        <span style="width: 100%;" class="progress-bar progress-bar-success" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-                                                            <span class="sr-only">مكتمل 100%</span>
-                                                        </span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="task">
-                                                        <span class="desc">حجز موعد متابعة مع الطبيب</span>
-                                                        <span class="percent">65%</span>
-                                                    </span>
-                                                    <span class="progress">
-                                                        <span style="width: 65%;" class="progress-bar progress-bar-danger" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">
-                                                            <span class="sr-only">مكتمل 65%</span>
-                                                        </span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="task">
-                                                        <span class="desc">إجراء الفحوصات الدورية</span>
-                                                        <span class="percent">85%</span>
-                                                    </span>
-                                                    <span class="progress">
-                                                        <span style="width: 85%;" class="progress-bar progress-bar-success" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
-                                                            <span class="sr-only">مكتمل 85%</span>
-                                                        </span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="task">
-                                                        <span class="desc">تحديث البيانات الطبية</span>
-                                                        <span class="percent">40%</span>
-                                                    </span>
-                                                    <span class="progress">
-                                                        <span style="width: 40%;" class="progress-bar progress-bar-warning" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">
-                                                            <span class="sr-only">مكتمل 40%</span>
-                                                        </span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="task">
-                                                        <span class="desc">مراجعة خطة العلاج مع الطبيب</span>
-                                                        <span class="percent">58%</span>
-                                                    </span>
-                                                    <span class="progress">
-                                                        <span style="width: 58%;" class="progress-bar progress-bar-info" aria-valuenow="58" aria-valuemin="0" aria-valuemax="100">
-                                                            <span class="sr-only">مكتمل 58%</span>
-                                                        </span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="task">
-                                                        <span class="desc">مراجعة نتائج الفحوصات الطبية</span>
-                                                        <span class="percent">90%</span>
-                                                    </span>
-                                                    <span class="progress">
-                                                        <span style="width: 90%;" class="progress-bar progress-bar-success" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
-                                                            <span class="sr-only">مكتمل 90%</span>
-                                                        </span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:;">
-                                                    <span class="task">
-                                                        <span class="desc">زيارة الطبيب الاختصاصي</span>
-                                                        <span class="percent">75%</span>
-                                                    </span>
-                                                    <span class="progress progress-striped">
-                                                        <span style="width: 75%;" class="progress-bar progress-bar-important" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-                                                            <span class="sr-only">مكتمل 75%</span>
-                                                        </span>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
+                                        
                                 </ul>
                             </li>
                             <!-- END TODO DROPDOWN -->
@@ -393,8 +122,8 @@
                                             <i class="icon-user"></i> ملفي  </a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('patient.reservations') }}">
-                                            <i class="icon-calendar"></i> مواعيدي </a>
+                                        <a href="{{route('patient.reserve')}}">
+                                            <i class="icon-calendar"></i> حجوزاتي </a>
                                     </li>
                                  
                                     <li>
@@ -460,19 +189,28 @@
                             </a>
                             
                                 </li>
-                               
+                                <li class="nav-item  ">
+                                    <a href="{{route('patient.reserve')}}" class="nav-link nav-toggle">
+                                       <i class="icon-calendar"></i>
+                                        <span class="title">الحجوزات </span>
+                                        <span class="arrow"></span>
+                                    </a>
+                               </li>
+                               <li class="nav-item  ">
+                                <a href="{{route('patient.bookservice')}}" class="nav-link nav-toggle">
+                                    <i class="fa fa-clock-o"></i>
+                                    <span class="title">احجز خدمة </span>
+                                    <span class="arrow"></span>
+                                </a>
+                           </li>
                         <li class="nav-item  ">
                              <a href="{{route('patient.reservations')}}" class="nav-link nav-toggle">
-                                <i class="icon-calendar"></i>
-                                 <span class="title">حجوزاتي </span>
+                                <i class="fa fa-star"></i>                                 <span class="title">تقييم طبيب  </span>
                                  <span class="arrow"></span>
                              </a>
                         </li>
-                      
                        
-                        
-                        
-                        
+                     
                      <!-- END SIDEBAR MENU -->
                  </div>
                  <!-- END SIDEBAR -->

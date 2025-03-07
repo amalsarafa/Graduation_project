@@ -58,15 +58,16 @@
                         
                     <div class="page-bar">
                         <ul class="page-breadcrumb">
+                            
                             <li>
-                                <a href="{{ route('admin.profile') }}">الملف الشخصي</a>
+                                
+                                <i class="icon-home"></i>
+
+                                <a href="{{ route('admin.dashboard') }}">الصفحة الرئيسية </a>
+                                <i class="fa fa-angle-left"></i>
                             </li>
                             <li>
-                                <i class="fa fa-angle-left"></i>
-                             
-                                <a href="{{ route('admin.dashboard') }}">الصفحة الرئيسية </a>
-                                <i class="icon-home"></i>
-                               
+                                <a href="{{ route('admin.profile') }}">الملف الشخصي</a>
                             </li>
                             
                            
@@ -118,7 +119,7 @@
                                                    
                                                 </li>
                                                 <li>
-                                                    <a href="{{route('admin.profile')}}"> ملفي الشخصي </a>
+                                                    <a href="{{route('admin.doctors')}}"> إضافة أطباء </a>
                                                 </li>
                                         
                                                 <li>
@@ -135,7 +136,7 @@
                                         <div class="col-md-9">
                                             <div class="row">
                                                 <div class="col-md-8 profile-info">
-                                                    <h1 class="font-green sbold uppercase">(مدير النظام){{$admin->name}}</h1>
+                                                    <h1 class="font-green sbold uppercase">{{$admin->name}}(مدير النظام)</h1>
                                                     <p> .المسؤول عن إدارة وصيانة النظام الإلكتروني في موقع خدمات التمريض، ضمان عمل الأنظمة التقنية بسلاسة، والحفاظ على أمن بيانات المرضى وتحسين أداء الخدمات الإلكترونية</p>
                                                     <p>
                                                         <a href="{{route('website.home')}}"> www.mhwcare.com </a>
@@ -197,45 +198,26 @@
                                                             <table class="table table-striped table-bordered table-advance table-hover">
                                                                 <thead>
                                                                     <tr>
-                                                                    <th> #</th>
-                                                                        <th>
-                                                                            <i class="fa fa-briefcase"></i> المريض </th>
-                                                                        <th class="hidden-xs">
-                                                                            <i class="fa fa-question"></i> الخدمة </th>
-                                                                        <th>
-                                                                            <i class="fa fa-bookmark"></i> الحالة </th>
-                                                                        
+                                                                        <th>#</th>
+                                                                        <th><i class="fa fa-user"></i> المريض</th>
+                                                                        <th><i class="fa fa-stethoscope"></i> الطبيب</th>
+                                                                        <th class="hidden-xs"><i class="fa fa-medkit"></i> الخدمة</th>
+                                                                        <th><i class="fa fa-calendar"></i> تاريخ الحجز</th>
+                                                                        <th><i class="fa fa-clock-o"></i> موعد الحجز</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                @foreach($patients as $patient)
-                                                                    <tr>
-                                                                    <td>{{$loop->iteration}}</td>
-                                                                        <td> {{$patient->user->name}}</td>
-                                                                        <td class="hidden-xs">
-                                                                        @if($patient->services->isNotEmpty())
-                                                                           {{ $patient->services->first()->name }}
-                                                                             @else
-                                                                       غير محدد
-                                                                       @endif
-                                                                       </td>
-                                                                        <td>  
-                                                                        @if($patient->services->isNotEmpty())
-                                                        
-                                                                           @if($patient->services->first()->status == 'approved')
-                                                                            <span class="label label-sm label-success">مقبول</span>
-                                                                          @elseif($patient->services->first()->status == 'pending')
-                                                                            <span class="label label-sm label-warning">قيد الانتظار</span>
-                                                                                @elseif($patient->services->first()->status == 'rejected')
-                                                                                 <span class="label label-sm label-danger">مرفوض</span>
-                                                                                 @endif
-                                                                             @else
-                                                                       غير محدد
-                                                                       @endif
-                                                                    </td>   
-                                                                    </tr>
+                                                                    @foreach($reservations as $reservation)
+                                                                        <tr>
+                                                                            <td>{{ $loop->iteration }}</td>
+                                                                            <td>{{ $reservation->patient->user->name }}</td>
+                                                                            <td>{{ $reservation->doctor->user->name }}</td>
+                                                                            <td class="hidden-xs">{{ $reservation->service ?? 'غير محدد' }}</td>
+                                                                            <td>{{ $reservation->date }}</td>
+                                                                            <td>{{ $reservation->time }}</td>
+                                                                        </tr>
                                                                     @endforeach
-                                                                  
+                                                                </tbody>
                                                                 </tbody>
                                                             </table>
                                                         </div>

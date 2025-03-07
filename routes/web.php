@@ -8,6 +8,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\DoctorRatingController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\BookController;
 
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\AdminProfileController;
@@ -20,21 +21,25 @@ use App\Http\Controllers\Admin\TaskController;
 
 use App\Http\Controllers\Doctor\DashboardController as DoctorDashboardController;
 use App\Http\Controllers\Doctor\DoctorProfileController;
-use App\Http\Controllers\Doctor\PatientController as DoctorPatientController;
+use App\Http\Controllers\Doctor\PatientController ;
 use App\Http\Controllers\Doctor\AppointmentController;
 
 use App\Http\Controllers\Patient\DashboradController as PatientDashboardController;
 use App\Http\Controllers\Patient\PatientProfileController;
 use App\Http\Controllers\Patient\PatientRervervationController;
-
+use App\Http\Controllers\Patient\BookServiceController;
+use App\Http\Controllers\Patient\ReserveController;
 
 //website
+Route::get('/', [BookController::class, 'index'])->name('website.home');
+Route::middleware(['auth'])->group(function () {
+    Route::post('/store', [BookController::class, 'store'])->name('website.store');
+});
 Route::controller(WebsiteController::class)->group(function () {
     // Main Pages
-    Route::get('/', 'home')->name('website.home');
     Route::get('/about', 'about')->name('website.about');
     Route::get('/blog', 'blog')->name('website.blog');
-    Route::get('/contact', 'contact')->name('website.contact')->middleware('auth');
+    Route::get('/contact', 'contact')->name('website.contact');
     Route::get('/search', [SearchController::class, 'index'])->name('search');
     Route::post('/contact', [ContactController::class, 'store'])->middleware('auth');
   
@@ -137,7 +142,9 @@ Route::prefix('doctor')->name('doctor.')->middleware(['auth', RoleMiddleware::cl
     Route::post('/profile/image', [DoctorProfileController::class, 'updateImage'])->name('profile.updateImage');
     Route::put('/password/update', [DoctorProfileController::class, 'updatePassword'])->name('password.update');
 
-    Route::get('/patients', [DoctorPatientController::class, 'index'])->name('patients');
+
+    Route::get('/patients', [PatientController::class, 'index'])->name('patients');
+    
     Route::get('/appointments', [AppointmentController::class, 'index'])->name('appointments');
 });
 
@@ -151,19 +158,28 @@ Route::prefix('patient')->name('patient.')->middleware(['auth', RoleMiddleware::
     Route::get('/profile', [PatientProfileController::class, 'index'])->name('profile');
     Route::put('/profile/{id}', [PatientProfileController::class, 'update'])->name('profile.update');
     Route::post('/profile/image', [PatientProfileController::class, 'updateImage'])->name('profile.updateImage');
-    Route::put('/password/update', [PatientProfileController::class, 'updatePassword'])->name('password.update');
+    Route::post('/profile/store', [PatientProfileController::class, 'store'])->name('profile.store');
 
-    Route::get('/reservations', [PatientRervervationController::class, 'index'])->name('reservations');
-    Route::post('/reservations/store', [PatientReservationController::class, 'store'])->name('reservations.store');
     
+    Route::put('/password/update', [PatientProfileController::class, 'updatePassword'])->name('password.update');
+    
+    //rate
+    Route::get('/reservations', [PatientRervervationController::class, 'index'])->name('reservations');
+    Route::post('/reservations/store', [PatientRervervationController::class, 'store'])->name('reservations.store');
+
+    //bookservice
+    Route::get('/bookservice', [BookServiceController::class, 'index'])->name('bookservice');
+    Route::post('/bookservice/store', [BookServiceController::class, 'store'])->name('bookservice.store');
+
+    //reservation table
+    Route::get('/reserve', [ReserveController::class, 'index'])->name('reserve');
+    Route::delete('reserve/{id}', [ReserveController::class, 'destroy'])->name('reserve.destroy');
+    Route::get('reserve/{id}/edit', [ReserveController::class, 'edit'])->name('reserve.edit');
+    Route::put('reserve/{id}', [ReserveController::class, 'update'])->name('reserve.update');
+  
+
+
 });
-
-
-
-
-
-
-
 
 
 Route::get('/dashboard', function () {

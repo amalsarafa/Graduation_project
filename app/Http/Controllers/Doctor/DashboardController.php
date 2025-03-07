@@ -4,20 +4,23 @@ namespace App\Http\Controllers\Doctor;
 use App\Models\Patient;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Appointment;
+use App\Models\PatientReservation;
+use App\Models\Doctor;
+
 class DashboardController extends Controller
 {
     public function index()
 {
     $doctorId = auth()->id(); 
-     
-    $newPatients = Patient::where('created_at', '>=', now()->subMonth())->count(); // عدد المرضى الجدد آخر شهر
-    $dailyVisits = Appointment::where('doctor_id', $doctorId)->whereDate('appointment_date', today())->count(); // عدد الزيارات اليومية
-    $activePatients = Patient::whereHas('appointments', function ($query) use ($doctorId) {
-        $query->where('doctor_id', $doctorId)->where('appointment_date', '>=', now()->subMonths(3)); // المرضى النشطون خلال آخر 3 أشهر
-    })->count();
+    $totalDoctors = Doctor::count();
+     //عدد مواعيد الطبيب
+     $appointmentsCount = PatientReservation::where('doctor_id', auth()->user()->doctor->id)->count();
+     // حساب عدد المرضى الذين لديهم مواعيد مع الطبيب
+    $patientsCount = PatientReservation::where('doctor_id', auth()->user()->doctor->id)
+    ->distinct('patient_id')
+    ->count('patient_id');
 
-    return view('doctor.dashboard', compact('newPatients', 'dailyVisits', 'activePatients'));
+    return view('doctor.dashboard', compact('appointmentsCount','patientsCount','totalDoctors'));
 }
 
 

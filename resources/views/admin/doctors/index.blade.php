@@ -224,17 +224,17 @@
                    
                     <div class="page-bar">
                         <ul class="page-breadcrumb">
+                            
+                            <li>
+                                
+                                <i class="icon-home"></i>
+                                <a href="{{ route('admin.dashboard') }}">الصفحة الرئيسية </a>
+                                <i class="fa fa-angle-left"></i>
+                               
+                            </li>
                             <li>
                                 <a href="{{ route('admin.doctors') }}">قسم الاطباء </a>
                             </li>
-                            <li>
-                                <i class="fa fa-angle-left"></i>
-                             
-                                <a href="{{ route('admin.dashboard') }}">الصفحة الرئيسية </a>
-                                <i class="icon-home"></i>
-                               
-                            </li>
-                            
                            
                         </ul>
                         

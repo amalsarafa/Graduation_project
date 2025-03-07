@@ -30,7 +30,6 @@
                     </div>
                     <a href="{{route('website.contact')}}" class="nav-item nav-link">اتصل بنا </a>
                 </div>
-                <butaton type="button" class="btn text-primary ms-3" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa fa-search"></i></butaton>
                 @if(Auth::check())
                 <a href="{{ route('logout') }}" 
                   class="btn btn-danger py-2 px-4 ms-3"
@@ -128,7 +127,115 @@
                 <h5 class="fw-bold text-primary text-uppercase">احجز خدمتك الآن</h5>
                 <h1 class="mb-0">سهولة في الحجز  </h1>
             </div>
-           
+            
+            <form id="reservationForm" method="POST" action="{{ route('website.store') }}" class="bg-light p-5 rounded shadow">
+                @csrf
+                <div class="row g-3">
+                    <!-- اختيار الطبيب -->
+                    <div class="col-md-6">
+                        <label for="doctor_id" class="form-label">اختيار الطبيب</label>
+                        <select class="form-select" name="doctor_user_id" required>
+                            <option value="">-- اختر الطبيب --</option>
+                            @foreach($doctors as $doctor)
+                                <option value="{{ $doctor->id }}">{{ $doctor->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+            
+                    <!-- اختيار الخدمة -->
+                    <div class="col-md-6">
+                        <label for="service_id" class="form-label">الخدمة</label>
+                        <select class="form-select" id="service_id" name="service_id" required>
+                            <option selected disabled>اختر الخدمة</option>
+                            @foreach ($services as $service)
+                                <option value="{{ $service->id }}">{{ $service->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+            
+                    <!-- اختيار التاريخ -->
+                    <div class="col-md-6">
+                        <label for="date" class="form-label">تاريخ الخدمة</label>
+                        <input type="date" class="form-control" id="date" name="date" required>
+                    </div>
+            
+                    <!-- اختيار الوقت -->
+                    <div class="col-md-6">
+                        <label for="time" class="form-label">وقت الخدمة</label>
+                        <input type="time" class="form-control" id="time" name="time" required>
+                    </div>
+            
+                    <!-- زر الحجز -->
+                    <div class="col-12 text-center">
+                        <button type="submit" class="btn btn-primary py-2 px-4">احجز الآن</button>
+                    </div>
+                </div>
+            </form>
+            
+            <meta name="csrf-token" content="{{ csrf_token() }}">
+            
+            <script>
+                document.getElementById('reservationForm').addEventListener('submit', function(event) {
+                    event.preventDefault();
+            
+                    let isAuthenticated = {!! json_encode(auth()->check()) !!};
+            
+                    if (!isAuthenticated) {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'يجب تسجيل الدخول',
+                            text: 'يرجى تسجيل الدخول لإجراء الحجز.',
+                            confirmButtonText: 'تسجيل الدخول'
+                        }).then(() => {
+                            window.location.href = "{{ route('login') }}";
+                        });
+                        return;
+                    }
+            
+                    let formData = new FormData(this);
+            
+                    fetch(this.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        }
+                    })
+                    .then(response => response.json()) 
+                    .then(data => {
+                        if (data.error) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'خطأ!',
+                                text: data.error,
+                                confirmButtonText: 'إغلاق'
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'تم الحجز!',
+                                text: data.success,
+                                confirmButtonText: 'حسناً',
+                                timer: 3000
+                            });
+                            document.getElementById('reservationForm').reset();
+                        }
+                    })
+                    .catch(error => {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'خطأ!',
+                            text: 'حدث خطأ أثناء إرسال الحجز، حاول مرة أخرى.',
+                            confirmButtonText: 'إغلاق'
+                        });
+                        console.error('Error:', error);
+                    });
+                });
+            </script>
+            
+            
+    
+    
         </div>
     </div>
     

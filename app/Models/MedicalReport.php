@@ -17,6 +17,8 @@ class MedicalReport extends Model
         'report_type', 
         'patient_id', 
         'doctor_id',
+        'file_path',
+        
     ];
     public function patient(): BelongsTo
     {

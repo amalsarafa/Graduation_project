@@ -30,7 +30,6 @@
                     </div>
                     <a href="{{route('website.contact')}}" class="nav-item nav-link">اتصل بنا </a>
                 </div>
-                <butaton type="button" class="btn text-primary ms-3" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fa fa-search"></i></butaton>
                 @if(Auth::check())
                 <a href="{{ route('logout') }}" 
                   class="btn btn-danger py-2 px-4 ms-3"
@@ -152,14 +151,7 @@
     
                 <!-- Sidebar Start -->
                 <div class="col-lg-4">
-                    <!-- Search Form Start -->
-                    <div class="mb-5 wow slideInUp" data-wow-delay="0.1s">
-                        <div class="input-group">
-                            <input type="text" class="form-control p-3" placeholder="ابحث عن مقال">
-                            <button class="btn btn-primary px-4"><i class="bi bi-search"></i></button>
-                        </div>
-                    </div>
-                    <!-- Search Form End -->
+                    
     
                     <!-- Category Start -->
                     <div class="mb-5 wow slideInUp" data-wow-delay="0.1s">

@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Doctor;
 use App\Models\Patient;
+use App\Models\MedicalReport;
+use App\Models\PatientReservation;
+
 class PatientProfileController extends Controller
 {
     /**
@@ -21,13 +24,56 @@ class PatientProfileController extends Controller
     {
             $user = Auth::user();
             $patient = $user->patient;
-            if (!$user->patient) {
-                return redirect()->route('website.home')->with('error', 'لا يوجد ملف مريض مرتبط بهذا الحساب.');
-            }
-        
-            return view('patient.profile.index', compact('patient', 'user'));
+            $reports = MedicalReport::where('patient_id', $patient->id)->get();
+            
+            $doctors = User::where('role', 'doctor')->get();
+            $patientId = $user->patient->id; 
+           $totalVisits = PatientReservation::where('patient_id', $patientId)->count();
+
+           $weeklyVisits = PatientReservation::where('patient_id', $patientId)
+            ->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])
+             ->count();
+
+           $lastVisit = PatientReservation::where('patient_id', $patientId)
+          ->latest('created_at')
+           ->first();
+
+            return view('patient.profile.index', compact(
+                'patient', 'user','reports','doctors','patientId','totalVisits','weeklyVisits','lastVisit'));
     }
 
+    
+    public function store(Request $request)
+    {
+        $request->validate([
+            'report_name' => 'required|string|max:255',
+            'report_date' => 'required|date',
+            'report_type' => 'nullable|string|max:255',
+            'doctor_user_id' => 'required|exists:users,id',
+            'file' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048', // دعم أنواع محددة
+        ]);
+    
+        if ($request->hasFile('file')) {
+            $filePath = $request->file('file')->store('reports', 'public');
+        } else {
+            return back()->withErrors(['error' => 'لم يتم رفع الملف']);
+        }
+        $doctor = Doctor::where('user_id', $request->doctor_user_id)->first();
+        $patient = Auth::user()->patient;
+        if (!$patient) {
+            return back()->withErrors(['error' => 'لم يتم العثور على بيانات المريض']);
+        }
+        MedicalReport::create([
+            'report_name' => $request->report_name,
+            'report_date' => $request->report_date,
+            'report_type' => $request->report_type,
+            'patient_id' => $patient->id,
+            'doctor_id' => $doctor->id,
+            'file_path' => $filePath,
+        ]);
+    
+        return back()->with('success', 'تم رفع التقرير بنجاح');
+    }
    
     public function update(Request $request, $id)
 {
@@ -42,7 +88,6 @@ class PatientProfileController extends Controller
         'address' => 'nullable|string|max:500',
         'id_number' => 'nullable|string|unique:patients,id_number,' . $patient->id,
         'chronic_diseases_history' => 'nullable|string',
-        'previous_report_file' => 'nullable|file|mimes:pdf,jpg,png,jpeg',
        
     ]);
 
@@ -60,11 +105,7 @@ class PatientProfileController extends Controller
         'address' => $request->address,
     ]);
 
-    if ($request->hasFile('previous_report_file')) {
-        $filePath = $request->file('previous_report_file')->store('reports', 'public');
-        $patient->previous_report_file = $filePath;
-        $patient->save();
-    }
+    
 
     return redirect()->back()->with('success', 'تم تحديث البيانات بنجاح.');
 }

@@ -28,9 +28,9 @@
                                 <a href="#"> </a>
                             </li>
                             <li>
-                             
-                                <a href="{{route('patient.dashboard')}}">الصفحة الرئيسية </a>
                                 <i class="icon-home"></i>
+
+                                <a href="{{route('patient.dashboard')}}">الصفحة الرئيسية </a>
                                
                             </li>
                             
@@ -50,7 +50,7 @@
                                     <i class=" widget-thumb-icon bg-purple fa fa-calendar-check-o"></i>
                                     <div class="widget-thumb-body">
                                         <span class="widget-thumb-subtitle">عدد التقارير</span>
-                                        <span class="widget-thumb-body-stat" data-counter="counterup" data-value="0">0</span>
+                                        <span class="widget-thumb-body-stat" data-counter="counterup">{{ $reportCount }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -67,7 +67,7 @@
                                     <i class=" widget-thumb-icon bg-purple fa fa-calendar-check-o"></i>
                                     <div class="widget-thumb-body">
                                         <span class="widget-thumb-subtitle">عدد الزيارات</span>
-                                        <span class="widget-thumb-body-stat" data-counter="counterup" data-value="0">0</span>
+                                        <span class="widget-thumb-body-stat" data-counter="counterup" >{{$totalVisits}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -77,12 +77,12 @@
                         <div class="col-md-4">
                             <!-- BEGIN WIDGET THUMB -->
                             <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20">
-                                <h4 class="widget-thumb-heading">عدد المواعيد القادمة </h4>
+                                <h4 class="widget-thumb-heading">عدد الحجوزات القادمة </h4>
                                 <div class="widget-thumb-wrap">
                                     <i class=" widget-thumb-icon bg-purple fa fa-calendar-check-o"></i>
                                     <div class="widget-thumb-body">
-                                        <span class="widget-thumb-subtitle">عدد المواعيد</span>
-                                        <span class="widget-thumb-body-stat" data-counter="counterup" data-value="0">0</span>
+                                        <span class="widget-thumb-subtitle">عدد الحجوزات</span>
+                                        <span class="widget-thumb-body-stat" data-counter="counterup" >{{ $bookingsCount}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -93,19 +93,31 @@
                                
                             </div>
                             <div class="portlet-body">
-                            <a href="{{route('patient.reservations')}}" class="icon-btn btn-dr">
-                                    <i class="icon-calendar"></i>
-                                    <div>  حجوزاتي  </div>
-                                </a>
-                               
-                                <a href="{{route('patient.profile')}}" class="icon-btn btn-dr">
-                                    <i class="icon-user"></i>
-                                    <div> ملفي الشخصي  </div>
-                                </a>
+                                 
                                 <a href="{{route('website.home')}}" class="icon-btn">
                                     <i class="fa fa"></i>
                                     <div>  الموقع الرئيسي </div>
                                 </a>
+
+                                <a href="{{route('patient.profile')}}" class="icon-btn btn-dr">
+                                    <i class="icon-user"></i>
+                                    <div> ملفي الشخصي  </div>
+                                </a>
+                                <a href="{{route('patient.reserve')}}" class="icon-btn btn-dr">
+                                    <i class="icon-calendar"></i>
+                                    <div>   الحجوزات  </div>
+                                </a>
+                                <a href="{{route('patient.bookservice')}}" class="icon-btn btn-dr">
+                                    <i class="fa fa-clock-o"></i>
+                                     <div>   احجز خدمة  </div>
+                                </a>
+                               
+                               
+                                <a href="{{route('patient.reservations')}}" class="icon-btn btn-dr">
+                                    <i class="fa fa-star"></i> 
+                                     <div>  تقييم طبيب  </div>
+                                </a>
+                               
                             </div>
                         </div>
                             <!-- END WIDGET THUMB -->

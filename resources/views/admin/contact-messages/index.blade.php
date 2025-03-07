@@ -49,15 +49,16 @@
                     </h3>
                     <div class="page-bar">
                            <ul class="page-breadcrumb">
+                                
                                 <li>
-                                    <a href="{{ route('admin.contact-messages') }}">رسائل اتصل بنا</a>
+                                    
+                                    <i class="icon-home"></i>
+
+                                    <a href="{{ route('admin.dashboard') }}">الصفحة الرئيسية </a>
+                                    <i class="fa fa-angle-left"></i>
                                 </li>
                                 <li>
-                                    <i class="fa fa-angle-left"></i>
-                                 
-                                    <a href="{{ route('admin.dashboard') }}">الصفحة الرئيسية </a>
-                                    <i class="icon-home"></i>
-                                   
+                                    <a href="{{ route('admin.contact-messages') }}">رسائل اتصل بنا</a>
                                 </li>
                                 
                                
