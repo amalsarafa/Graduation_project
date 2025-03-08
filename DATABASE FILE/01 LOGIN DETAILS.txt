@@ -1,0 +1,16 @@
+📌 *********LOGIN DETAILS***********
+
+---------------Admin Dashborad---------
+email:admin123@gmail.com
+password:0599728952
+
+---------------Doctor Dashborad---------
+ email:halasmar@gmail.com
+password:0599728952
+
+----------------Patient Dashborad---------
+email:patient123@gmail.com
+password:0599728952
+
+
+
