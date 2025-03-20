@@ -84,14 +84,7 @@
                                 </div>
                             </div>
                         
-                            <div class="row mb-2">
-                                <div class="col-md-3 pull-right">
-                                    <label for="password" class="control-label">كلمة المرور</label>
-                                </div>
-                                <div class="col-md-8">
-                                    <input type="password" class="form-control" name="password" required placeholder="كلمة المرور">
-                                </div>
-                            </div>
+                            
                         
                             <div class="row mb-2">
                                 <div class="col-md-3 pull-right">
@@ -99,6 +92,18 @@
                                 </div>
                                 <div class="col-md-8">
                                     <input type="date" class="form-control" name="birth_date" required>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-md-3 pull-right">
+                                    <label for="gender" class="control-label">الجنس</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <select class="form-control" name="gender" required>
+                                        <option value="" disabled selected>اختر الجنس</option>
+                                        <option value="male">ذكر</option>
+                                        <option value="female">أنثى</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="row mb-2">
@@ -120,19 +125,15 @@
                             </div>
                         
                         
+                            
                             <div class="row mb-2">
                                 <div class="col-md-3 pull-right">
-                                    <label for="gender" class="control-label">الجنس</label>
+                                    <label for="password" class="control-label">كلمة المرور</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <select class="form-control" name="gender" required>
-                                        <option value="" disabled selected>اختر الجنس</option>
-                                        <option value="male">ذكر</option>
-                                        <option value="female">أنثى</option>
-                                    </select>
+                                    <input type="password" class="form-control" name="password" required placeholder="كلمة المرور">
                                 </div>
                             </div>
-                        
                             
                             <div class="row mb-2">
                                 <div class="col-md-3 pull-right">
@@ -218,7 +219,7 @@
                             <div class="portlet box green">
                                 <div class="portlet-title">
                                     <div class="caption">
-                                        <i class="fa fa-wheelchair"></i>ادارة المرضى </div>
+                                        <i class="fa fa-wheelchair"></i>إدارة المرضى </div>
                                     <div class="tools"> </div>
                                 </div>
                                 <div class="portlet-body">
@@ -256,11 +257,10 @@
                                        <td>{{ $patient->user->name }}</td>
                                       <td>{{ $patient->user->phone_number }}</td>
                                       <td>{{ $patient->user->email }}</td>
+                                      <td> {{ $patient->id_number }}</td>
                                       <td>{{ $patient->chronic_diseases_history ?? 'لا يوجد' }}</td>
-                                      <td>
-                                       
-                                         {{ $patient->id_number }}
-                    
+                                      
+                                        
                                             <td>{{ $patient->user->phone_number }}</td>
                                       <td>
                                                   

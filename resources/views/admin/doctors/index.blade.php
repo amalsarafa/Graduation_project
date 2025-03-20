@@ -86,24 +86,7 @@
 </div>
 
 
-    <div class="row mb-2">
-        <div class="col-md-3 pull-right">
-            <label class="control-label">كلمة المرور</label>
-        </div>
-        <div class="col-md-8">
-            <input type="password" name="password" class="form-control" placeholder="كلمة المرور" required>
-        </div>
-    </div>
-
-    <div class="row mb-2">
-        <div class="col-md-3 pull-right">
-            <label class="control-label">صورة الملف الشخصي</label>
-        </div>
-        <div class="col-md-8">
-            <input type="file" name="profile_image" class="form-control">
-        </div>
-    </div>
-
+   
     <div class="row mb-2">
         <div class="col-md-3 pull-right">
             <label class="control-label">الجنس</label>
@@ -125,13 +108,29 @@
             <input type="text" name="country" class="form-control" placeholder="الدولة">
         </div>
     </div>
-
     <div class="row mb-2">
         <div class="col-md-3 pull-right">
             <label class="control-label">العنوان</label>
         </div>
         <div class="col-md-8">
             <input type="text" name="address" class="form-control" placeholder="العنوان">
+        </div>
+    </div>
+    <div class="row mb-2">
+        <div class="col-md-3 pull-right">
+            <label class="control-label">صورة الملف الشخصي</label>
+        </div>
+        <div class="col-md-8">
+            <input type="file" name="profile_image" class="form-control">
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col-md-3 pull-right">
+            <label class="control-label">كلمة المرور</label>
+        </div>
+        <div class="col-md-8">
+            <input type="password" name="password" class="form-control" placeholder="كلمة المرور" required>
         </div>
     </div>
 
@@ -341,7 +340,7 @@
 
                                    </td>
                                                 <td>{{$doctor->user->address}}</td>
-                                                <td>{{$doctor->user->specialization}} </td>
+                                                <td>{{$doctor->specialization}} </td>
                                                 <td>{{$doctor->years_experience}}</td>
                                                 <td>{{ $doctor->uniquePatients() }}</td>
                                             </tr>

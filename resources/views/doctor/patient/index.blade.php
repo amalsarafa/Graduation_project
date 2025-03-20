@@ -144,7 +144,7 @@
                                                                             <tr>
                                                                                 <th>#</th>
                                                                                 <th>اسم المريض</th>
-                                                                                <th>التقييم</th>
+                                                                               
                                                                                 <th>التعليق</th>
                                                                                 <th>التاريخ</th>
                                                                             </tr>
@@ -154,7 +154,7 @@
                                                                             <tr>
                                                                                 <td>{{ $index + 1 }}</td>
                                                                                 <td>{{ $rating->patient->user->name }}</td>
-                                                                                <td>{{ $rating->rating }}</td>
+                                                                                
                                                                                 <td>{{ $rating->comment }}</td>
                                                                                 <td>{{ optional($rating->created_at)->format('Y-m-d') ?? 'لم يتم التعيين' }}</td>
                                                                             </tr>

@@ -99,19 +99,44 @@
                                             @foreach($reservations as $reservation)
                                             <tr>
                                                 <td>{{ $reservation->date }}</td>
-                                                <td>{{ $reservation->time }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($reservation->time)->format('h:i A') }}</td>
                                                 <td>{{ $reservation->service }}</td> 
                                                 <td>{{ $reservation->doctor->user->name }}</td> 
                                                 <td>
                                                     <!-- زر التعديل -->
+                                                    
                                               <a href="{{ route('patient.reserve.edit', $reservation->id) }}" class="btn btn-primary">تعديل</a>
                                                <!-- زر الحذف -->
-                                                   <form action="{{ route('patient.reserve.destroy', $reservation->id) }}" method="POST" style="display:inline;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger">حذف</button>
-                                                    </form>                                                                                    
-                                                    
+                                               <button type="button" class="btn btn-danger" onclick="openDeleteModal({{ $reservation->id }})">
+                                                حذف
+                                            </button>
+                  
+                  
+                                    <!-- نافذة تأكيد الحذف -->
+                                <div id="customDeleteModal" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: center;">
+                                <div style="background: white; padding: 20px; border-radius: 10px; text-align: center; width: 300px;">
+                                <h4>تأكيد الحذف</h4>
+                                <p>هل أنت متأكد من حذف هذا الحجز؟ </p>
+                                 <button onclick="closeDeleteModal()" style="background: gray; color: white; padding: 10px 20px; border: none; border-radius: 5px; margin-right: 10px;">إلغاء</button>
+                                   <form id="deleteDoctorForm" method="POST" style="display:inline;">
+                                 @csrf
+                                @method('DELETE')
+                           <button type="submit" style="background: red; color: white; padding: 10px 20px; border: none; border-radius: 5px;">حذف</button>
+                            </form>
+                        </div>
+                            </div>
+                  
+                  <script>
+                  function openDeleteModal(reservationId) {
+                  document.getElementById('customDeleteModal').style.display = 'flex';
+                  let form = document.getElementById('deleteDoctorForm');
+                  form.action = `/patient/reserve/${reservationId}`; //   
+                  }
+                  
+                  function closeDeleteModal() {
+                  document.getElementById('customDeleteModal').style.display = 'none';
+                  }
+                  </script>
                                                 </td> 
                                                 
                                             </tr>

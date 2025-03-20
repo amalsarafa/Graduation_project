@@ -83,8 +83,9 @@
             
                 <div class="form-actions">
                     <button type="submit" class="btn green uppercase">تسجيل الدخول</button>
-                    <label class="rememberme check">
-                        <input type="checkbox" name="remember" value="1" /> تذكرني
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" name="remember" value="1" class="rounded border-gray-300">
+                        <span>تذكرني</span>
                     </label>
                     <a href="{{ route('password.request') }}" class="forget-password">هل نسيت كلمة المرور؟</a>
                 </div>

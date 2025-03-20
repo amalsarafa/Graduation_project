@@ -76,7 +76,7 @@
                                                     <th>اسم المريض</th>
                                                     <th>التاريخ</th>
                                                     <th>الوقت</th>
-                                                    <th>الحالة</th>
+                                                  
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -86,13 +86,8 @@
                                                         <td>{{ $appointment->service }}</td>
                                                         <td>{{ $appointment->patient->user->name ?? 'غير متوفر' }}</td>
                                                         <td>{{ $appointment->date }}</td>
-                                                        <td>{{ $appointment->time }}</td>
-                                                        <td>
-                                                            <span class="badge 
-                                                                {{ $appointment->status == 'pending' ? 'bg-warning' : ($appointment->status == 'confirmed' ? 'bg-success' : 'bg-danger') }}">
-                                                                {{ $appointment->status == 'pending' ? 'قيد الانتظار' : ($appointment->status == 'confirmed' ? 'مؤكد' : 'ملغى') }}
-                                                            </span>
-                                                        </td>
+                                                        <td>{{ \Carbon\Carbon::parse( $appointment->time )->format('h:i A') }}</td>
+                                                       
                                                         
                                                     </tr>
                                                 @endforeach

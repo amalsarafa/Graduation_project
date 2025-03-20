@@ -17,41 +17,43 @@ class BookController extends Controller
 
    {   
      $user = Auth::user();
-     $doctors = Doctor::with('user')->get(); 
+     $doctors = User::where('role', 'doctor')->get(); 
        $services = Service::all();
        return view('website.home', compact('doctors','services','user'));
    }
    public function store(Request $request)
 {
     $request->validate([
-        'doctor_user_id' => 'required|exists:users,id',  // 
+         'doctor_user_id' => 'required|exists:users,id',
         'service_id' => 'required|exists:services,id',
         'date' => 'required|date|after_or_equal:today',
         'time' => 'required',
     ]);
 
-    $patient = Auth::user();
+    $patient = Auth::user()->patient;
 
     if (!$patient) {
-        return response()->json(['error' => 'يجب تسجيل الدخول لإتمام الحجز'], 401);
+        return back()->withErrors(['error' => 'لم يتم العثور على بيانات المريض']);
     }
-
     $doctor = Doctor::where('user_id', $request->doctor_user_id)->first();
 
     if (!$doctor) {
-        return response()->json(['error' => 'لم يتم العثور على بيانات الطبيب'], 404);
+        return back()->withErrors(['error' => 'لم يتم العثور على بيانات الطبيب']);
     }
 
-    $reservation = PatientReservation::create([
-        'patient_id' => $patient->id, // 
+    PatientReservation::create([
+        'patient_id' => $patient->id,
         'doctor_id' => $doctor->id, 
         'date' => $request->date,
         'time' => $request->time,
-        'service' => Service::find($request->service_id)->name,
+       'service' => Service::find($request->service_id)->name,
         'status' => 'pending',
     ]);
+    PatientService::create([
+        'patient_id' => $patient->id,
+        'service_id' => $request->service_id,
+    ]);
 
-    
     return response()->json(['success' => 'تم تأكيد الحجز بنجاح!']);
 }
 

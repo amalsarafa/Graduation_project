@@ -11,14 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-      
-           
             Schema::create('patient_services', function (Blueprint $table) {
                 $table->foreignId('patient_id')->constrained('patients')->onDelete('cascade');
                 $table->foreignId('service_id')->constrained('services')->onDelete('cascade');
                 $table->timestamps();
-    
-                // إضافة فهرس فريد بدلاً من المفتاح الأساسي
                 $table->unique(['patient_id', 'service_id']);
           
         });

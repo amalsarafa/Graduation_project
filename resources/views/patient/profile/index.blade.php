@@ -78,11 +78,9 @@
                                                          onerror="this.onerror=null;this.src='{{ asset('assets/pages/media/profile/people19.png') }}';" />
                                                 </li>
                                                 
+                                               
                                                 <li>
-                                                    <a href="{{route('patient.reservations')}}">  رفع تقرير  </a>
-                                                </li>
-                                                <li>
-                                                    <a href="{{route('patient.reservations')}}"> حجز خدمة   
+                                                    <a href="{{route('patient.bookservice')}}"> حجز خدمة   
                                                       
                                                     </a>
                                                 </li>
@@ -126,7 +124,7 @@
                                                                     <span class="sale-info"> آخر زيارة
                                                                         <i class="fa fa-img-up"></i>
                                                                     </span>
-                                                                    <span class="sale-num"> {{ $lastVisit ? \Carbon\Carbon::parse($lastVisit->visit_date)->translatedFormat('d F Y') : 'لا توجد زيارات' }}</span>
+                                                                    <span class="sale-num"> {{ $lastVisit ? \Carbon\Carbon::parse($lastVisit->date)->translatedFormat('d F Y') : 'لا توجد زيارات' }}</span>
                                                                 </li>
                                                                 <li>
                                                                     <span class="sale-info"> عدد الزيارات الأسبوعية

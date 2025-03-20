@@ -53,11 +53,11 @@
             <div class="row py-5">
                 <div class="col-12 pt-lg-5 mt-lg-5 text-center">
                     <h5 class="text-white text-uppercase mb-3 animated slideInDown">مرحبًا بكم في مدونتنا، اكتشفوا أسرار التغذية الصحية لحياة أفضل</h5>
-                    <a href="index.html" class="h5 text-white">الصفحة الرئيسية</a>
+                    <a href="{{route('website.home')}}" class="h5 text-white">الصفحة الرئيسية</a>
                     <i class="fa fa-angle-double-left text-white px-2"></i>
-                    <a href="blog.html" class="h5 text-white">المدونة</a>
+                    <a href="{{route('website.blog')}}" class="h5 text-white">المدونة</a>
                     <i class="fa fa-angle-double-left text-white px-2"></i>
-                    <a href="detail -Healthy nutrition.html" class="h5 text-white">التغذية الصحية</a>
+                    <a href="{{route('website.blog.nutrition')}}" class="h5 text-white">التغذية الصحية</a>
                 </div>
             </div>
         </div>
@@ -115,41 +115,12 @@
     
                     <!-- Comment List End -->
     
-                    <!-- Comment Form Start -->
-                    <div class="bg-light rounded p-5">
-                        <div class="section-title section-title-sm position-relative pb-3 mb-4">
-                            <h3 class="mb-0">اترك تعليقًا</h3>
-                        </div>
-                        <form>
-                            <div class="row g-3">
-                                <div class="col-12 col-sm-6">
-                                    <input type="text" class="form-control bg-white border-0" placeholder="اسمك" style="height: 55px;">
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <input type="email" class="form-control bg-white border-0" placeholder="بريدك الإلكتروني" style="height: 55px;">
-                                </div>
-                                <div class="col-12">
-                                    <textarea class="form-control bg-white border-0" rows="5" placeholder="تعليقك"></textarea>
-                                </div>
-                                <div class="col-12">
-                                    <button class="btn btn-primary w-100 py-3" type="submit">إرسال التعليق</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <!-- Comment Form End -->
+                    
                 </div>
     
                 <!-- Sidebar Start -->
                 <div class="col-lg-4">
-                    <!-- Search Form Start -->
-                    <div class="mb-5 wow slideInUp" data-wow-delay="0.1s">
-                        <div class="input-group">
-                            <input type="text" class="form-control p-3" placeholder="بحث في المقالات">
-                            <button class="btn btn-primary px-4"><i class="bi bi-search"></i></button>
-                        </div>
-                    </div>
-                    <!-- Search Form End -->
+                   
     
                     <!-- Category Start -->
                     <div class="mb-5 wow slideInUp" data-wow-delay="0.1s">

@@ -449,8 +449,9 @@
                 <div class="col-lg-4 wow slideInUp" data-wow-delay="0.3s">
                     <div class="team-item bg-light rounded overflow-hidden">
                         <div class="team-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="{{ asset('storage/' . $doctor->user->profile_image) }}" 
-                                 onerror="this.src='{{ asset('default-doctor.png') }}';" alt="صورة الطبيب">
+                            <img class="img-fluid w-100" src="{{ asset('storage/' . $doctor->profile_image) }}" 
+                              onerror="this.src='{{ asset('default-doctor.png') }}';" alt="صورة الطبيب" loading="lazy">
+
                             <div class="team-social">
                                 <a class="btn btn-lg btn-primary btn-lg-square rounded" href="#"><i class="fab fa-twitter fw-normal"></i></a>
                                 <a class="btn btn-lg btn-primary btn-lg-square rounded" href="#"><i class="fab fa-facebook-f fw-normal"></i></a>
@@ -459,8 +460,8 @@
                             </div>
                         </div>
                         <div class="text-center py-4">
-                            <h4 class="text-primary">{{  $doctor->user->name }}</h4>
-                            <p class="text-uppercase m-0">{{ $doctor->specialization ?? 'غير محدد' }}</p>
+                            <h4 class="text-primary">{{  $doctor->name }}</h4>
+                            <p class="text-uppercase m-0">{{ $doctor->doctor->specialization ?? 'غير محدد' }}</p>
                         </div>
                     </div>
                 </div>

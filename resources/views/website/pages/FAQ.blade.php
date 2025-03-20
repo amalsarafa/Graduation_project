@@ -187,9 +187,8 @@
                             <h3 class="mb-0">الأسئلة الأكثر شيوعاً</h3>
                         </div>
                         <div class="d-flex flex-column justify-content-start">
-                            <a class="h6 fw-bold bg-light rounded py-3 px-4 d-flex align-items-center justify-content-between mb-2" href="service.html"><span>ما هي الخدمات التي تقدمونها ؟</span> <i class="bi bi-arrow-right ms-3"></i></a>
-                            <a class="h6 fw-bold bg-light rounded py-3 px-4 d-flex align-items-center justify-content-between mb-2" href="#collapseTwo"><span>كيف يمكنني إدارة حسابي؟</span> <i class="bi bi-arrow-right ms-3"></i></a>
-                            <a class="h6 fw-bold bg-light rounded py-3 px-4 d-flex align-items-center justify-content-between mb-2" href="#collapseThree"><span>كيف يمكنني حجز خدمة؟ </span> <i class="bi bi-arrow-right ms-3"></i></a>
+                            <a class="h6 fw-bold bg-light rounded py-3 px-4 d-flex align-items-center justify-content-between mb-2" href="{{route('website.services')}}"><span>ما هي الخدمات التي تقدمونها ؟</span> <i class="bi bi-arrow-right ms-3"></i></a>
+                            <a class="h6 fw-bold bg-light rounded py-3 px-4 d-flex align-items-center justify-content-between mb-2" href="{{route('website.home')}}"><span>كيف يمكنني حجز خدمة؟ </span> <i class="bi bi-arrow-right ms-3"></i></a>
 
                         </div>
                     </div>

@@ -177,7 +177,7 @@
                             <th class="hidden-xs">
                                 <i class="fa fa-cogs"></i> الخدمة </th>
                             <th>
-                                <i class="fa fa-calendar-check"></i> الحالة </th>
+                                <i class="fa fa-calendar-check"></i> التاريخ </th>
                             
                         </tr>
                     </thead>
@@ -189,13 +189,7 @@
                             </td>
                             <td > {{ $reservation->service }} </td>
                             <td>
-                                @if($reservation->status == 'confirmed')
-                                    <span class="label label-success label-sm"> تم تقديم الاستشارة بنجاح </span>
-                                @elseif($reservation->status == 'pending')
-                                    <span class="label label-warning label-sm"> قيد الانتظار </span>
-                                @else
-                                    <span class="label label-danger label-sm"> تم الإلغاء </span>
-                                @endif
+                                {{ $reservation->date }}
                             </td>
                         </tr>
                     @endforeach

@@ -34,9 +34,10 @@ class PatientProfileController extends Controller
             ->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])
              ->count();
 
-           $lastVisit = PatientReservation::where('patient_id', $patientId)
-          ->latest('created_at')
-           ->first();
+             $lastVisit = PatientReservation::where('patient_id', $patientId)
+             ->whereNotNull('date') 
+             ->latest('date') 
+             ->first();
 
             return view('patient.profile.index', compact(
                 'patient', 'user','reports','doctors','patientId','totalVisits','weeklyVisits','lastVisit'));
