@@ -42,7 +42,10 @@ class WebsiteController extends Controller
 
     // Pages
     public function team() {
-       return view('website.pages.team');
+      $user = Auth::user();
+      $doctors = User::where('role', 'doctor')->get();
+      $services = Service::all();
+       return view('website.pages.team', compact('doctors','services','user'));
      }
     public function price() { 
       return view('website.pages.price'); 
